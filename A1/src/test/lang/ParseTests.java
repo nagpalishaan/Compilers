@@ -28,6 +28,18 @@ public class ParseTests {
 		Util.testValidSyntax(TEST_DIRECTORY, "product.in");
 	}
 
+	@Test public void assignment() {
+		Util.testValidSyntax(TEST_DIRECTORY, "assignment.in");
+	}
+
+	@Test public void for() {
+		Util.testValidSyntax(TEST_DIRECTORY, "for.in");
+	}
+
+	@Test public void if() {
+		Util.testValidSyntax(TEST_DIRECTORY, "if.in");
+	}
+
 	@Test public void error() {
 		Util.testSyntaxError(TEST_DIRECTORY, "error.in");
 	}
