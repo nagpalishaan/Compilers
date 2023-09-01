@@ -1,0 +1,5 @@
+for i = 1 until 5 do
+    if not i then
+        x = i
+    fi
+od
