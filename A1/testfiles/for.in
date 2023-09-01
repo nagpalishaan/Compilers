@@ -1,0 +1,3 @@
+for i = 1 until 5 then do
+    a = i + 1
+od
