@@ -44,6 +44,7 @@ Numeral = [0-9]+ "." [0-9]+
 "if"          { return sym(Terminals.IF); }
 "then"        { return sym(Terminals.THEN); }
 "fi"          { return sym(Terminals.FI); }
+"not"         { return sym(Terminals.NOT); }
 "="           { return sym(Terminals.ASSIGN); }
 {ID}          { return sym(Terminals.ID); }
 {Numeral}     { return sym(Terminals.NUMERAL); }
