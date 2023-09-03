@@ -19,27 +19,27 @@ public class ParseTests {
 	@Test public void let() {
 		Util.testValidSyntax(TEST_DIRECTORY, "let.in");
 	}
-
+	
 	@Test public void numerical() {
 		Util.testValidSyntax(TEST_DIRECTORY, "numerical.in");
-	}
-
-	@Test public void product() {
-		Util.testValidSyntax(TEST_DIRECTORY, "product.in");
 	}*/
+
+	@Test public void exampleprogram() {
+		Util.testValidSyntax(TEST_DIRECTORY, "exampleprogram.in");
+	}
 
 	@Test public void assignment() {
 		Util.testValidSyntax(TEST_DIRECTORY, "assignment.in");
-	}/*
+	}
 
-	@Test public void for() {
+	@Test public void forstmt() {
 		Util.testValidSyntax(TEST_DIRECTORY, "for.in");
-	}*/
+	}
 
 	@Test public void ifstmt() {
 		Util.testValidSyntax(TEST_DIRECTORY, "if.in");
 	}
-	/*
+	
 	@Test public void error() {
 		Util.testSyntaxError(TEST_DIRECTORY, "error.in");
 	}
@@ -54,5 +54,5 @@ public class ParseTests {
 
 	@Test public void error4() {
 		Util.testSyntaxError(TEST_DIRECTORY, "error4.in");
-	}*/
+	}
 }

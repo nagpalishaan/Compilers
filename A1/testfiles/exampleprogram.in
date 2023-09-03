@@ -1,4 +1,4 @@
-for i = 1 until 5 do
+for i = 1.0 until 5.0 do
     if not i then
         x = i
     fi
