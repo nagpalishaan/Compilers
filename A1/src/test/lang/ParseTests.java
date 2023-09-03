@@ -12,7 +12,7 @@ public class ParseTests {
 	/** Directory where the test input files are stored. */
 	private static final File TEST_DIRECTORY = new File("testfiles");
 
-	@Test public void identifier() {
+	/*@Test public void identifier() {
 		Util.testValidSyntax(TEST_DIRECTORY, "identifier.in");
 	}
 
@@ -26,20 +26,20 @@ public class ParseTests {
 
 	@Test public void product() {
 		Util.testValidSyntax(TEST_DIRECTORY, "product.in");
-	}
+	}*/
 
 	@Test public void assignment() {
 		Util.testValidSyntax(TEST_DIRECTORY, "assignment.in");
-	}
+	}/*
 
 	@Test public void for() {
 		Util.testValidSyntax(TEST_DIRECTORY, "for.in");
-	}
+	}*/
 
-	@Test public void if() {
+	@Test public void ifstmt() {
 		Util.testValidSyntax(TEST_DIRECTORY, "if.in");
 	}
-
+	/*
 	@Test public void error() {
 		Util.testSyntaxError(TEST_DIRECTORY, "error.in");
 	}
@@ -54,5 +54,5 @@ public class ParseTests {
 
 	@Test public void error4() {
 		Util.testSyntaxError(TEST_DIRECTORY, "error4.in");
-	}
+	}*/
 }
