@@ -5,7 +5,7 @@ import staticlang.ast.LangParser.Terminals.*;
 
 /** 
      * Abstract base class for recursive decent parsers. 
-     * *You should implement the parseProgram() method to parse a MiniS program. 
+     ** You should implement the parseProgram() method to parse a MiniS program. 
  * */
 
 public abstract class RDPTemplate{ 
@@ -16,13 +16,16 @@ public abstract class RDPTemplate{
     public void parse(LangScanner scanner) {
         this.scanner=scanner; 
         parseProgram(); 
-        accept(EOF); //Ensureallinputisprocessed. 
+        accept(EOF); //Ensure all input is processed. 
     }
 
-    protected abstract void parseProgram();//TODO
+    // TO DO
+    protected abstract void parseProgram() {
+
+    }
 
     /** Returns the current token without proceeding to the next.*/ 
-    protected int peek(){ 
+    protected int peek() { 
         if (currentToken == null) accept(); 
         return currentToken.getId(); 
     }
@@ -32,7 +35,7 @@ public abstract class RDPTemplate{
         try { 
             currentToken=scanner.nextToken(); 
         }catch(Exception e){ 
-            throw ne RuntimeException(e);
+            throw new RuntimeException(e);
         } 
     }
 
@@ -48,6 +51,6 @@ public abstract class RDPTemplate{
     }
 
     protected static void error(Stringmessage) { 
-        thrownewRuntimeException(message); 
+        throw new RuntimeException(message); 
     } 
 }
