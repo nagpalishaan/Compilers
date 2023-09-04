@@ -19,9 +19,6 @@ public abstract class RDPTemplate{
         accept(EOF); //Ensure all input is processed. 
     }
 
-    // %terminals FOR, UNTIL, DO, OD, IF, THEN, FI, NOT, ASSIGN, ID, NUMERAL;
-
-    // TO DO
     protected void parseProgram() {
         int currentToken = peek();
         if(currentToken == FOR) {
@@ -38,10 +35,48 @@ public abstract class RDPTemplate{
         }
     }
 
-    protected void parseFor () {
-
+    protected void parseFor() {
+        accept(FOR);
+        parseAssignment();
+        accept(UNTIL);
+        parseExpr();
+        accept(DO);
+        parseProgram();
+        accept(OD);
     }
     
+    protected void parseIf() {
+        accept(IF);
+        parseExpr();
+        accept(THEN);
+        parseProgram();
+        accept(FI);
+    }
+
+    protected void parseAssignment() {
+        accept(ID);
+        accept(ASSIGN);
+        parseExpr();
+    }
+
+    protected void parseExpr() {
+        int currentToken = peek();
+        switch (currentToken) {
+            case ID:
+                accept(ID);
+                break;
+            case NUMERAL:
+                accept(NUMERAL);
+                break;
+            case NOT:
+                accept(NOT);
+                parseExpr();
+                break;
+            default:
+                error("Invalid token");
+                break;
+        }
+    }
 
     /** Returns the current token without proceeding to the next.*/ 
     protected int peek(){ 
