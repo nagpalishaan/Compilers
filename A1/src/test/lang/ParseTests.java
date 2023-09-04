@@ -36,8 +36,16 @@ public class ParseTests {
 		Util.testValidSyntax(TEST_DIRECTORY, "for.in");
 	}
 
+	@Test public void forINT() {
+		Util.testValidSyntax(TEST_DIRECTORY, "forINT.in");
+	}
+
 	@Test public void ifstmt() {
 		Util.testValidSyntax(TEST_DIRECTORY, "if.in");
+	}
+
+	@Test public void ifINT() {
+		Util.testValidSyntax(TEST_DIRECTORY, "ifINT.in");
 	}
 	
 	@Test public void error() {
