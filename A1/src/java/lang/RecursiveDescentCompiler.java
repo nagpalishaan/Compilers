@@ -9,7 +9,7 @@ import lang.ast.LangParser;
 import lang.ast.LangParser.SyntaxError;
 import lang.ast.LangScanner;
 
-import lang.RDPTemplate;
+import lang.RDP;
 
 public class RecursiveDescentCompiler {
     
@@ -28,7 +28,8 @@ public class RecursiveDescentCompiler {
 
     private static void parse(Reader reader) {
 		LangScanner scanner = new LangScanner(reader);
-		LangParser parser = new LangParser();
+		// LangParser parser = new LangParser();
+        RDP parser;
 
 		try {
 			parser.parse(scanner);

@@ -8,8 +8,8 @@ import static lang.ast.LangParser.Terminals.*;
      ** You should implement the parseProgram() method to parse a MiniS program. 
  * */
 
-public abstract class RDPTemplate{ 
-    private LangScanner scanner; 
+public abstract class RDP { 
+    public LangScanner scanner;  /* note to self: changed from private */
     private beaver.Symbol currentToken;
 
     /** Initialize the parser and start parsing via the parseProgram() method.*/ 
@@ -20,14 +20,14 @@ public abstract class RDPTemplate{
     }
 
     protected void parseProgram() {
-        int currentToken = peek();
-        if(currentToken == FOR) {
+        int currToken = peek();
+        if(currToken == FOR) {
             parseFor();
         }
-        else if(currentToken == IF) {
+        else if(currToken == IF) {
             parseIf();
         }
-        else if(currentToken == ID) {
+        else if(currToken == ID) {
             parseAssignment();
         }
         else {
@@ -60,8 +60,8 @@ public abstract class RDPTemplate{
     }
 
     protected void parseExpr() {
-        int currentToken = peek();
-        switch (currentToken) {
+        int currToken = peek();
+        switch (currToken) {
             case ID:
                 accept(ID);
                 break;
