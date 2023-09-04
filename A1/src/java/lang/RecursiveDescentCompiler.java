@@ -29,7 +29,7 @@ public class RecursiveDescentCompiler {
     private static void parse(Reader reader) {
 		LangScanner scanner = new LangScanner(reader);
 		// LangParser parser = new LangParser();
-        RecursiveDescentParser parser;
+        RecursiveDescentParser parser = new RecursiveDescentParser() {};
 
 		try {
 			parser.parse(scanner);
