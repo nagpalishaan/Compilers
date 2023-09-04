@@ -1,28 +1,28 @@
-packagelang; 
+package lang; 
 import lang.ast.LangParser; 
 import lang.ast.LangScanner; 
-import staticlang.ast.LangParser.Terminals.*; 
+import static lang.ast.LangParser.Terminals.*; 
 
 /** 
      * Abstract base class for recursive decent parsers. 
-     * *You should implement the parseProgram() method to parse a MiniS program. 
+     ** You should implement the parseProgram() method to parse a MiniS program. 
  * */
 
 public abstract class RDPTemplate{ 
-    privateLangScannerscanner; 
-    privatebeaver.SymbolcurrentToken;
+    private LangScanner scanner; 
+    private beaver.Symbol currentToken;
 
     /** Initialize the parser and start parsing via the parseProgram() method.*/ 
     public void parse(LangScanner scanner) {
-        this.scanner=scanner; 
+        this.scanner = scanner; 
         parseProgram(); 
-        accept(EOF); //Ensureallinputisprocessed. 
+        accept(EOF); //Ensure all input is processed. 
     }
 
-    %terminals FOR, UNTIL, DO, OD, IF, THEN, FI, NOT, ASSIGN, ID, NUMERAL;
+    // %terminals FOR, UNTIL, DO, OD, IF, THEN, FI, NOT, ASSIGN, ID, NUMERAL;
 
     // TO DO
-    protected abstract void parseProgram() {
+    protected void parseProgram() {
         int currentToken = peek();
         if(currentToken == FOR) {
             parseFor();
@@ -38,6 +38,9 @@ public abstract class RDPTemplate{
         }
     }
 
+    protected void parseFor () {
+
+    }
     
 
     /** Returns the current token without proceeding to the next.*/ 
@@ -49,24 +52,24 @@ public abstract class RDPTemplate{
     /** Read the next token from the scanner.*/ 
     protected void accept() { 
         try { 
-            currentToken=scanner.nextToken(); 
-        }catch(Exception e){ 
-            throw ne RuntimeException(e);
+            currentToken = scanner.nextToken(); 
+         } catch(Exception e){ 
+            throw new RuntimeException(e);
         } 
     }
 
     /** Ensure the current token is of a certain type; then read the next.*/ 
     protected void accept(int expectedToken) { 
         if(peek()!=expectedToken){ 
-            error("expected token"+ 
+            error("expected token " + 
             LangParser.Terminals.NAMES[expectedToken]+ 
-            "got token"+ 
+            " got token " + 
             LangParser.Terminals.NAMES[currentToken.getId()]);
         } 
         accept(); 
     }
 
-    protected static void error(Stringmessage) { 
-        thrownewRuntimeException(message); 
+    protected static void error(String message) { 
+        throw new RuntimeException(message); 
     } 
 }
