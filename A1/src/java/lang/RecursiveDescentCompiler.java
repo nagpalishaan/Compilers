@@ -9,6 +9,8 @@ import lang.ast.LangParser;
 import lang.ast.LangParser.SyntaxError;
 import lang.ast.LangScanner;
 
+import lang.RDPTemplate;
+
 public class RecursiveDescentCompiler {
     
     public static void main(String args[]) {
