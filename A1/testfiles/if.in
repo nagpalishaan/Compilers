@@ -1,5 +1,5 @@
 for x = 1.0 until 3.0 do
-    if x then
+    if not x then
         y = 5.0
     fi
 od
