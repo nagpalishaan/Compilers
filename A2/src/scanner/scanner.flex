@@ -46,6 +46,7 @@ Numeral = [0-9]+ ("." [0-9]+)?
 "="           { return sym(Terminals.ASSIGN); }
 "*"           { return sym(Terminals.MUL); }
 "+"           { return sym(Terminals.ADD); }
+"/"           { return sym(Terminals.DIV); }
 {Numeral}     { return sym(Terminals.NUMERAL); }
 {ID}          { return sym(Terminals.ID); }
 <<EOF>>       { return sym(Terminals.EOF); }

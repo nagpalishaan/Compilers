@@ -43,6 +43,7 @@ exp =
 	factor
 	| exp.a ADD factor.b {: return new Add(a, b); :}
 	| exp.a MUL factor.b {: return new Mul(a, b); :}
+	| exp.a DIV factor.b {: return new Div(a, b); :}
 	;
 
 factor = 
