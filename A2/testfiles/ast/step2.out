@@ -1,0 +1,15 @@
+Program
+  List
+    Function
+      IdDecl ID="a"
+      List
+        DeclareVar
+          IdDecl ID="x"
+        DeclareVar
+          IdDecl ID="y"
+        AssignVar
+          IdDecl ID="x"
+          Numeral NUMERAL="5"
+        AssignVar
+          IdDecl ID="y"
+          IdUse ID="x"
