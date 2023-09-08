@@ -10,6 +10,7 @@
 :};
 
 %terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL, ASSIGN, SEMICOLON;
+%terminals MUL, ADD;
 
 %typeof program = "Program";
 %typeof id_decl = "IdDecl";
@@ -38,7 +39,11 @@ functionDecls =
     | functionDecls.a function.b {: return a.add(b); :} 
 	;
 
-exp = factor;
+exp = 
+	factor
+	| exp.a ADD factor.b {: return new Add(a, b); :}
+	| exp.a MUL factor.b {: return new Mul(a, b); :}
+	;
 
 factor = 
 	numeral

@@ -1,0 +1,20 @@
+Program
+  List
+    Function
+      IdDecl ID="product"
+      List
+        DeclareVar
+          IdDecl ID="a"
+        DeclareVar
+          IdDecl ID="b"
+        AssignVar
+          IdDecl ID="a"
+          Numeral NUMERAL="2"
+        AssignVar
+          IdDecl ID="b"
+          Numeral NUMERAL="3"
+        AssignVar
+          IdDecl ID="c"
+          Mul
+            IdUse ID="a"
+            IdUse ID="b"

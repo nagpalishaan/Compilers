@@ -9,5 +9,7 @@ AssignVar : Stmt ::= IdDecl Expr;
 abstract Expr;
 Numeral : Expr ::= <NUMERAL>;
 IdUse : Expr ::= <ID>;
+Add : Expr ::= Left:Expr Right:Expr;
+Mul : Expr ::= Left:Expr Right:Expr;
 
 IdDecl ::= <ID>;
