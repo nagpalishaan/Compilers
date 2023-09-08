@@ -10,7 +10,7 @@
 :};
 
 %terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL, ASSIGN, SEMICOLON;
-%terminals MUL, ADD;
+%terminals MUL, ADD, DIV, SUB;
 
 %typeof program = "Program";
 %typeof id_decl = "IdDecl";
@@ -44,6 +44,7 @@ exp =
 	| exp.a ADD factor.b {: return new Add(a, b); :}
 	| exp.a MUL factor.b {: return new Mul(a, b); :}
 	| exp.a DIV factor.b {: return new Div(a, b); :}
+	| exp.a SUB factor.b {: return new Sub(a, b); :}
 	;
 
 factor = 
