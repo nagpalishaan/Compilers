@@ -22,6 +22,7 @@
 %typeof statementList = "List";
 %typeof id_use = "IdUse";
 %typeof assign = "AssignVar";
+%typeof declare = "DeclareVar";
 
 %goal program;
 
