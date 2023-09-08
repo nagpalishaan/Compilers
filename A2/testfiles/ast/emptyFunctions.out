@@ -2,5 +2,7 @@ Program
   List
     Function
       IdDecl ID="b"
+      List
     Function
       IdDecl ID="c"
+      List
