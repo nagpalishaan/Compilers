@@ -13,11 +13,11 @@
 
 %typeof program = "Program";
 %typeof id_decl = "IdDecl";
-%typeof functionDeclaration = "FunctionDeclaration";
+%typeof functionDeclaration = "FuncDeclaration";
 
 %goal program;
 
 program = functionDeclaration.a {: return new Program(a); :} ;
 id_decl = ID.id {: return new IdDecl(id); :} ;
 
-function = INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new FunctionDeclaration(); :} ;
+functionDeclaration = INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new FuncDeclaration(); :} ;
