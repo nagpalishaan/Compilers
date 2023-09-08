@@ -9,7 +9,7 @@
 	}
 :};
 
-%terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL;
+%terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL, ASSIGN, SEMICOLON;
 
 %typeof program = "Program";
 %typeof id_decl = "IdDecl";
