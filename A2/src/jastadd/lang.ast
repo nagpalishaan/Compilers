@@ -13,4 +13,5 @@ Add : Expr ::= Left:Expr Right:Expr;
 Mul : Expr ::= Left:Expr Right:Expr;
 Div : Expr ::= Left:Expr Right:Expr;
 Sub : Expr ::= Left:Expr Right:Expr;
+Mod : Expr ::= Left:Expr Right:Expr;
 IdDecl ::= <ID>;
