@@ -44,6 +44,7 @@ Numeral = [0-9]+ ("." [0-9]+)?
 "}"           { return sym(Terminals.RCURLY); }
 ";"           { return sym(Terminals.SEMICOLON); }
 "="           { return sym(Terminals.ASSIGN); }
+{Numeral}     { return sym(Terminals.NUMERAL); }
 {ID}          { return sym(Terminals.ID); }
 <<EOF>>       { return sym(Terminals.EOF); }
 
