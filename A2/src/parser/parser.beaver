@@ -15,12 +15,17 @@
 %typeof id_decl = "IdDecl";
 %typeof function = "Function";
 %typeof numeral = "Numeral";
+%typeof functionDecls = "List";
 
 %goal program;
 
-program = function.a {: return new Program(a); :} ;
+program = functionDecls.a {: return new Program(a); :} ;
 id_decl = ID.id {: return new IdDecl(id); :} ;
 
-function = INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new FuncDeclaration(); :} ;
+function = INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new Function(); :} ;
 
 numeral = NUMERAL.num {: return new Numeral(num); :} ;
+
+functionDecls =
+    function.a {: return new List().add(a); :}
+    | functionDecls.a function.b {: return a.add(b); :} ;

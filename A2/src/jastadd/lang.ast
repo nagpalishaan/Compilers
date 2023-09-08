@@ -1,11 +1,8 @@
 Program ::= Function*;
 
-abstract Function;
-FuncDeclaration : Function ::= IdDecl Stmt*;
+Function ::= IdDecl Expr;
 
-abstract Stmt;
+IdDecl ::= <ID>;
 
 abstract Expr;
 Numeral : Expr ::= <NUMERAL>;
-
-IdDecl ::= <ID>;
