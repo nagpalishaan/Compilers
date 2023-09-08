@@ -5,4 +5,7 @@ FuncDeclaration : Function ::= IdDecl Stmt*;
 
 abstract Stmt;
 
+abstract Expr;
+Numeral : Expr ::= <NUMERAL>;
+
 IdDecl ::= <ID>;

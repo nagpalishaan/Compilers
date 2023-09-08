@@ -9,11 +9,12 @@
 	}
 :};
 
-%terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY;
+%terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL;
 
 %typeof program = "Program";
 %typeof id_decl = "IdDecl";
 %typeof function = "Function";
+%typeof numeral = "Numeral";
 
 %goal program;
 
@@ -21,3 +22,5 @@ program = function.a {: return new Program(a); :} ;
 id_decl = ID.id {: return new IdDecl(id); :} ;
 
 function = INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new FuncDeclaration(); :} ;
+
+numeral = NUMERAL.num {: return new Numeral(num); :} ;
