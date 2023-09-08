@@ -1,5 +1,4 @@
 Program
   List
     Function
-      null
-      null
+      IdDecl ID="a"

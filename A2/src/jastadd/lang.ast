@@ -1,8 +1,5 @@
 Program ::= Function*;
 
-Function ::= IdDecl Expr;
+Function ::= IdDecl;
 
 IdDecl ::= <ID>;
-
-abstract Expr;
-Numeral : Expr ::= <NUMERAL>;

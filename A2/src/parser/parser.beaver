@@ -22,7 +22,7 @@
 program = functionDecls.a {: return new Program(a); :} ;
 id_decl = ID.id {: return new IdDecl(id); :} ;
 
-function = INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new Function(); :} ;
+function = INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new Function(a); :} ;
 
 numeral = NUMERAL.num {: return new Numeral(num); :} ;
 
