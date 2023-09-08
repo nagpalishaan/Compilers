@@ -1,12 +1,8 @@
 Program ::= Function*;
 
 abstract Function;
-Function ::= Type IdDecl Block;
+FuncDeclaration : Function ::= IdDecl Stmt*;
 
 abstract Stmt;
 
-Type ::= "int";
-
 IdDecl ::= <ID>;
-
-Block ::= Stmt*;

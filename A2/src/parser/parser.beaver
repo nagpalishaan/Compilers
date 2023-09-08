@@ -9,10 +9,15 @@
 	}
 :};
 
-%terminals ID;
+%terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY;
 
 %typeof program = "Program";
+%typeof id_decl = "IdDecl";
+%typeof functionDeclaration = "FunctionDeclaration";
 
 %goal program;
 
-program = ID.id {: return new Program(id); :} ;
+program = functionDeclaration.a {: return new Program(a); :} ;
+id_decl = ID.id {: return new IdDecl(id); :} ;
+
+function = INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new FunctionDeclaration(); :} ;
