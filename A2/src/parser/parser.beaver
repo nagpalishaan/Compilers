@@ -28,7 +28,10 @@
 
 program = functionDecls.a {: return new Program(a); :} ;
 
-function = INT id_decl.a LPARANTH RPARANTH LCURLY statementList.b RCURLY {: return new Function(a, b); :} ;
+function = 
+	INT id_decl.a LPARANTH RPARANTH LCURLY statementList.b RCURLY {: return new Function(a, b); :} 
+	| INT id_decl.a LPARANTH RPARANTH LCURLY RCURLY {: return new Function(a, new List()); :} 
+	;
 
 functionDecls =
     function.a {: return new List().add(a); :}
@@ -50,7 +53,6 @@ statement =
 statementList = 
 	statement.a {: return new List().add(a); :}
     | statementList.a statement.b {: return a.add(b); :} 
-	| {: return new List(); :} 
 	;
 
 numeral = NUMERAL.num {: return new Numeral(num); :} ;
