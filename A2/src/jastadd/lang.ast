@@ -2,9 +2,14 @@ Program ::= Function*;
 
 Function ::= IdDecl Stmt*;
 
+StmtBlock ::= Stmt*;
+
 abstract Stmt;
 DeclareVar : Stmt ::= IdDecl Expr*;
 AssignVar : Stmt ::= IdDecl Expr;
+
+IfElse : Stmt ::= Expr Stmt* [ElseBlock:StmtBlock];
+While : Stmt ::= Expr Stmt*;
 
 abstract Expr;
 Numeral : Expr ::= <NUMERAL>;
