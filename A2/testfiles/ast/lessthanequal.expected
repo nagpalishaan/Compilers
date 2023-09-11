@@ -1,0 +1,14 @@
+Program
+  List
+    Function
+      IdDecl ID="n"
+      List
+        DeclareVar
+          IdDecl ID="a"
+        DeclareVar
+          IdDecl ID="b"
+        AssignVar
+          IdDecl ID="c"
+          LessEqual
+            IdUse ID="a"
+            IdUse ID="b"
