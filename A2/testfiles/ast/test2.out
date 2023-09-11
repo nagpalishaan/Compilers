@@ -1,0 +1,7 @@
+Program
+  List
+    Function
+      IdDecl ID="n"
+      List
+        DeclareVar
+          IdDecl ID="x"
