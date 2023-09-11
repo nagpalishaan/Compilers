@@ -63,6 +63,7 @@ expList =
 factor = 
 	numeral
 	| id_use
+	| LPARANTH exp.a RPARANTH {: return a; :}
 	;
 
 statement = 
