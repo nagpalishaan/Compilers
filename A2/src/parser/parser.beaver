@@ -10,7 +10,7 @@
 :};
 
 %terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL, ASSIGN, SEMICOLON;
-%terminals MUL, ADD, DIV, SUB, MOD;
+%terminals MUL, ADD, DIV, SUB, MOD, LT, LTE, GT, GTE, NOT, EQUAL;
 
 %typeof program = "Program";
 %typeof id_decl = "IdDecl";
@@ -46,6 +46,12 @@ exp =
 	| exp.a DIV factor.b {: return new Div(a, b); :}
 	| exp.a SUB factor.b {: return new Sub(a, b); :}
 	| exp.a MOD factor.b {: return new Mod(a, b); :}
+	| exp.a LT factor.b {: return new Less(a, b); :}
+	| exp.a LTE factor.b {: return new LessEqual(a, b); :}
+	| exp.a GT factor.b {: return new Greater(a, b); :}
+	| exp.a GTE factor.b {: return new GreaterEqual(a, b); :}
+	| exp.a NOT factor.b {: return new Not(a, b); :}
+	| exp.a EQUAL factor.b {: return new Equal(a, b); :}
 	;
 
 factor = 
