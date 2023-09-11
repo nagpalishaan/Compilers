@@ -58,6 +58,7 @@ Numeral = [0-9]+ ("." [0-9]+)?
 "if"          { return sym(Terminals.IF); }
 "else"        { return sym(Terminals.ELSE); }
 "while"       { return sym(Terminals.WHILE); }
+"return"       { return sym(Terminals.RETURN); }
 {Numeral}     { return sym(Terminals.NUMERAL); }
 {ID}          { return sym(Terminals.ID); }
 <<EOF>>       { return sym(Terminals.EOF); }

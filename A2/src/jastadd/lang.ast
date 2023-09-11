@@ -10,6 +10,7 @@ AssignVar : Stmt ::= IdDecl Expr;
 
 IfElse : Stmt ::= Expr Stmt* [ElseBlock:StmtBlock];
 While : Stmt ::= Expr Stmt*;
+Return : Stmt ::= Expr;
 
 abstract Expr;
 Numeral : Expr ::= <NUMERAL>;

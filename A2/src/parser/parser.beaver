@@ -10,7 +10,7 @@
 :};
 
 %terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL, ASSIGN, SEMICOLON;
-%terminals MUL, ADD, DIV, SUB, MOD, LT, LTE, GT, GTE, NOT, EQUAL, IF, ELSE, WHILE;
+%terminals MUL, ADD, DIV, SUB, MOD, LT, LTE, GT, GTE, NOT, EQUAL, IF, ELSE, WHILE, RETURN;
 
 %typeof program = "Program";
 %typeof id_decl = "IdDecl";
@@ -88,6 +88,7 @@ statement =
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new IfElse(a, b, new Opt()); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY ELSE LCURLY statementList.c RCURLY {: return new IfElse(a, b, new Opt(c)); :}
 	| WHILE LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new While(a, b); :}
+	| RETURN exp.a SEMICOLON {: return new Return(a); :}
 	;
 
 statementList = 
