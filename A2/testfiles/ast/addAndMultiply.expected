@@ -17,11 +17,11 @@ Program
           Numeral NUMERAL="3"
         AssignVar
           IdDecl ID="c"
-          Mul
-            Add
-              IdUse ID="a"
+          Add
+            IdUse ID="a"
+            Mul
               IdUse ID="b"
-            Numeral NUMERAL="2"
+              Numeral NUMERAL="2"
         AssignVar
           IdDecl ID="d"
           Add

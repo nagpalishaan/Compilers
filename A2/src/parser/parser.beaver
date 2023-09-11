@@ -20,6 +20,7 @@
 %typeof exp = "Expr";
 %typeof expList = "List";
 %typeof factor = "Expr";
+%typeof term = "Expr";
 %typeof statement = "Stmt";
 %typeof statementList = "List";
 %typeof id_use = "IdUse";
@@ -40,30 +41,44 @@ functionDecls =
     | functionDecls.a function.b {: return a.add(b); :} 
 	;
 
-exp = 
-	factor
-	| exp.a ADD factor.b {: return new Add(a, b); :}
-	| exp.a MUL factor.b {: return new Mul(a, b); :}
-	| exp.a DIV factor.b {: return new Div(a, b); :}
-	| exp.a SUB factor.b {: return new Sub(a, b); :}
-	| exp.a MOD factor.b {: return new Mod(a, b); :}
-	| exp.a LT factor.b {: return new Less(a, b); :}
-	| exp.a LTE factor.b {: return new LessEqual(a, b); :}
-	| exp.a GT factor.b {: return new Greater(a, b); :}
-	| exp.a GTE factor.b {: return new GreaterEqual(a, b); :}
-	| exp.a NOT factor.b {: return new Not(a, b); :}
-	| exp.a EQUAL factor.b {: return new Equal(a, b); :}
-	;
+exp =
+  factor
+  | add_expr
+  | comparison_expr
+  ;
+
+add_expr =
+  exp.a ADD factor.b {: return new Add(a, b); :}
+  | exp.a SUB factor.b {: return new Sub(a, b); :}
+  ;
+
+comparison_expr =
+  exp.a LT factor.b {: return new Less(a, b); :}
+  | exp.a LTE factor.b {: return new LessEqual(a, b); :}
+  | exp.a GT factor.b {: return new Greater(a, b); :}
+  | exp.a GTE factor.b {: return new GreaterEqual(a, b); :}
+  | exp.a NOT factor.b {: return new Not(a, b); :}
+  | exp.a EQUAL factor.b {: return new Equal(a, b); :}
+  ;
+
+factor =
+  term
+  | factor.a MUL term.b {: return new Mul(a, b); :}
+  | factor.a DIV term.b {: return new Div(a, b); :}
+  | factor.a MOD term.b {: return new Mod(a, b); :}
+  ;
+
+term =
+  numeral
+  | id_use
+  | LPARANTH exp.a RPARANTH {: return a; :}
+  ;
+
+
 
 expList = 
 	exp.a {: return new List().add(a); :}
     | expList.a exp.b {: return a.add(b); :} 
-	;
-
-factor = 
-	numeral
-	| id_use
-	| LPARANTH exp.a RPARANTH {: return a; :}
 	;
 
 statement = 
