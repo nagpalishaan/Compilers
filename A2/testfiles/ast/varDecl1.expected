@@ -1,11 +1,15 @@
 Program
   List
     Function
-      IdDecl ID="a"
+      IdDecl ID="n"
       List
         DeclareVar
           IdDecl ID="x"
           List
+            Numeral NUMERAL="3"
         DeclareVar
           IdDecl ID="y"
           List
+            Sub
+              IdUse ID="x"
+              Numeral NUMERAL="2"

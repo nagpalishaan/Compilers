@@ -18,6 +18,7 @@
 %typeof numeral = "Numeral";
 %typeof functionDecls = "List";
 %typeof exp = "Expr";
+%typeof expList = "List";
 %typeof factor = "Expr";
 %typeof statement = "Stmt";
 %typeof statementList = "List";
@@ -54,6 +55,11 @@ exp =
 	| exp.a EQUAL factor.b {: return new Equal(a, b); :}
 	;
 
+expList = 
+	exp.a {: return new List().add(a); :}
+    | expList.a exp.b {: return a.add(b); :} 
+	;
+
 factor = 
 	numeral
 	| id_use
@@ -61,7 +67,8 @@ factor =
 
 statement = 
 	id_decl.a ASSIGN exp.b SEMICOLON {: return new AssignVar(a, b); :} 
-	| INT id_decl.a SEMICOLON {: return new DeclareVar(a); :} 
+	| INT id_decl.a SEMICOLON {: return new DeclareVar(a, new List()); :} 
+	| INT id_decl.a ASSIGN expList.b SEMICOLON {: return new DeclareVar(a, b); :}
 	;
 
 statementList = 

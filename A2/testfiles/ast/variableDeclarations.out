@@ -5,5 +5,7 @@ Program
       List
         DeclareVar
           IdDecl ID="x"
+          List
         DeclareVar
           IdDecl ID="y"
+          List

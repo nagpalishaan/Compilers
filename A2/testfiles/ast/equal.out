@@ -5,8 +5,10 @@ Program
       List
         DeclareVar
           IdDecl ID="a"
+          List
         DeclareVar
           IdDecl ID="b"
+          List
         AssignVar
           IdDecl ID="c"
           Equal

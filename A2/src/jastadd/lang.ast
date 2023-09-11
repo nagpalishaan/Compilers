@@ -3,7 +3,7 @@ Program ::= Function*;
 Function ::= IdDecl Stmt*;
 
 abstract Stmt;
-DeclareVar : Stmt ::= IdDecl;
+DeclareVar : Stmt ::= IdDecl Expr*;
 AssignVar : Stmt ::= IdDecl Expr;
 
 abstract Expr;

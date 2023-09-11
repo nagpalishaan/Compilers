@@ -5,8 +5,10 @@ Program
       List
         DeclareVar
           IdDecl ID="c"
+          List
         DeclareVar
           IdDecl ID="d"
+          List
         AssignVar
           IdDecl ID="c"
           Numeral NUMERAL="3"
