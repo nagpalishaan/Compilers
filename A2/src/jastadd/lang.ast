@@ -1,6 +1,6 @@
 Program ::= Function*;
 
-Function ::= IdDecl Stmt*;
+Function ::= IdDecl [StmtBlock];
 
 StmtBlock ::= Stmt*;
 

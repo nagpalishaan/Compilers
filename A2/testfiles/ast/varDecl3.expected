@@ -2,10 +2,11 @@ Program
   List
     Function
       IdDecl ID="n"
-      List
-        DeclareVar
-          IdDecl ID="x"
-          List
-        AssignVar
-          IdDecl ID="x"
-          Numeral NUMERAL="3"
+      Opt
+        List
+          DeclareVar
+            IdDecl ID="x"
+            List
+          AssignVar
+            IdDecl ID="x"
+            Numeral NUMERAL="3"

@@ -2,56 +2,57 @@ Program
   List
     Function
       IdDecl ID="a"
-      List
-        DeclareVar
-          IdDecl ID="x"
-          List
-            Numeral NUMERAL="3"
-        DeclareVar
-          IdDecl ID="y"
-          List
-            Numeral NUMERAL="4"
-        DeclareVar
-          IdDecl ID="z"
-          List
-            Numeral NUMERAL="5"
-        DeclareVar
-          IdDecl ID="a"
-          List
-            Less
-              Mul
-                Greater
-                  Add
-                    IdUse ID="x"
-                    IdUse ID="y"
-                  Numeral NUMERAL="2"
-                IdUse ID="z"
-              Div
+      Opt
+        List
+          DeclareVar
+            IdDecl ID="x"
+            List
+              Numeral NUMERAL="3"
+          DeclareVar
+            IdDecl ID="y"
+            List
+              Numeral NUMERAL="4"
+          DeclareVar
+            IdDecl ID="z"
+            List
+              Numeral NUMERAL="5"
+          DeclareVar
+            IdDecl ID="a"
+            List
+              Less
+                Mul
+                  Greater
+                    Add
+                      IdUse ID="x"
+                      IdUse ID="y"
+                    Numeral NUMERAL="2"
+                  IdUse ID="z"
+                Div
+                  IdUse ID="x"
+                  Sub
+                    Mod
+                      IdUse ID="y"
+                      IdUse ID="z"
+                    Numeral NUMERAL="1"
+          DeclareVar
+            IdDecl ID="b"
+            List
+              Not
+                Add
+                  LessEqual
+                    Add
+                      Mul
+                        GreaterEqual
+                          Numeral NUMERAL="5"
+                          Numeral NUMERAL="2"
+                        Less
+                          Numeral NUMERAL="2"
+                          Numeral NUMERAL="3"
+                      Mul
+                        Equal
+                          Numeral NUMERAL="2"
+                          Numeral NUMERAL="3"
+                        Numeral NUMERAL="3"
+                    Numeral NUMERAL="2"
+                  Numeral NUMERAL="5"
                 IdUse ID="x"
-                Sub
-                  Mod
-                    IdUse ID="y"
-                    IdUse ID="z"
-                  Numeral NUMERAL="1"
-        DeclareVar
-          IdDecl ID="b"
-          List
-            Not
-              Add
-                LessEqual
-                  Add
-                    Mul
-                      GreaterEqual
-                        Numeral NUMERAL="5"
-                        Numeral NUMERAL="2"
-                      Less
-                        Numeral NUMERAL="2"
-                        Numeral NUMERAL="3"
-                    Mul
-                      Equal
-                        Numeral NUMERAL="2"
-                        Numeral NUMERAL="3"
-                      Numeral NUMERAL="3"
-                  Numeral NUMERAL="2"
-                Numeral NUMERAL="5"
-              IdUse ID="x"
