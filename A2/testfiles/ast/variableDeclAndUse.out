@@ -1,7 +1,7 @@
 Program
   List
     Function
-      IdDecl ID="n"
+      IdDecl ID="a"
       Opt
         List
           DeclareVar
@@ -11,7 +11,8 @@ Program
             IdDecl ID="b"
             List
           AssignVar
-            IdDecl ID="c"
-            GreaterEqual
-              IdUse ID="a"
-              IdUse ID="b"
+            IdDecl ID="a"
+            Numeral NUMERAL="2"
+          AssignVar
+            IdDecl ID="b"
+            Numeral NUMERAL="3"
