@@ -6,11 +6,13 @@ Program
         List
           DeclareVar
             IdDecl ID="x"
-            List
-              Numeral NUMERAL="3"
+            Opt
+              List
+                Numeral NUMERAL="3"
           DeclareVar
             IdDecl ID="y"
-            List
-              Sub
-                IdUse ID="x"
-                Numeral NUMERAL="2"
+            Opt
+              List
+                Sub
+                  IdUse ID="x"
+                  Numeral NUMERAL="2"

@@ -5,12 +5,14 @@ Function ::= IdDecl [StmtBlock];
 StmtBlock ::= Stmt*;
 
 abstract Stmt;
-DeclareVar : Stmt ::= IdDecl Expr*;
+DeclareVar : Stmt ::= IdDecl [ExprBlock];
 AssignVar : Stmt ::= IdDecl Expr;
 
 IfElse : Stmt ::= Expr Stmt* [ElseBlock:StmtBlock];
 While : Stmt ::= Expr Stmt*;
 Return : Stmt ::= Expr;
+
+ExprBlock ::= Expr*;
 
 abstract Expr;
 Numeral : Expr ::= <NUMERAL>;

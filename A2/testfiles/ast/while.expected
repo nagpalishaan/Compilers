@@ -6,8 +6,9 @@ Program
         List
           DeclareVar
             IdDecl ID="a"
-            List
-              Numeral NUMERAL="2"
+            Opt
+              List
+                Numeral NUMERAL="2"
           While
             Not
               IdUse ID="a"

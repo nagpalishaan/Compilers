@@ -6,10 +6,10 @@ Program
         List
           DeclareVar
             IdDecl ID="a"
-            List
+            Opt
           DeclareVar
             IdDecl ID="b"
-            List
+            Opt
           AssignVar
             IdDecl ID="c"
             LessEqual

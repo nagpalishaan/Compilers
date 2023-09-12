@@ -6,7 +6,7 @@ Program
         List
           DeclareVar
             IdDecl ID="x"
-            List
+            Opt
           AssignVar
             IdDecl ID="x"
             Numeral NUMERAL="3"

@@ -83,8 +83,8 @@ expList =
 
 statement = 
 	id_decl.a ASSIGN exp.b SEMICOLON {: return new AssignVar(a, b); :} 
-	| INT id_decl.a SEMICOLON {: return new DeclareVar(a, new List()); :} 
-	| INT id_decl.a ASSIGN expList.b SEMICOLON {: return new DeclareVar(a, b); :}
+	| INT id_decl.a SEMICOLON {: return new DeclareVar(a, new Opt()); :} 
+	| INT id_decl.a ASSIGN expList.b SEMICOLON {: return new DeclareVar(a, new Opt(b)); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new IfElse(a, b, new Opt()); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY ELSE LCURLY statementList.c RCURLY {: return new IfElse(a, b, new Opt(c)); :}
 	| WHILE LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new While(a, b); :}

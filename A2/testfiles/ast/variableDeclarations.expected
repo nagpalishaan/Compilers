@@ -6,7 +6,7 @@ Program
         List
           DeclareVar
             IdDecl ID="x"
-            List
+            Opt
           DeclareVar
             IdDecl ID="y"
-            List
+            Opt
