@@ -10,7 +10,7 @@
 :};
 
 %terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL, ASSIGN, SEMICOLON;
-%terminals MUL, ADD, DIV, SUB, MOD, LT, LTE, GT, GTE, NOT, EQUAL, IF, ELSE, WHILE, RETURN;
+%terminals MUL, ADD, DIV, SUB, MOD, LT, LTE, GT, GTE, NOT, EQUAL, IF, ELSE, WHILE, RETURN, COMMA;
 
 %typeof program = "Program";
 %typeof id_decl = "IdDecl";
