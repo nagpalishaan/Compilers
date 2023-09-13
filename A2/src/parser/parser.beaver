@@ -48,12 +48,11 @@ functionDecls =
 
 paramList =
     param.a {: return new List().add(a); :}
-    | paramList.a param.b {: return a.add(b); :}
+    | paramList.a COMMA param.b {: return a.add(b); :}
     ;
 
 param =
     INT id_decl.a {: return new Param(a); :}
-    | INT id_decl.a COMMA {: return new Param(a); :}
     ;
 
 exp =
