@@ -3,6 +3,7 @@ Program
     Function
       IdDecl ID="m"
       Opt
+      Opt
         List
           AssignVar
             IdDecl ID="a"

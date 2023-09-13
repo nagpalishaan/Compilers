@@ -3,6 +3,8 @@ Program
     Function
       IdDecl ID="b"
       Opt
+      Opt
     Function
       IdDecl ID="c"
+      Opt
       Opt

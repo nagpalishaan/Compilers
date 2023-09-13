@@ -3,6 +3,7 @@ Program
     Function
       IdDecl ID="sum"
       Opt
+      Opt
         List
           DeclareVar
             IdDecl ID="a"

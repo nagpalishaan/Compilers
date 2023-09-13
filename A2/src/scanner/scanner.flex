@@ -43,6 +43,7 @@ Numeral = [0-9]+ ("." [0-9]+)?
 "{"           { return sym(Terminals.LCURLY); }
 "}"           { return sym(Terminals.RCURLY); }
 ";"           { return sym(Terminals.SEMICOLON); }
+","           { return sym(Terminals.COMMA); }
 "="           { return sym(Terminals.ASSIGN); }
 "%"           { return sym(Terminals.MOD); }
 "*"           { return sym(Terminals.MUL); }
