@@ -16,6 +16,9 @@ IfElse : Stmt ::= Expr Stmt* [ElseBlock:StmtBlock];
 While : Stmt ::= Expr Stmt*;
 Return : Stmt ::= Expr;
 
+FunctionCallStmt : Stmt ::= FunctionCall;
+FunctionCall : Expr ::= IdDecl [ExprBlock];
+
 ExprBlock ::= Expr*;
 
 abstract Expr;

@@ -5,5 +5,5 @@ int n() {
     } else {
         return 1;
     }
-    return function(a, b);
+    return function(a, b % a);
 }
