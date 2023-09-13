@@ -14,6 +14,7 @@ public class ParseTests {
 		Util.testSyntaxError(TEST_DIRECTORY, "error.in");
 	}
 
+	@Test
 	public void multipleFunctionParamExtraComma() {
 		Util.testSyntaxError(TEST_DIRECTORY, "multipleFunctionParamExtraComma.in");
 	}
