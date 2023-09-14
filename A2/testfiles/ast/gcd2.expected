@@ -18,9 +18,9 @@ Program
               Return
                 IdUse ID="a"
             Opt
-          FunctionCallStmt
+          Return
             FunctionCall
-              IdDecl ID="gcd2"
+              IdUse ID="gcd2"
               Opt
                 List
                   IdUse ID="b"

@@ -8,7 +8,6 @@ Program
           DeclareVar
             IdDecl ID="a"
             Opt
-              List
-                Numeral NUMERAL="5"
+              Numeral NUMERAL="5"
           Return
             IdUse ID="a"
