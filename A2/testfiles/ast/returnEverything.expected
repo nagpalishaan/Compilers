@@ -12,9 +12,10 @@ Program
             Equal
               IdUse ID="b"
               Numeral NUMERAL="0"
-            List
-              Return
-                IdUse ID="a"
+            Opt
+              List
+                Return
+                  IdUse ID="a"
             Opt
               List
                 Return
