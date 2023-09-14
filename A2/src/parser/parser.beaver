@@ -31,6 +31,7 @@
 %typeof functionCallParamList = "List";
 %typeof functionCall = "FunctionCall";
 %typeof functionCallStmt = "FunctionCallStmt";
+%typeof add_expr = "Expr";
 
 
 %goal program;
@@ -64,22 +65,25 @@ exp =
 	| comparison_expr
 	;
 
-add_expr =
-  exp.a ADD factor.b {: return new Add(a, b); :}
-  | exp.a SUB factor.b {: return new Sub(a, b); :}
-  ;
 
 comparison_expr =
-	exp.a LT factor.b {: return new Less(a, b); :}
-	| exp.a LTE factor.b {: return new LessEqual(a, b); :}
-	| exp.a GT factor.b {: return new Greater(a, b); :}
-	| exp.a GTE factor.b {: return new GreaterEqual(a, b); :}
-	| exp.a NOT factor.b {: return new Not(a, b); :}
-	| exp.a EQUAL factor.b {: return new Equal(a, b); :}
+	add_expr.a LT add_expr.b {: return new Less(a, b); :}
+	| add_expr.a LTE add_expr.b {: return new LessEqual(a, b); :}
+	| add_expr.a GT add_expr.b {: return new Greater(a, b); :}
+	| add_expr.a GTE add_expr.b {: return new GreaterEqual(a, b); :}
+	| add_expr.a NOT add_expr.b {: return new Not(a, b); :}
+	| add_expr.a EQUAL add_expr.b {: return new Equal(a, b); :}
 	;
 
+
+add_expr =
+	add_expr.a ADD factor.b {: return new Add(a, b); :}
+	| add_expr.a SUB factor.b {: return new Sub(a, b); :}
+	;
+
+
 factor =
-  term
+  	term
 	| factor.a MUL term.b {: return new Mul(a, b); :}
 	| factor.a DIV term.b {: return new Div(a, b); :}
 	| factor.a MOD term.b {: return new Mod(a, b); :}
@@ -102,7 +106,7 @@ functionCallParamList =
 	| functionCallParamList.a COMMA exp.b {: return a.add(b); :}
 	;
 
-functionCall = id_decl.a LPARANTH functionCallParamList.b RPARANTH {: return new FunctionCall(a, new Opt(b)); :} ;
+functionCall = id_use.a LPARANTH functionCallParamList.b RPARANTH {: return new FunctionCall(a, new Opt(b)); :} ;
 
 functionCallStmt = functionCall.a SEMICOLON {: return new FunctionCallStmt(a); :};
 
