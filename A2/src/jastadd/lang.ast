@@ -24,6 +24,7 @@ ExprBlock ::= Expr*;
 abstract Expr;
 Numeral : Expr ::= <NUMERAL>;
 IdUse : Expr ::= <ID>;
+Neg : Expr ::= Expr;
 Add : Expr ::= Left:Expr Right:Expr;
 Mul : Expr ::= Left:Expr Right:Expr;
 Div : Expr ::= Left:Expr Right:Expr;

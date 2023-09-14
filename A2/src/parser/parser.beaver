@@ -31,6 +31,7 @@
 %typeof functionCall = "FunctionCall";
 %typeof functionCallStmt = "FunctionCallStmt";
 %typeof add_expr = "Expr";
+%typeof neg = "Neg";
 
 
 %goal program;
@@ -86,6 +87,7 @@ term =
 	| id_use
 	| LPARANTH exp.a RPARANTH {: return a; :}
 	| functionCall
+  | SUB term.a {: return new Neg(a); :}
 	;
 
 functionCallParamList =
