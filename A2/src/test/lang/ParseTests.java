@@ -14,6 +14,11 @@ public class ParseTests {
 	}
 
 	@Test
+	public void numFunction() {
+		Util.testSyntaxError(TEST_DIRECTORY, "numFunction.in");
+	}
+
+	@Test
 	public void error() {
 		Util.testSyntaxError(TEST_DIRECTORY, "error.in");
 	}
