@@ -22,4 +22,14 @@ public class ParseTests {
 	public void multipleFunctionParamExtraComma() {
 		Util.testSyntaxError(TEST_DIRECTORY, "multipleFunctionParamExtraComma.in");
 	}
+
+	@Test
+	public void lessThanError() {
+		Util.testSyntaxError(TEST_DIRECTORY, "lessThanError.in");
+	}
+
+	@Test
+	public void multipleIdError() {
+		Util.testSyntaxError(TEST_DIRECTORY, "multipleIdError.in");
+	}
 }
