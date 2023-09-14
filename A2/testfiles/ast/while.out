@@ -13,7 +13,8 @@ Program
             Not
               IdUse ID="a"
               Numeral NUMERAL="2"
-            List
-              AssignVar
-                IdDecl ID="b"
-                Numeral NUMERAL="3"
+            Opt
+              List
+                AssignVar
+                  IdDecl ID="b"
+                  Numeral NUMERAL="3"

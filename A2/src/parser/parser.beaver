@@ -110,7 +110,8 @@ statement =
 	| IF LPARANTH exp.a RPARANTH LCURLY RCURLY {: return new IfElse(a, new Opt(), new Opt()); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY ELSE LCURLY statementList.c RCURLY {: return new IfElse(a, new Opt(b), new Opt(c)); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY RCURLY ELSE LCURLY RCURLY {: return new IfElse(a, new Opt(), new Opt()); :}
-	| WHILE LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new While(a, b); :}
+	| WHILE LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new While(a, new Opt(b)); :}
+	| WHILE LPARANTH exp.a RPARANTH LCURLY RCURLY {: return new While(a, new Opt()); :}
 	| RETURN exp.a SEMICOLON {: return new Return(a); :}
 	| functionCallStmt
 	;

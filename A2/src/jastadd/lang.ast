@@ -13,7 +13,7 @@ DeclareVar : Stmt ::= IdDecl [ExprBlock];
 AssignVar : Stmt ::= IdDecl Expr;
 
 IfElse : Stmt ::= Expr [StmtBlock] [ElseBlock:StmtBlock];
-While : Stmt ::= Expr Stmt*;
+While : Stmt ::= Expr [StmtBlock];
 Return : Stmt ::= Expr;
 
 FunctionCallStmt : Stmt ::= FunctionCall;
