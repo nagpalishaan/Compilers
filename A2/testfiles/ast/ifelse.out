@@ -13,13 +13,14 @@ Program
             Equal
               IdUse ID="a"
               Numeral NUMERAL="2"
-            List
-              AssignVar
-                IdDecl ID="b"
-                Numeral NUMERAL="3"
-              AssignVar
-                IdDecl ID="c"
-                Numeral NUMERAL="4"
+            Opt
+              List
+                AssignVar
+                  IdDecl ID="b"
+                  Numeral NUMERAL="3"
+                AssignVar
+                  IdDecl ID="c"
+                  Numeral NUMERAL="4"
             Opt
               List
                 AssignVar
