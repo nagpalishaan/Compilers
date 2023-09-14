@@ -72,6 +72,16 @@ Program
           DeclareVar
             IdDecl ID="b"
             Opt
+          AssignVar
+            IdDecl ID="a"
+            FunctionCall
+              IdUse ID="read"
+              Opt
+          AssignVar
+            IdDecl ID="b"
+            FunctionCall
+              IdUse ID="read"
+              Opt
           FunctionCallStmt
             FunctionCall
               IdUse ID="print"
