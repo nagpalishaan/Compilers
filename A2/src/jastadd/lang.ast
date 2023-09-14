@@ -17,7 +17,7 @@ While : Stmt ::= Expr Stmt*;
 Return : Stmt ::= Expr;
 
 FunctionCallStmt : Stmt ::= FunctionCall;
-FunctionCall : Expr ::= IdDecl [ExprBlock];
+FunctionCall : Expr ::= IdUse [ExprBlock];
 
 ExprBlock ::= Expr*;
 

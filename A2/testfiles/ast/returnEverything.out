@@ -19,9 +19,9 @@ Program
               List
                 Return
                   Numeral NUMERAL="1"
-          FunctionCallStmt
+          Return
             FunctionCall
-              IdDecl ID="function"
+              IdUse ID="function"
               Opt
                 List
                   IdUse ID="a"
