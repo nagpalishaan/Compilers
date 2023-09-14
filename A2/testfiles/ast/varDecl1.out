@@ -8,12 +8,10 @@ Program
           DeclareVar
             IdDecl ID="x"
             Opt
-              List
-                Numeral NUMERAL="3"
+              Numeral NUMERAL="3"
           DeclareVar
             IdDecl ID="y"
             Opt
-              List
-                Sub
-                  IdUse ID="x"
-                  Numeral NUMERAL="2"
+              Sub
+                IdUse ID="x"
+                Numeral NUMERAL="2"

@@ -18,7 +18,6 @@
 %typeof numeral = "Numeral";
 %typeof functionDecls = "List";
 %typeof exp = "Expr";
-%typeof expList = "List";
 %typeof factor = "Expr";
 %typeof term = "Expr";
 %typeof statement = "Stmt";
@@ -60,14 +59,8 @@ param =
     ;
 
 exp =
-	factor
-	| add_expr
-	| comparison_expr
-	;
-
-
-comparison_expr =
-	add_expr.a LT add_expr.b {: return new Less(a, b); :}
+    add_expr
+	| add_expr.a LT add_expr.b {: return new Less(a, b); :}
 	| add_expr.a LTE add_expr.b {: return new LessEqual(a, b); :}
 	| add_expr.a GT add_expr.b {: return new Greater(a, b); :}
 	| add_expr.a GTE add_expr.b {: return new GreaterEqual(a, b); :}
@@ -75,12 +68,11 @@ comparison_expr =
 	| add_expr.a EQUAL add_expr.b {: return new Equal(a, b); :}
 	;
 
-
 add_expr =
-	add_expr.a ADD factor.b {: return new Add(a, b); :}
+	factor
+	| add_expr.a ADD factor.b {: return new Add(a, b); :}
 	| add_expr.a SUB factor.b {: return new Sub(a, b); :}
 	;
-
 
 factor =
   	term
@@ -96,11 +88,6 @@ term =
 	| functionCall
 	;
 
-expList = 
-	exp.a {: return new List().add(a); :}
-    | expList.a exp.b {: return a.add(b); :} 
-	;
-
 functionCallParamList =
 	exp.a {: return new List().add(a); :}
 	| functionCallParamList.a COMMA exp.b {: return a.add(b); :}
@@ -113,7 +100,7 @@ functionCallStmt = functionCall.a SEMICOLON {: return new FunctionCallStmt(a); :
 statement = 
 	id_decl.a ASSIGN exp.b SEMICOLON {: return new AssignVar(a, b); :} 
 	| INT id_decl.a SEMICOLON {: return new DeclareVar(a, new Opt()); :} 
-	| INT id_decl.a ASSIGN expList.b SEMICOLON {: return new DeclareVar(a, new Opt(b)); :}
+	| INT id_decl.a ASSIGN exp.b SEMICOLON {: return new DeclareVar(a, new Opt(b)); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new IfElse(a, b, new Opt()); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY ELSE LCURLY statementList.c RCURLY {: return new IfElse(a, b, new Opt(c)); :}
 	| WHILE LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new While(a, b); :}
@@ -131,3 +118,4 @@ numeral = NUMERAL.num {: return new Numeral(num); :} ;
 id_decl = ID.id {: return new IdDecl(id); :} ;
 
 id_use = ID.id {: return new IdUse(id); :} ;
+
