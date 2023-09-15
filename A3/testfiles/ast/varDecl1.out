@@ -1,0 +1,17 @@
+Program
+  List
+    Function
+      IdDecl ID="n"
+      Opt
+      Opt
+        List
+          DeclareVar
+            IdDecl ID="x"
+            Opt
+              Numeral NUMERAL="3"
+          DeclareVar
+            IdDecl ID="y"
+            Opt
+              Sub
+                IdUse ID="x"
+                Numeral NUMERAL="2"
