@@ -1,0 +1,24 @@
+Program
+  List
+    Function
+      IdDecl ID="sum"
+      Opt
+      Opt
+        List
+          DeclareVar
+            IdDecl ID="a"
+            Opt
+          DeclareVar
+            IdDecl ID="b"
+            Opt
+          AssignVar
+            IdDecl ID="a"
+            Numeral NUMERAL="2"
+          AssignVar
+            IdDecl ID="b"
+            Numeral NUMERAL="3"
+          AssignVar
+            IdDecl ID="c"
+            Add
+              IdUse ID="a"
+              IdUse ID="b"
