@@ -12,18 +12,6 @@ aspect PrettyPrint {
 	    }
 	}
 
-	public void Mul.prettyPrint(PrintStream out, String ind) {
-		getLeft().prettyPrint(out, ind);
-		out.print(" * ");
-		getRight().prettyPrint(out, ind);
-	}
-
-	public void Div.prettyPrint(PrintStream out, String ind) {
-		getLeft().prettyPrint(out, ind);
-		out.print(" / ");
-		getRight().prettyPrint(out, ind);
-	}
-
 	public void Numeral.prettyPrint(PrintStream out, String ind) {
 		out.print(getNUMERAL());
 	}
@@ -36,51 +24,169 @@ aspect PrettyPrint {
 		out.print(getID());
 	}
 
+	public void Param.prettyPrint(PrintStream out, String ind) {	
+		out.print("int ");
+		getIdDecl().prettyPrint(out, ind);
+	}
+
     public void Return.prettyPrint(PrintStream out, String ind) {
-		out.print("return ");
+		out.print(ind + "return ");
         getExpr().prettyPrint(out, ind);
         out.print(";");
 	}
 
+	public void Function.prettyPrint(PrintStream out, String ind) {	
+		out.print("int ");
+		getIdDecl().prettyPrint(out, ind);
+		out.print("(");
+		if (hasParamList()) {
+			int curr = 0;
+			ParamList paramList = getParamList();
+			int size = paramList.getNumParam();
+			for (int i = 0; i < size; i++) {
+				Param p = paramList.getParam(i);
+				p.prettyPrint(out, ind);
+				if (curr < size) {
+					out.print(", ");
+				}
+				curr += 1;
+			}
+		}
+		out.print(") {");
+		out.println();
+
+		if (hasStmtBlock()){
+			StmtBlock stmtBlock = getStmtBlock();
+			int size = stmtBlock.getNumStmt();
+			for (int i = 0; i < size; i++) {
+				Stmt s = stmtBlock.getStmt(i);
+				s.prettyPrint(out, ind);
+				out.println();
+			}
+		}
+		else {
+			out.println();
+		}
+		out.println("}");
+	}
+
     public void While.prettyPrint(PrintStream out, String ind) {
-		out.println("while (");
+		out.print(ind + "while (");
         getExpr().prettyPrint(out, ind);
         out.print(") {");
         out.println();
 
-        // TODO : check if implementation correct, check if hasStmtBlock() ?
-        for (Stmt s : getStmtBlock()) {
-            out.print(ind+"  ");
-            s.prettyPrint(out, ind);
-            out.println();
+        StmtBlock stmtBlock = getStmtBlock();
+		if (hasStmtBlock()) {
+			int size = stmtBlock.getNumStmt();
+			for (int i = 0; i < size; i++) {
+				Stmt s = stmtBlock.getStmt(i);
+				out.print(ind+"  ");
+				s.prettyPrint(out, ind);
+				out.println();
+			}
         }
+		else {
+			out.println();
+		}
         out.println("}");
 	}
 
     public void IfElse.prettyPrint(PrintStream out, String ind) {
-		out.println("if (");
+		out.print(ind + "if (");
         getExpr().prettyPrint(out, ind);
-        out.print(") {");
-        out.println();
+        out.println(") {");
 
-        // TODO : check if implementation correct, check if hasStmtBlock() ?
-        for (Stmt s : getStmtBlock()) {
-            out.print(ind+"  ");
-            s.prettyPrint(out, ind);
-            out.println();
-        }  
+		StmtBlock stmtBlock = getStmtBlock();
+		if (hasStmtBlock()) {
+			int size = stmtBlock.getNumStmt();
+			for (int i = 0; i < size; i++) {
+				Stmt s = stmtBlock.getStmt(i);
+				out.print(ind+"  ");
+				s.prettyPrint(out, ind);
+				out.println();
+			}  
+		}
+		else{
+			out.println();
+		}
         out.println("}");
 
         out.println("else {");
         out.println();
 
-        // TODO : check if implementation correct, check if hasStmtBlock() ?
-        for (Stmt s : getStmtBlock()) {
-            out.print(ind+"  ");
-            s.prettyPrint(out, ind);
-            out.println();
-        }  
+		StmtBlock elseBlock = getElseBlock();
+		if (hasElseBlock()) {
+			int size = elseBlock.getNumStmt();
+			for (int i = 0; i < size; i++) {
+				Stmt s = elseBlock.getStmt(i);
+				out.print(ind+"  ");
+				s.prettyPrint(out, ind);
+				out.println();
+			}  
+		}
         out.println("}");
+	}
+
+	public void DeclareVar.prettyPrint(PrintStream out, String ind) {
+		out.print(ind + "int ");
+        getIdDecl().prettyPrint(out, ind);
+ 
+        if (hasExprBlock()) {
+            out.print(" = ");
+			ExprBlock exprBlock = getExprBlock();
+			int size = exprBlock.getNumExpr();
+            for (int i = 0; i < size; i++) {
+				Expr e = getExprBlock().getExpr(i);
+				e.prettyPrint(out, ind);
+			}
+        }    
+		out.print(";");    
+	}
+
+    public void AssignVar.prettyPrint(PrintStream out, String ind) {
+		out.print(ind);
+        getIdDecl().prettyPrint(out, ind);
+        out.print(" = ");
+        getExpr().prettyPrint(out, ind);
+        out.print(";");
+	}
+
+    public void FunctionCall.prettyPrint(PrintStream out, String ind) {
+        getIdUse().prettyPrint(out, ind);
+        out.print("(");
+
+        if (hasExprBlock()){
+            int curr = 0;
+			ExprBlock exprBlock = getExprBlock();
+			int size = exprBlock.getNumExpr();
+            for (int i = 0; i < size; i++) {
+				Expr e = getExprBlock().getExpr(i);
+                e.prettyPrint(out, ind);
+                if (curr < size) {
+                    out.print(", ");   
+                }
+                curr += 1;
+            }
+        }
+        out.print(")");
+	}
+
+    public void FunctionCallStmt.prettyPrint(PrintStream out, String ind) {
+        getFunctionCall().prettyPrint(out, ind);
+        out.print(";");
+	}
+
+	public void Mul.prettyPrint(PrintStream out, String ind) {
+		getLeft().prettyPrint(out, ind);
+		out.print(" * ");
+		getRight().prettyPrint(out, ind);
+	}
+
+	public void Div.prettyPrint(PrintStream out, String ind) {
+		getLeft().prettyPrint(out, ind);
+		out.print(" / ");
+		getRight().prettyPrint(out, ind);
 	}
 
     public void Add.prettyPrint(PrintStream out, String ind) {
@@ -135,48 +241,5 @@ aspect PrettyPrint {
 		getLeft().prettyPrint(out, ind);
 		out.print(" <= ");
 		getRight().prettyPrint(out, ind);
-	}
-
-    public void DeclareVar.prettyPrint(PrintStream out, String ind) {
-		out.println("int ");
-        getIdDecl().prettyPrint(out, ind);
- 
-        // TODO: check if implementation correct
-        if (hasExprBlock()) {
-            out.print(" = ");
-            getExpr().prettyPrint(out, ind);
-            out.print(";");
-        }        
-	}
-
-    public void AssignVar.prettyPrint(PrintStream out, String ind) {
-        getIdDecl().prettyPrint(out, ind);
-        out.print(" = ");
-        getExpr().prettyPrint(out, ind);
-        out.print(";");
-	}
-
-    public void FunctionCall.prettyPrint(PrintStream out, String ind) {
-        getIdUse().prettyPrint(out, ind);
-        out.print("(");
-
-        // TODO : check if implementation correct
-        for (Expr e : getExprBlock()) {
-            e.prettyPrint(out, ind);
-            out.print(", ");   // TODO : check if last param, ignore comma
-        }
-        out.print(")");
-	}
-
-    public void FunctionCallStmt.prettyPrint(PrintStream out, String ind) {
-        getIdUse().prettyPrint(out, ind);
-        out.print("(");
-
-        // TODO : check if implementation correct
-        for (Expr e : getExprBlock()) {
-            e.prettyPrint(out, ind);
-            out.print(", ");   // TODO : check if last param, ignore comma
-        }
-        out.print(";");
 	}
 }
