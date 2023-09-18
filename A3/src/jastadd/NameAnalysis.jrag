@@ -96,6 +96,12 @@ aspect NameAnalysis {
 		}
 	}
 
+    public void IfElse.checkNames(PrintStream err, SymbolTable symbols) {
+		getExpr().checkNames(err, symbols);
+        symbols = symbols.push();
+        // continue editing this
+	}
+
 	/**
 	 * Helper method
 	 * @return line number of this token
