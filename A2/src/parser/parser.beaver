@@ -87,7 +87,7 @@ term =
 	| id_use
 	| LPARANTH exp.a RPARANTH {: return a; :}
 	| functionCall
-  | SUB term.a {: return new Neg(a); :}
+    | SUB term.a {: return new Neg(a); :}
 	;
 
 functionCallParamList =
@@ -96,9 +96,9 @@ functionCallParamList =
 	;
 
 functionCall = 
-  id_use.a LPARANTH functionCallParamList.b RPARANTH {: return new FunctionCall(a, new Opt(b)); :}
-  | id_use.a LPARANTH RPARANTH {: return new FunctionCall(a, new Opt()); :}
-  ;
+	id_use.a LPARANTH functionCallParamList.b RPARANTH {: return new FunctionCall(a, new Opt(b)); :}
+	| id_use.a LPARANTH RPARANTH {: return new FunctionCall(a, new Opt()); :}
+	;
 
 functionCallStmt = functionCall.a SEMICOLON {: return new FunctionCallStmt(a); :};
 
