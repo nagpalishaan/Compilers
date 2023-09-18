@@ -8,7 +8,7 @@ ParamList ::= Param*;
 
 abstract Stmt;
 DeclareVar : Stmt ::= IdDecl [Expr];
-AssignVar : Stmt ::= IdDecl Expr;
+AssignVar : Stmt ::= IdUse Expr;
 
 StmtBlock ::= Stmt*;
 
