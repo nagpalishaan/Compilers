@@ -39,7 +39,8 @@
 program = functionDecls.a {: return new Program(a); :} ;
 
 function = 
-    INT id_decl.a LPARANTH paramList.b RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, b, c); :} 
+	INT id_decl.a LPARANTH RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, new Opt(), c); :} 
+   	| INT id_decl.a LPARANTH paramList.b RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, new Opt(b), c); :} 
 	;
 
 functionDecls =
@@ -48,7 +49,7 @@ functionDecls =
 	;
 
 paramList =
-	{: return new List(); :}
+	param.a {: return new List().add(a); :}
     | paramList.a COMMA param.b {: return a.add(b); :}
     ;
 

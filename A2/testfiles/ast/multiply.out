@@ -2,7 +2,7 @@ Program
   List
     Function
       IdDecl ID="product"
-      List
+      Opt
       List
         DeclareVar
           IdDecl ID="a"

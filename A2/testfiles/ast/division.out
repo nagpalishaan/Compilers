@@ -2,7 +2,7 @@ Program
   List
     Function
       IdDecl ID="m"
-      List
+      Opt
       List
         AssignVar
           IdDecl ID="a"

@@ -1,8 +1,10 @@
 Program ::= Function*;
 
-Function ::= IdDecl Param* Stmt*;
+Function ::= IdDecl [ParamList] Stmt*;
 
 Param ::= IdDecl;
+
+ParamList ::= Param*;
 
 abstract Stmt;
 DeclareVar : Stmt ::= IdDecl [Expr];
