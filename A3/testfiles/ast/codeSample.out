@@ -23,14 +23,14 @@ Program
                   Opt
                     List
                       AssignVar
-                        IdDecl ID="a"
+                        IdUse ID="a"
                         Sub
                           IdUse ID="a"
                           IdUse ID="b"
                   Opt
                     List
                       AssignVar
-                        IdDecl ID="b"
+                        IdUse ID="b"
                         Sub
                           IdUse ID="b"
                           IdUse ID="a"

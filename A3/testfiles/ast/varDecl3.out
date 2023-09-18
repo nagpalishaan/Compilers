@@ -9,5 +9,5 @@ Program
             IdDecl ID="x"
             Opt
           AssignVar
-            IdDecl ID="x"
+            IdUse ID="x"
             Numeral NUMERAL="3"

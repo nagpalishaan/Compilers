@@ -16,5 +16,5 @@ Program
             Opt
               List
                 AssignVar
-                  IdDecl ID="b"
+                  IdUse ID="b"
                   Numeral NUMERAL="3"

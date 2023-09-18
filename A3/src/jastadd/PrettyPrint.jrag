@@ -146,7 +146,7 @@ aspect PrettyPrint {
 
     public void AssignVar.prettyPrint(PrintStream out, String ind) {
 		out.print(ind);
-        getIdDecl().prettyPrint(out, ind);
+        getIdUse().prettyPrint(out, ind);
         out.print(" = ");
         getExpr().prettyPrint(out, ind);
         out.print(";");

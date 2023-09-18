@@ -6,7 +6,7 @@ Program
       Opt
         List
           AssignVar
-            IdDecl ID="a"
+            IdUse ID="a"
             Numeral NUMERAL="0"
           IfElse
             Equal

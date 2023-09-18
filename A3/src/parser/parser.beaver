@@ -103,7 +103,7 @@ functionCall =
 functionCallStmt = functionCall.a SEMICOLON {: return new FunctionCallStmt(a); :};
 
 statement = 
-	id_decl.a ASSIGN exp.b SEMICOLON {: return new AssignVar(a, b); :} 
+	id_use.a ASSIGN exp.b SEMICOLON {: return new AssignVar(a, b); :} 
 	| INT id_decl.a SEMICOLON {: return new DeclareVar(a, new Opt()); :} 
 	| INT id_decl.a ASSIGN exp.b SEMICOLON {: return new DeclareVar(a, new Opt(b)); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new IfElse(a, new Opt(b), new Opt()); :}

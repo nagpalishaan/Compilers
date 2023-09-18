@@ -12,13 +12,13 @@ Program
             IdDecl ID="d"
             Opt
           AssignVar
-            IdDecl ID="c"
+            IdUse ID="c"
             Numeral NUMERAL="3"
           AssignVar
-            IdDecl ID="d"
+            IdUse ID="d"
             Numeral NUMERAL="4"
           AssignVar
-            IdDecl ID="e"
+            IdUse ID="e"
             Mod
               IdUse ID="c"
               IdUse ID="d"
