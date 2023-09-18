@@ -11,16 +11,16 @@ Program
           IdDecl ID="b"
           Opt
         AssignVar
-          IdDecl ID="a"
+          IdUse ID="a"
           Numeral NUMERAL="2"
         AssignVar
-          IdDecl ID="b"
+          IdUse ID="b"
           Numeral NUMERAL="3"
         AssignVar
-          IdDecl ID="c"
+          IdUse ID="c"
           Numeral NUMERAL="4"
         AssignVar
-          IdDecl ID="d"
+          IdUse ID="d"
           Add
             Add
               IdUse ID="a"

@@ -20,14 +20,14 @@ Program
                 IdUse ID="b"
               List
                 AssignVar
-                  IdDecl ID="a"
+                  IdUse ID="a"
                   Sub
                     IdUse ID="a"
                     IdUse ID="b"
               Opt
                 List
                   AssignVar
-                    IdDecl ID="b"
+                    IdUse ID="b"
                     Sub
                       IdUse ID="b"
                       IdUse ID="a"
@@ -70,12 +70,12 @@ Program
           IdDecl ID="b"
           Opt
         AssignVar
-          IdDecl ID="a"
+          IdUse ID="a"
           FunctionCall
             IdUse ID="read"
             Opt
         AssignVar
-          IdDecl ID="b"
+          IdUse ID="b"
           FunctionCall
             IdUse ID="read"
             Opt

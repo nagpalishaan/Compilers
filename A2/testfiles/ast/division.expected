@@ -5,13 +5,13 @@ Program
       Opt
       List
         AssignVar
-          IdDecl ID="a"
+          IdUse ID="a"
           Numeral NUMERAL="2"
         AssignVar
-          IdDecl ID="b"
+          IdUse ID="b"
           Numeral NUMERAL="3"
         AssignVar
-          IdDecl ID="c"
+          IdUse ID="c"
           Div
             IdUse ID="a"
             IdUse ID="b"

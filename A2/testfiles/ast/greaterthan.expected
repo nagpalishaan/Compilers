@@ -11,7 +11,7 @@ Program
           IdDecl ID="b"
           Opt
         AssignVar
-          IdDecl ID="c"
+          IdUse ID="c"
           Greater
             IdUse ID="a"
             IdUse ID="b"
