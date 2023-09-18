@@ -2,9 +2,9 @@ Program
   List
     Function
       IdDecl ID="b"
-      Opt
-      Opt
+      List
+      List
     Function
       IdDecl ID="c"
-      Opt
-      Opt
+      List
+      List

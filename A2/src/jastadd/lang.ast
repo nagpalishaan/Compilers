@@ -1,25 +1,21 @@
 Program ::= Function*;
 
-Function ::= IdDecl [ParamList] [StmtBlock];
-
-ParamList ::= Param*;
+Function ::= IdDecl Param* Stmt*;
 
 Param ::= IdDecl;
 
-StmtBlock ::= Stmt*;
-
 abstract Stmt;
-DeclareVar : Stmt ::= IdDecl [ExprBlock];
+DeclareVar : Stmt ::= IdDecl [Expr];
 AssignVar : Stmt ::= IdDecl Expr;
 
-IfElse : Stmt ::= Expr [StmtBlock] [ElseBlock:StmtBlock];
-While : Stmt ::= Expr [StmtBlock];
+StmtBlock ::= Stmt*;
+
+IfElse : Stmt ::= Expr Stmt* [ElseBlock:StmtBlock];
+While : Stmt ::= Expr Stmt*;
 Return : Stmt ::= Expr;
 
 FunctionCallStmt : Stmt ::= FunctionCall;
-FunctionCall : Expr ::= IdUse [ExprBlock];
-
-ExprBlock ::= Expr*;
+FunctionCall : Expr ::= IdUse [Expr];
 
 abstract Expr;
 Numeral : Expr ::= <NUMERAL>;

@@ -2,5 +2,5 @@ Program
   List
     Function
       IdDecl ID="c"
-      Opt
-      Opt
+      List
+      List

@@ -2,19 +2,17 @@ Program
   List
     Function
       IdDecl ID="n"
-      Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="a"
-            Opt
-              Numeral NUMERAL="2"
-          While
-            Not
-              IdUse ID="a"
-              Numeral NUMERAL="2"
-            Opt
-              List
-                AssignVar
-                  IdDecl ID="b"
-                  Numeral NUMERAL="3"
+      List
+      List
+        DeclareVar
+          IdDecl ID="a"
+          Opt
+            Numeral NUMERAL="2"
+        While
+          Not
+            IdUse ID="a"
+            Numeral NUMERAL="2"
+          List
+            AssignVar
+              IdDecl ID="b"
+              Numeral NUMERAL="3"

@@ -2,17 +2,16 @@ Program
   List
     Function
       IdDecl ID="n"
-      Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="a"
-            Opt
-          DeclareVar
-            IdDecl ID="b"
-            Opt
-          AssignVar
-            IdDecl ID="c"
-            Less
-              IdUse ID="a"
-              IdUse ID="b"
+      List
+      List
+        DeclareVar
+          IdDecl ID="a"
+          Opt
+        DeclareVar
+          IdDecl ID="b"
+          Opt
+        AssignVar
+          IdDecl ID="c"
+          Less
+            IdUse ID="a"
+            IdUse ID="b"
