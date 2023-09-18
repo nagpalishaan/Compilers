@@ -3,22 +3,21 @@ Program
     Function
       IdDecl ID="n"
       Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="c"
-            Opt
-          DeclareVar
-            IdDecl ID="d"
-            Opt
-          AssignVar
-            IdDecl ID="c"
-            Numeral NUMERAL="3"
-          AssignVar
-            IdDecl ID="d"
-            Numeral NUMERAL="4"
-          AssignVar
-            IdDecl ID="e"
-            Mod
-              IdUse ID="c"
-              IdUse ID="d"
+      List
+        DeclareVar
+          IdDecl ID="c"
+          Opt
+        DeclareVar
+          IdDecl ID="d"
+          Opt
+        AssignVar
+          IdUse ID="c"
+          Numeral NUMERAL="3"
+        AssignVar
+          IdUse ID="d"
+          Numeral NUMERAL="4"
+        AssignVar
+          IdUse ID="e"
+          Mod
+            IdUse ID="c"
+            IdUse ID="d"

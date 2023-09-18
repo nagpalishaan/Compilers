@@ -3,4 +3,4 @@ Program
     Function
       IdDecl ID="a"
       Opt
-      Opt
+      List

@@ -3,29 +3,27 @@ Program
     Function
       IdDecl ID="n"
       Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="a"
-            Opt
-              Numeral NUMERAL="2"
-          IfElse
-            Equal
-              IdUse ID="a"
-              Numeral NUMERAL="2"
-            Opt
-              List
-                AssignVar
-                  IdUse ID="b"
-                  Numeral NUMERAL="3"
-                AssignVar
-                  IdUse ID="c"
-                  Numeral NUMERAL="4"
-            Opt
-              List
-                AssignVar
-                  IdUse ID="b"
-                  Numeral NUMERAL="4"
-                AssignVar
-                  IdUse ID="c"
-                  Numeral NUMERAL="5"
+      List
+        DeclareVar
+          IdDecl ID="a"
+          Opt
+            Numeral NUMERAL="2"
+        IfElse
+          Equal
+            IdUse ID="a"
+            Numeral NUMERAL="2"
+          List
+            AssignVar
+              IdUse ID="b"
+              Numeral NUMERAL="3"
+            AssignVar
+              IdUse ID="c"
+              Numeral NUMERAL="4"
+          Opt
+            List
+              AssignVar
+                IdUse ID="b"
+                Numeral NUMERAL="4"
+              AssignVar
+                IdUse ID="c"
+                Numeral NUMERAL="5"

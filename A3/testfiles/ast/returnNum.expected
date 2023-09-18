@@ -3,7 +3,6 @@ Program
     Function
       IdDecl ID="n"
       Opt
-      Opt
-        List
-          Return
-            Numeral NUMERAL="5"
+      List
+        Return
+          Numeral NUMERAL="5"

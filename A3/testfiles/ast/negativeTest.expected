@@ -3,15 +3,14 @@ Program
     Function
       IdDecl ID="main"
       Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="a"
-            Opt
-              Neg
-                Numeral NUMERAL="1"
-          DeclareVar
-            IdDecl ID="b"
-            Opt
-              Neg
-                Numeral NUMERAL="2"
+      List
+        DeclareVar
+          IdDecl ID="a"
+          Opt
+            Neg
+              Numeral NUMERAL="1"
+        DeclareVar
+          IdDecl ID="b"
+          Opt
+            Neg
+              Numeral NUMERAL="2"

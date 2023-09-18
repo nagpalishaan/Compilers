@@ -8,23 +8,21 @@ Program
             IdDecl ID="a"
           Param
             IdDecl ID="b"
-      Opt
-        List
-          IfElse
-            Equal
-              IdUse ID="b"
-              Numeral NUMERAL="0"
+      List
+        IfElse
+          Equal
+            IdUse ID="b"
+            Numeral NUMERAL="0"
+          List
+            Return
+              IdUse ID="a"
+          Opt
+        Return
+          FunctionCall
+            IdUse ID="gcd2"
             Opt
               List
-                Return
+                IdUse ID="b"
+                Mod
                   IdUse ID="a"
-            Opt
-          Return
-            FunctionCall
-              IdUse ID="gcd2"
-              Opt
-                List
                   IdUse ID="b"
-                  Mod
-                    IdUse ID="a"
-                    IdUse ID="b"

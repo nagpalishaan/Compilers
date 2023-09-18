@@ -8,31 +8,28 @@ Program
             IdDecl ID="a"
           Param
             IdDecl ID="b"
-      Opt
-        List
-          While
-            Not
-              IdUse ID="a"
-              IdUse ID="b"
-            Opt
+      List
+        While
+          Not
+            IdUse ID="a"
+            IdUse ID="b"
+          List
+            IfElse
+              Greater
+                IdUse ID="a"
+                IdUse ID="b"
               List
-                IfElse
-                  Greater
+                AssignVar
+                  IdUse ID="a"
+                  Sub
                     IdUse ID="a"
                     IdUse ID="b"
-                  Opt
-                    List
-                      AssignVar
-                        IdUse ID="a"
-                        Sub
-                          IdUse ID="a"
-                          IdUse ID="b"
-                  Opt
-                    List
-                      AssignVar
-                        IdUse ID="b"
-                        Sub
-                          IdUse ID="b"
-                          IdUse ID="a"
-          Return
-            IdUse ID="a"
+              Opt
+                List
+                  AssignVar
+                    IdUse ID="b"
+                    Sub
+                      IdUse ID="b"
+                      IdUse ID="a"
+        Return
+          IdUse ID="a"

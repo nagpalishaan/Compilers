@@ -3,11 +3,10 @@ Program
     Function
       IdDecl ID="a"
       Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="x"
-            Opt
-          DeclareVar
-            IdDecl ID="y"
-            Opt
+      List
+        DeclareVar
+          IdDecl ID="x"
+          Opt
+        DeclareVar
+          IdDecl ID="y"
+          Opt
