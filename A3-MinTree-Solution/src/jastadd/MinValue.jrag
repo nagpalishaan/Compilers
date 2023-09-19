@@ -12,7 +12,9 @@ aspect MinValue {
 
 	// Exercise 2
 	inh int Node.globalMin();
-	eq Program.getNode().globalMin() = 0;
+	eq Program.getNode().globalMin() {
+	    return getNode().localMin();
+	}
 
 	// Exercise 3
 	syn boolean Leaf.isMinValue() = false;
