@@ -75,7 +75,10 @@ aspect NameAnalysis {
 
     public void DeclareVar.checkNames(PrintStream err, SymbolTable symbols) {
 		getIdDecl().checkNames(err, symbols);
-        // getExpr().checkNames(err, symbols);
+
+		if (hasExpr()) {
+        	getExpr().checkNames(err, symbols);
+		}
 	}
 
     public void Return.checkNames(PrintStream err, SymbolTable symbols) {
@@ -99,7 +102,65 @@ aspect NameAnalysis {
     public void IfElse.checkNames(PrintStream err, SymbolTable symbols) {
 		getExpr().checkNames(err, symbols);
         symbols = symbols.push();
-        // continue editing this
+
+        if (hasStmt()){
+			for(int i = 0; i < getNumStmt(); i++){
+        	    getStmt(i).checkNames(err, symbols);
+			}
+		}
+
+		// TODO: check if else block should be in separate function
+		StmtBlock elseBlock = getElseBlock();
+		if (hasElseBlock()){
+			for(int i = 0; i < elseBlock.getNumStmt(); i++){
+        	    getStmt(i).checkNames(err, symbols);
+			}
+		}
+	}
+
+	public void While.checkNames(PrintStream err, SymbolTable symbols) {
+		getExpr().checkNames(err, symbols);
+        symbols = symbols.push();
+
+        if (hasStmt()){
+			for(int i = 0; i < getNumStmt(); i++){
+        	    getStmt(i).checkNames(err, symbols);
+			}
+		}
+	}
+
+	public void Function.checkNames(PrintStream err, SymbolTable symbols) {
+		getIdDecl().checkNames(err, symbols);
+		symbols = symbols.push();
+
+		// TODO: check if use ParamList or Param
+		if (hasParamList()) {
+			ParamList paramList = getParamList();
+			for(int i = 0; i < paramList.getNumParam(); i++){
+			    paramList.getParam(i).checkNames(err, symbols);
+			}
+		}
+
+		if (hasStmt()){
+			for(int i = 0; i < getNumStmt(); i++){
+        	    getStmt(i).checkNames(err, symbols);
+			}
+		}
+	}
+
+	public void FunctionCall.checkNames(PrintStream err, SymbolTable symbols) {
+		getIdUse().checkNames(err, symbols);
+		symbols = symbols.push(); // TODO: check if need to push here
+
+		if (hasExpr()){
+            for(int i = 0; i < getNumExpr(); i++){
+        	    getExpr(i).checkNames(err, symbols);
+			}
+        }
+	}
+
+	public void FunctionCallStmt.checkNames(PrintStream err, SymbolTable symbols) {
+		getFunctionCall().checkNames(err, symbols);
 	}
 
 	/**
