@@ -94,8 +94,8 @@ functionCallParamList =
 	;
 
 functionCall = 
-	id_use.a LPARANTH RPARANTH {: return new FunctionCall(a, new Opt()); :}
-	| id_use.a LPARANTH functionCallParamList.b RPARANTH {: return new FunctionCall(a, new Opt(b)); :}
+	id_use.a LPARANTH RPARANTH {: return new FunctionCall(a, new List()); :}
+	| id_use.a LPARANTH functionCallParamList.b RPARANTH {: return new FunctionCall(a, b); :}
 	;
 
 functionCallStmt = functionCall.a SEMICOLON {: return new FunctionCallStmt(a); :};

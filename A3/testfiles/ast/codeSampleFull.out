@@ -53,12 +53,11 @@ Program
         Return
           FunctionCall
             IdUse ID="gcd2"
-            Opt
-              List
+            List
+              IdUse ID="b"
+              Mod
+                IdUse ID="a"
                 IdUse ID="b"
-                Mod
-                  IdUse ID="a"
-                  IdUse ID="b"
     Function
       IdDecl ID="main"
       Opt
@@ -73,55 +72,48 @@ Program
           IdUse ID="a"
           FunctionCall
             IdUse ID="read"
-            Opt
+            List
         AssignVar
           IdUse ID="b"
           FunctionCall
             IdUse ID="read"
-            Opt
+            List
         FunctionCallStmt
           FunctionCall
             IdUse ID="print"
-            Opt
-              List
-                FunctionCall
-                  IdUse ID="gcd1"
-                  Opt
-                    List
-                      IdUse ID="a"
-                      IdUse ID="b"
+            List
+              FunctionCall
+                IdUse ID="gcd1"
+                List
+                  IdUse ID="a"
+                  IdUse ID="b"
         FunctionCallStmt
           FunctionCall
             IdUse ID="print"
-            Opt
-              List
-                FunctionCall
-                  IdUse ID="gcd2"
-                  Opt
-                    List
-                      IdUse ID="a"
-                      IdUse ID="b"
+            List
+              FunctionCall
+                IdUse ID="gcd2"
+                List
+                  IdUse ID="a"
+                  IdUse ID="b"
         DeclareVar
           IdDecl ID="diff"
           Opt
             Sub
               FunctionCall
                 IdUse ID="gcd1"
-                Opt
-                  List
-                    IdUse ID="a"
-                    IdUse ID="b"
+                List
+                  IdUse ID="a"
+                  IdUse ID="b"
               FunctionCall
                 IdUse ID="gcd2"
-                Opt
-                  List
-                    IdUse ID="a"
-                    IdUse ID="b"
+                List
+                  IdUse ID="a"
+                  IdUse ID="b"
         FunctionCallStmt
           FunctionCall
             IdUse ID="print"
-            Opt
-              List
-                IdUse ID="diff"
+            List
+              IdUse ID="diff"
         Return
           Numeral NUMERAL="0"

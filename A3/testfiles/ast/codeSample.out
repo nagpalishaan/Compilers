@@ -53,9 +53,8 @@ Program
         Return
           FunctionCall
             IdUse ID="gcd2"
-            Opt
-              List
+            List
+              IdUse ID="b"
+              Mod
+                IdUse ID="a"
                 IdUse ID="b"
-                Mod
-                  IdUse ID="a"
-                  IdUse ID="b"

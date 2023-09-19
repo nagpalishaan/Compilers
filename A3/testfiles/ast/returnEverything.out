@@ -21,9 +21,8 @@ Program
         Return
           FunctionCall
             IdUse ID="function"
-            Opt
-              List
+            List
+              IdUse ID="a"
+              Mod
+                IdUse ID="b"
                 IdUse ID="a"
-                Mod
-                  IdUse ID="b"
-                  IdUse ID="a"
