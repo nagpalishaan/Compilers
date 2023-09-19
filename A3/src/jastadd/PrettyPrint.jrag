@@ -55,12 +55,9 @@ aspect PrettyPrint {
 		out.print(") {");
 		out.println();
 
-		if (hasStmtBlock()){
-			StmtBlock stmtBlock = getStmtBlock();
-			int size = stmtBlock.getNumStmt();
-			for (int i = 0; i < size; i++) {
-				Stmt s = stmtBlock.getStmt(i);
-				s.prettyPrint(out, ind);
+		if (hasStmt()){
+			for(int i = 0; i < getNumStmt(); i++){
+        	    getStmt(i).prettyPrint(out, ind);
 				out.println();
 			}
 		}
@@ -76,16 +73,12 @@ aspect PrettyPrint {
         out.print(") {");
         out.println();
 
-        StmtBlock stmtBlock = getStmtBlock();
-		if (hasStmtBlock()) {
-			int size = stmtBlock.getNumStmt();
-			for (int i = 0; i < size; i++) {
-				Stmt s = stmtBlock.getStmt(i);
-				out.print(ind+"  ");
-				s.prettyPrint(out, ind);
+        if (hasStmt()){
+			for(int i = 0; i < getNumStmt(); i++){
+        	    getStmt(i).prettyPrint(out, ind);
 				out.println();
 			}
-        }
+		}
 		else {
 			out.println();
 		}
@@ -97,15 +90,11 @@ aspect PrettyPrint {
         getExpr().prettyPrint(out, ind);
         out.println(") {");
 
-		StmtBlock stmtBlock = getStmtBlock();
-		if (hasStmtBlock()) {
-			int size = stmtBlock.getNumStmt();
-			for (int i = 0; i < size; i++) {
-				Stmt s = stmtBlock.getStmt(i);
-				out.print(ind+"  ");
-				s.prettyPrint(out, ind);
+		if (hasStmt()){
+			for(int i = 0; i < getNumStmt(); i++){
+        	    getStmt(i).prettyPrint(out, ind);
 				out.println();
-			}  
+			}
 		}
 		else{
 			out.println();
@@ -132,14 +121,9 @@ aspect PrettyPrint {
 		out.print(ind + "int ");
         getIdDecl().prettyPrint(out, ind);
  
-        if (hasExprBlock()) {
+        if (hasExpr()) {
             out.print(" = ");
-			ExprBlock exprBlock = getExprBlock();
-			int size = exprBlock.getNumExpr();
-            for (int i = 0; i < size; i++) {
-				Expr e = getExprBlock().getExpr(i);
-				e.prettyPrint(out, ind);
-			}
+			getExpr().prettyPrint(out, ind);
         }    
 		out.print(";");    
 	}
@@ -156,19 +140,11 @@ aspect PrettyPrint {
         getIdUse().prettyPrint(out, ind);
         out.print("(");
 
-        if (hasExprBlock()){
-            int curr = 0;
-			ExprBlock exprBlock = getExprBlock();
-			int size = exprBlock.getNumExpr();
-            for (int i = 0; i < size; i++) {
-				Expr e = getExprBlock().getExpr(i);
-                e.prettyPrint(out, ind);
-                if (curr < size) {
-                    out.print(", ");   
-                }
-                curr += 1;
-            }
+		// TODO: check if this is correct
+        if (hasExpr()){
+            getExpr().prettyPrint(out, ind);
         }
+
         out.print(")");
 	}
 
