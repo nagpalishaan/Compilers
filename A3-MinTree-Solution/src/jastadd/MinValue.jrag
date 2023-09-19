@@ -17,7 +17,9 @@ aspect MinValue {
 	}
 
 	// Exercise 3
-	syn boolean Leaf.isMinValue() = false;
+	syn boolean Leaf.isMinValue() {
+		return getNumber() == globalMin();
+	}
 	
 	// Exercise 4
 	syn int Program.nbrOfMinValues() = 0;
