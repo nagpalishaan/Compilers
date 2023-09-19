@@ -22,6 +22,20 @@ aspect MinValue {
 	}
 	
 	// Exercise 4
-	syn int Program.nbrOfMinValues() = 0;
+	syn int Program.nbrOfMinValues() {
+		return getNode().nbrOfMinValues();
+	}
 	syn int Node.nbrOfMinValues() = 0;
+
+	eq Leaf.nbrOfMinValues() {
+		if (isMinValue()) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	eq Pair.nbrOfMinValues() {
+		return getLeft().nbrOfMinValues() + getRight().nbrOfMinValues();
+	}
 }
