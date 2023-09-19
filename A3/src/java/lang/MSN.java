@@ -20,8 +20,8 @@ public class MSN extends TraversingVisitor{
         MSN msn = new MSN();
         n.accept(msn, 0);
         Integer[] msnArray = msn.maxMSN.toArray(new Integer[msn.maxMSN.size()]);
-
-        return msnArray[msnArray.length-1];
+        //subtract 1 bc it is always 1 extra
+        return msnArray[msnArray.length-1]-1;
     }
 
 
