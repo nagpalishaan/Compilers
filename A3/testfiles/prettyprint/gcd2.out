@@ -1,4 +1,4 @@
-int gcd2(int a, int b, ) {
+int gcd2(int a, int b) {
 	if (b == 0) {
 		return a;
 	}

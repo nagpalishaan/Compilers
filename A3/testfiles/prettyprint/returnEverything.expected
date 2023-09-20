@@ -1,31 +1,10 @@
-Program
-  List
-    Function
-      IdDecl ID="n"
-      Opt
-      Opt
-        List
-          AssignVar
-            IdDecl ID="a"
-            Numeral NUMERAL="0"
-          IfElse
-            Equal
-              IdUse ID="b"
-              Numeral NUMERAL="0"
-            Opt
-              List
-                Return
-                  IdUse ID="a"
-            Opt
-              List
-                Return
-                  Numeral NUMERAL="1"
-          Return
-            FunctionCall
-              IdUse ID="function"
-              Opt
-                List
-                  IdUse ID="a"
-                  Mod
-                    IdUse ID="b"
-                    IdUse ID="a"
+int n() {
+	a = 0;
+	if (b == 0) {
+		return a;
+	} else {
+		return 1;
+	}
+	return function(a, b % a);
+}
+

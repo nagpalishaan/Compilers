@@ -3,8 +3,7 @@ int n() {
     if (a == 2) {
         b = 3;
         c = 4;
-    }
-    else {
+    } else {
         b = 4;
         c = 5;
     }

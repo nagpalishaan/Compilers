@@ -1,6 +1,2 @@
-Program
-  List
-    Function
-      IdDecl ID="a"
-      Opt
-      Opt
+int a() {}
+
