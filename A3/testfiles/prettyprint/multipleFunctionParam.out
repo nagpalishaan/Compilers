@@ -1,17 +1,4 @@
-Program
-  List
-    Function
-      IdDecl ID="main"
-      Opt
-        List
-          Param
-            IdDecl ID="a"
-          Param
-            IdDecl ID="b"
-          Param
-            IdDecl ID="c"
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="d"
-            Opt
+int main(int a, int b, int c, ) {
+	int d;
+}
+

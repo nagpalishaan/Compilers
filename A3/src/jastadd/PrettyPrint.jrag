@@ -39,17 +39,17 @@ aspect PrettyPrint {
 		out.print("int ");
 		getIdDecl().prettyPrint(out, ind);
 		out.print("(");
-		if (hasParamList()) {
-			int curr = 0;
-			ParamList paramList = getParamList();
-			for (int i = 0; i < paramList.getNumParam(); i++) {
-				paramList.getParam(i).prettyPrint(out, ind);
-				if (curr < paramList.getNumParam()) {
-					out.print(", ");
-				}
-				curr += 1;
+
+		int curr = 0;
+		ParamList paramList = getParamList();
+		for (int i = 0; i < paramList.getNumParam(); i++) {
+			paramList.getParam(i).prettyPrint(out, ind);
+			if (curr < paramList.getNumParam()) {
+				out.print(", ");
 			}
+			curr += 1;
 		}
+		
 		out.print(") {");
 		
 		if (hasStmt()){
@@ -88,20 +88,19 @@ aspect PrettyPrint {
 
 		if (hasStmt()){
 			for(int i = 0; i < getNumStmt(); i++){
-        	    getStmt(i).prettyPrint(out, ind);
+        	    getStmt(i).prettyPrint(out, ind + "\t");
 				out.println();
 			}
 		}
 		else{
 			out.println();
 		}
-        out.println("}");
-
-        out.println("else {");
-        out.println();
+        out.print("\t" + "}");
 
 		StmtBlock elseBlock = getElseBlock();
 		if (hasElseBlock()) {
+			out.println("\t" + "else {");
+			out.println();
 			int size = elseBlock.getNumStmt();
 			for (int i = 0; i < size; i++) {
 				Stmt s = elseBlock.getStmt(i);
@@ -109,8 +108,9 @@ aspect PrettyPrint {
 				s.prettyPrint(out, ind + "\t");
 				out.println();
 			}  
+			out.print("\t" + "}");
 		}
-        out.println("}");
+        
 	}
 
 	public void DeclareVar.prettyPrint(PrintStream out, String ind) {
@@ -181,6 +181,11 @@ aspect PrettyPrint {
 		getLeft().prettyPrint(out, ind);
 		out.print(" % ");
 		getRight().prettyPrint(out, ind);
+	}
+
+	public void Neg.prettyPrint(PrintStream out, String ind) {
+		out.print("-");
+		getExpr().prettyPrint(out, ind);
 	}
 
     public void Not.prettyPrint(PrintStream out, String ind) {

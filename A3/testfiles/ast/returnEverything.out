@@ -2,7 +2,8 @@ Program
   List
     Function
       IdDecl ID="n"
-      Opt
+      ParamList
+        List
       List
         AssignVar
           IdUse ID="a"
@@ -15,9 +16,10 @@ Program
             Return
               IdUse ID="a"
           Opt
-            List
-              Return
-                Numeral NUMERAL="1"
+            StmtBlock
+              List
+                Return
+                  Numeral NUMERAL="1"
         Return
           FunctionCall
             IdUse ID="function"

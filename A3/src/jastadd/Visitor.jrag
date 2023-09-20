@@ -17,6 +17,7 @@ aspect Visitor {
 		public Object visit(Add node, Object data);
 		public Object visit(Sub node, Object data);
 		public Object visit(Mod node, Object data);
+		public Object visit(Neg node, Object data);
 		public Object visit(Not node, Object data);
 		public Object visit(Equal node, Object data);
 		public Object visit(Greater node, Object data);
@@ -72,6 +73,9 @@ aspect Visitor {
 		return visitor.visit(this, data);
 	}
 	public Object Mod.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Neg.accept(Visitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
 	public Object Not.accept(Visitor visitor, Object data) {

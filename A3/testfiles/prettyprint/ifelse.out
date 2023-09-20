@@ -1,31 +1,12 @@
-Program
-  List
-    Function
-      IdDecl ID="n"
-      Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="a"
-            Opt
-              Numeral NUMERAL="2"
-          IfElse
-            Equal
-              IdUse ID="a"
-              Numeral NUMERAL="2"
-            Opt
-              List
-                AssignVar
-                  IdDecl ID="b"
-                  Numeral NUMERAL="3"
-                AssignVar
-                  IdDecl ID="c"
-                  Numeral NUMERAL="4"
-            Opt
-              List
-                AssignVar
-                  IdDecl ID="b"
-                  Numeral NUMERAL="4"
-                AssignVar
-                  IdDecl ID="c"
-                  Numeral NUMERAL="5"
+int n() {
+	int a = 2;
+	if (a == 2) {
+		b = 3;
+		c = 4;
+	}	else {
+
+	  		b = 4;
+	  		c = 5;
+	}
+}
+

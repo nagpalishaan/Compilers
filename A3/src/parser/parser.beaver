@@ -39,8 +39,8 @@
 program = functionDecls.a {: return new Program(a); :} ;
 
 function = 
-	INT id_decl.a LPARANTH RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, new Opt(), c); :} 
-   	| INT id_decl.a LPARANTH paramList.b RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, new Opt(b), c); :} 
+	INT id_decl.a LPARANTH RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, new ParamList(new List()), c); :} 
+   	| INT id_decl.a LPARANTH paramList.b RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, new ParamList(b), c); :} 
 	;
 
 functionDecls =
@@ -105,7 +105,7 @@ statement =
 	| INT id_decl.a SEMICOLON {: return new DeclareVar(a, new Opt()); :} 
 	| INT id_decl.a ASSIGN exp.b SEMICOLON {: return new DeclareVar(a, new Opt(b)); :}
 	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new IfElse(a, b, new Opt()); :}
-	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY ELSE LCURLY statementList.c RCURLY {: return new IfElse(a, b, new Opt(c)); :}
+	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY ELSE LCURLY statementList.c RCURLY {: return new IfElse(a, b, new Opt(new StmtBlock(c))); :}
 	| WHILE LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new While(a, b); :}
 	| RETURN exp.a SEMICOLON {: return new Return(a); :}
 	| functionCallStmt

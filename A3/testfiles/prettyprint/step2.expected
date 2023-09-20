@@ -1,19 +1,7 @@
-Program
-  List
-    Function
-      IdDecl ID="a"
-      Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="x"
-            Opt
-          DeclareVar
-            IdDecl ID="y"
-            Opt
-          AssignVar
-            IdDecl ID="x"
-            Numeral NUMERAL="5"
-          AssignVar
-            IdDecl ID="y"
-            IdUse ID="x"
+int a() {
+	int x;
+	int y;
+	x = 5;
+	y = x;
+}
+

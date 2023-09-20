@@ -1,10 +1,4 @@
-Program
-  List
-    Function
-      IdDecl ID="n"
-      Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="x"
-            Opt
+int n() {
+	int x;
+}
+

@@ -1,6 +1,6 @@
 Program ::= Function*;
 
-Function ::= IdDecl [ParamList] Stmt*;
+Function ::= IdDecl ParamList Stmt*;
 
 Param ::= IdDecl;
 

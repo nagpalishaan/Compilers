@@ -1,13 +1,5 @@
-Program
-  List
-    Function
-      IdDecl ID="n"
-      Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="a"
-            Opt
-              Numeral NUMERAL="5"
-          Return
-            IdUse ID="a"
+int n() {
+	int a = 5;
+	return a;
+}
+

@@ -140,12 +140,11 @@ aspect NameAnalysis {
 		symbols = symbols.push();
 
 		// TODO: check if use ParamList or Param
-		if (hasParamList()) {
-			ParamList paramList = getParamList();
-			for(int i = 0; i < paramList.getNumParam(); i++){
-			    paramList.getParam(i).checkNames(err, symbols);
-			}
+		ParamList paramList = getParamList();
+		for(int i = 0; i < paramList.getNumParam(); i++){
+			paramList.getParam(i).checkNames(err, symbols);
 		}
+		
 
 		if (hasStmt()){
 			for(int i = 0; i < getNumStmt(); i++){
