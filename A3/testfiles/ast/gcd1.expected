@@ -2,7 +2,7 @@ Program
   List
     Function
       IdDecl ID="gcd1"
-      Opt
+      ParamList
         List
           Param
             IdDecl ID="a"
@@ -25,11 +25,12 @@ Program
                     IdUse ID="a"
                     IdUse ID="b"
               Opt
-                List
-                  AssignVar
-                    IdUse ID="b"
-                    Sub
+                StmtBlock
+                  List
+                    AssignVar
                       IdUse ID="b"
-                      IdUse ID="a"
+                      Sub
+                        IdUse ID="b"
+                        IdUse ID="a"
         Return
           IdUse ID="a"
