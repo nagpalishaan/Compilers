@@ -1,10 +1,7 @@
-Program
-  List
-    Function
-      IdDecl ID="b"
-      Opt
-      Opt
-    Function
-      IdDecl ID="c"
-      Opt
-      Opt
+int b() {
+
+}
+int c() {
+
+}
+

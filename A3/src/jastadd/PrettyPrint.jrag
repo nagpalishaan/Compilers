@@ -57,6 +57,7 @@ aspect PrettyPrint {
 
 		if (hasStmt()){
 			for(int i = 0; i < getNumStmt(); i++){
+				out.print(ind);
         	    getStmt(i).prettyPrint(out, ind);
 				out.println();
 			}

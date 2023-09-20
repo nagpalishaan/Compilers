@@ -1,19 +1,7 @@
-Program
-  List
-    Function
-      IdDecl ID="a"
-      Opt
-      Opt
-        List
-          DeclareVar
-            IdDecl ID="a"
-            Opt
-          DeclareVar
-            IdDecl ID="b"
-            Opt
-          AssignVar
-            IdDecl ID="a"
-            Numeral NUMERAL="2"
-          AssignVar
-            IdDecl ID="b"
-            Numeral NUMERAL="3"
+int a() {
+int a;
+int b;
+a = 2;
+b = 3;
+}
+
