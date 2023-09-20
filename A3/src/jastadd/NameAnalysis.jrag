@@ -73,7 +73,6 @@ aspect NameAnalysis {
 	}
 
 
-
 	public void AssignVar.checkNames(PrintStream err, SymbolTable symbols) {
 		getIdUse().checkNames(err, symbols);
         getExpr().checkNames(err, symbols);
@@ -135,21 +134,21 @@ aspect NameAnalysis {
 	// 	}
 	// }
 
-	// public void Function.checkNames(PrintStream err, SymbolTable symbols) {
-	// 	getIdDecl().checkNames(err, symbols);
-	// 	symbols = symbols.push();
+	public void Function.checkNames(PrintStream err, SymbolTable symbols) {
+		getIdDecl().checkNames(err, symbols);
+	 	SymbolTable a = symbols.push();
 
-	// 	ParamList paramList = getParamList();
-	// 	for(int i = 0; i < paramList.getNumParam(); i++){
-	// 		paramList.getParam(i).checkNames(err, symbols);
-	// 	}
+	 	ParamList paramList = getParamList();
+	 	for(int i = 0; i < paramList.getNumParam(); i++){
+	 		paramList.getParam(i).checkNames(err, a);
+	 	}
 
-	// 	StmtBlock stmtList = getStmtBlock();
-	// 	for(int i = 0; i < stmtList.getNumStmt(); i++){
-	// 		stmtList.getStmt(i).checkNames(err, symbols);
-	// 	}
+	 	StmtBlock stmtList = getStmtBlock();
+	 	for(int i = 0; i < stmtList.getNumStmt(); i++){
+	 		stmtList.getStmt(i).checkNames(err, a);
+	 	}
 		
-	// }
+	}
 
 	public void FunctionCall.checkNames(PrintStream err, SymbolTable symbols) {
 		getIdUse().checkNames(err, symbols);
@@ -167,9 +166,9 @@ aspect NameAnalysis {
 	}
 
 	public void StmtBlock.checkNames(PrintStream err, SymbolTable symbols) {
-		symbols = symbols.push();
+		SymbolTable a = symbols.push();
 		for (Stmt s : getStmts()) {
-			s.checkNames(err, symbols);
+			s.checkNames(err, a);
 		}
 	}
 
