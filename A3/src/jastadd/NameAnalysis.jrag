@@ -144,9 +144,7 @@ aspect NameAnalysis {
 	 	}
 
 	 	StmtBlock stmtList = getStmtBlock();
-	 	for(int i = 0; i < stmtList.getNumStmt(); i++){
-	 		stmtList.getStmt(i).checkNames(err, a);
-	 	}
+	 	stmtList.checkNames(err, a);
 		
 	}
 
