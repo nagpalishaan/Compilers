@@ -12,7 +12,6 @@ abstract Stmt;
 DeclareVar : Stmt ::= IdDecl [Expr];
 AssignVar : Stmt ::= IdUse Expr;
 
-
 IfElse : Stmt ::= Expr StmtBlock [ElseBlock:StmtBlock];
 While : Stmt ::= Expr StmtBlock;
 Return : Stmt ::= Expr;
