@@ -4,16 +4,18 @@ Program
       IdDecl ID="n"
       ParamList
         List
-      List
-        DeclareVar
-          IdDecl ID="a"
-          Opt
-            Numeral NUMERAL="2"
-        While
-          Not
-            IdUse ID="a"
-            Numeral NUMERAL="2"
-          List
-            AssignVar
-              IdUse ID="b"
-              Numeral NUMERAL="3"
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="a"
+            Opt
+              Numeral NUMERAL="2"
+          While
+            Not
+              IdUse ID="a"
+              Numeral NUMERAL="2"
+            StmtBlock
+              List
+                AssignVar
+                  IdUse ID="b"
+                  Numeral NUMERAL="3"

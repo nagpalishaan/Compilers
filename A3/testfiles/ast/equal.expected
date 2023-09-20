@@ -4,15 +4,16 @@ Program
       IdDecl ID="n"
       ParamList
         List
-      List
-        DeclareVar
-          IdDecl ID="a"
-          Opt
-        DeclareVar
-          IdDecl ID="b"
-          Opt
-        AssignVar
-          IdUse ID="c"
-          Equal
-            IdUse ID="a"
-            IdUse ID="b"
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="a"
+            Opt
+          DeclareVar
+            IdDecl ID="b"
+            Opt
+          AssignVar
+            IdUse ID="c"
+            Equal
+              IdUse ID="a"
+              IdUse ID="b"

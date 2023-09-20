@@ -4,7 +4,8 @@ Program
       IdDecl ID="n"
       ParamList
         List
-      List
-        DeclareVar
-          IdDecl ID="x"
-          Opt
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="x"
+            Opt

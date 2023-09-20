@@ -4,10 +4,11 @@ Program
       IdDecl ID="a"
       ParamList
         List
-      List
-        DeclareVar
-          IdDecl ID="x"
-          Opt
-        DeclareVar
-          IdDecl ID="y"
-          Opt
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="x"
+            Opt
+          DeclareVar
+            IdDecl ID="y"
+            Opt

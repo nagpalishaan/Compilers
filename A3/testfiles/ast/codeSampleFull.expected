@@ -8,32 +8,35 @@ Program
             IdDecl ID="a"
           Param
             IdDecl ID="b"
-      List
-        While
-          Not
-            IdUse ID="a"
-            IdUse ID="b"
-          List
-            IfElse
-              Greater
-                IdUse ID="a"
-                IdUse ID="b"
+      StmtBlock
+        List
+          While
+            Not
+              IdUse ID="a"
+              IdUse ID="b"
+            StmtBlock
               List
-                AssignVar
-                  IdUse ID="a"
-                  Sub
+                IfElse
+                  Greater
                     IdUse ID="a"
                     IdUse ID="b"
-              Opt
-                StmtBlock
-                  List
-                    AssignVar
-                      IdUse ID="b"
-                      Sub
-                        IdUse ID="b"
+                  StmtBlock
+                    List
+                      AssignVar
                         IdUse ID="a"
-        Return
-          IdUse ID="a"
+                        Sub
+                          IdUse ID="a"
+                          IdUse ID="b"
+                  Opt
+                    StmtBlock
+                      List
+                        AssignVar
+                          IdUse ID="b"
+                          Sub
+                            IdUse ID="b"
+                            IdUse ID="a"
+          Return
+            IdUse ID="a"
     Function
       IdDecl ID="gcd2"
       ParamList
@@ -42,80 +45,83 @@ Program
             IdDecl ID="a"
           Param
             IdDecl ID="b"
-      List
-        IfElse
-          Equal
-            IdUse ID="b"
-            Numeral NUMERAL="0"
-          List
-            Return
-              IdUse ID="a"
-          Opt
-        Return
-          FunctionCall
-            IdUse ID="gcd2"
-            List
+      StmtBlock
+        List
+          IfElse
+            Equal
               IdUse ID="b"
-              Mod
-                IdUse ID="a"
+              Numeral NUMERAL="0"
+            StmtBlock
+              List
+                Return
+                  IdUse ID="a"
+            Opt
+          Return
+            FunctionCall
+              IdUse ID="gcd2"
+              List
                 IdUse ID="b"
+                Mod
+                  IdUse ID="a"
+                  IdUse ID="b"
     Function
       IdDecl ID="main"
       ParamList
         List
-      List
-        DeclareVar
-          IdDecl ID="a"
-          Opt
-        DeclareVar
-          IdDecl ID="b"
-          Opt
-        AssignVar
-          IdUse ID="a"
-          FunctionCall
-            IdUse ID="read"
-            List
-        AssignVar
-          IdUse ID="b"
-          FunctionCall
-            IdUse ID="read"
-            List
-        FunctionCallStmt
-          FunctionCall
-            IdUse ID="print"
-            List
-              FunctionCall
-                IdUse ID="gcd1"
-                List
-                  IdUse ID="a"
-                  IdUse ID="b"
-        FunctionCallStmt
-          FunctionCall
-            IdUse ID="print"
-            List
-              FunctionCall
-                IdUse ID="gcd2"
-                List
-                  IdUse ID="a"
-                  IdUse ID="b"
-        DeclareVar
-          IdDecl ID="diff"
-          Opt
-            Sub
-              FunctionCall
-                IdUse ID="gcd1"
-                List
-                  IdUse ID="a"
-                  IdUse ID="b"
-              FunctionCall
-                IdUse ID="gcd2"
-                List
-                  IdUse ID="a"
-                  IdUse ID="b"
-        FunctionCallStmt
-          FunctionCall
-            IdUse ID="print"
-            List
-              IdUse ID="diff"
-        Return
-          Numeral NUMERAL="0"
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="a"
+            Opt
+          DeclareVar
+            IdDecl ID="b"
+            Opt
+          AssignVar
+            IdUse ID="a"
+            FunctionCall
+              IdUse ID="read"
+              List
+          AssignVar
+            IdUse ID="b"
+            FunctionCall
+              IdUse ID="read"
+              List
+          FunctionCallStmt
+            FunctionCall
+              IdUse ID="print"
+              List
+                FunctionCall
+                  IdUse ID="gcd1"
+                  List
+                    IdUse ID="a"
+                    IdUse ID="b"
+          FunctionCallStmt
+            FunctionCall
+              IdUse ID="print"
+              List
+                FunctionCall
+                  IdUse ID="gcd2"
+                  List
+                    IdUse ID="a"
+                    IdUse ID="b"
+          DeclareVar
+            IdDecl ID="diff"
+            Opt
+              Sub
+                FunctionCall
+                  IdUse ID="gcd1"
+                  List
+                    IdUse ID="a"
+                    IdUse ID="b"
+                FunctionCall
+                  IdUse ID="gcd2"
+                  List
+                    IdUse ID="a"
+                    IdUse ID="b"
+          FunctionCallStmt
+            FunctionCall
+              IdUse ID="print"
+              List
+                IdUse ID="diff"
+          Return
+            Numeral NUMERAL="0"

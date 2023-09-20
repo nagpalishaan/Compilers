@@ -4,9 +4,11 @@ Program
       IdDecl ID="b"
       ParamList
         List
-      List
+      StmtBlock
+        List
     Function
       IdDecl ID="c"
       ParamList
         List
-      List
+      StmtBlock
+        List

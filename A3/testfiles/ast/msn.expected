@@ -4,42 +4,46 @@ Program
       IdDecl ID="main"
       ParamList
         List
-      List
-        DeclareVar
-          IdDecl ID="i"
-          Opt
-            Numeral NUMERAL="100"
-        While
-          Greater
-            IdUse ID="i"
-            Numeral NUMERAL="0"
-          List
-            IfElse
-              Equal
-                IdUse ID="i"
-                Numeral NUMERAL="5"
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="i"
+            Opt
+              Numeral NUMERAL="100"
+          While
+            Greater
+              IdUse ID="i"
+              Numeral NUMERAL="0"
+            StmtBlock
+              List
+                IfElse
+                  Equal
+                    IdUse ID="i"
+                    Numeral NUMERAL="5"
+                  StmtBlock
+                    List
+                      FunctionCallStmt
+                        FunctionCall
+                          IdUse ID="print"
+                          List
+                            IdUse ID="i"
+                  Opt
+                AssignVar
+                  IdUse ID="i"
+                  Sub
+                    IdUse ID="i"
+                    Numeral NUMERAL="1"
+          IfElse
+            Equal
+              IdUse ID="i"
+              Numeral NUMERAL="0"
+            StmtBlock
               List
                 FunctionCallStmt
                   FunctionCall
                     IdUse ID="print"
                     List
                       IdUse ID="i"
-              Opt
-            AssignVar
-              IdUse ID="i"
-              Sub
-                IdUse ID="i"
-                Numeral NUMERAL="1"
-        IfElse
-          Equal
-            IdUse ID="i"
+            Opt
+          Return
             Numeral NUMERAL="0"
-          List
-            FunctionCallStmt
-              FunctionCall
-                IdUse ID="print"
-                List
-                  IdUse ID="i"
-          Opt
-        Return
-          Numeral NUMERAL="0"
