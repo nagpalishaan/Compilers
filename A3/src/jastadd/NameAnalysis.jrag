@@ -20,10 +20,14 @@ aspect NameAnalysis {
 
 		public SymbolTable() {
 			tail = BOTTOM;
+			declare("print");
+			declare("read");
 		}
 
 		public SymbolTable(SymbolTable tail) {
 			this.tail = tail;
+			declare("print");
+			declare("read");
 		}
 
 		/**
