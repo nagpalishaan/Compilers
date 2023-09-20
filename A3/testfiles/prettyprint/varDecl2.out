@@ -1,4 +1,4 @@
 int n() {
-int x;
+	int x;
 }
 

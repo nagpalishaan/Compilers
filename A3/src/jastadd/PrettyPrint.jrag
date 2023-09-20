@@ -42,30 +42,25 @@ aspect PrettyPrint {
 		if (hasParamList()) {
 			int curr = 0;
 			ParamList paramList = getParamList();
-			int size = paramList.getNumParam();
-			for (int i = 0; i < size; i++) {
-				Param p = paramList.getParam(i);
-				p.prettyPrint(out, ind);
-				if (curr < size) {
+			for (int i = 0; i < paramList.getNumParam(); i++) {
+				paramList.getParam(i).prettyPrint(out, ind);
+				if (curr < paramList.getNumParam()) {
 					out.print(", ");
 				}
 				curr += 1;
 			}
 		}
 		out.print(") {");
-		out.println();
-
+		
 		if (hasStmt()){
+			out.println();
 			for(int i = 0; i < getNumStmt(); i++){
-				out.print(ind);
-        	    getStmt(i).prettyPrint(out, ind);
+        	    getStmt(i).prettyPrint(out, ind + "\t");
 				out.println();
 			}
 		}
-		else {
-			out.println();
-		}
-		out.println("}");
+		out.print("}");
+		out.println();
 	}
 
     public void While.prettyPrint(PrintStream out, String ind) {
@@ -76,14 +71,14 @@ aspect PrettyPrint {
 
         if (hasStmt()){
 			for(int i = 0; i < getNumStmt(); i++){
-        	    getStmt(i).prettyPrint(out, ind);
+        	    getStmt(i).prettyPrint(out, ind + "\t");
 				out.println();
 			}
 		}
 		else {
 			out.println();
 		}
-        out.println("}");
+        out.print(ind + "}");
 	}
 
     public void IfElse.prettyPrint(PrintStream out, String ind) {
@@ -111,7 +106,7 @@ aspect PrettyPrint {
 			for (int i = 0; i < size; i++) {
 				Stmt s = elseBlock.getStmt(i);
 				out.print(ind+"  ");
-				s.prettyPrint(out, ind);
+				s.prettyPrint(out, ind + "\t");
 				out.println();
 			}  
 		}
