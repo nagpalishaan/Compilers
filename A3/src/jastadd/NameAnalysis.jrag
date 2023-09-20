@@ -110,15 +110,17 @@ aspect NameAnalysis {
 
 		List stmts = getStmts();
         if (hasStmt()){
+			SymbolTable a = symbols.push();
 			for(int i = 0; i < getNumStmt(); i++){
-        	    getStmt(i).checkNames(err, symbols.push());
+        	    getStmt(i).checkNames(err, a);
 			}
 		}
 
 		StmtBlock elseBlock = getElseBlock();
 		if (hasElseBlock()){
+			SymbolTable b = symbols.push();
 			for(int i = 0; i < elseBlock.getNumStmt(); i++){
-        	    elseBlock.getStmt(i).checkNames(err, symbols.push());
+        	    elseBlock.getStmt(i).checkNames(err, b);
 			}
 		}
 	}
