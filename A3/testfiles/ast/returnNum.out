@@ -4,6 +4,7 @@ Program
       IdDecl ID="n"
       ParamList
         List
-      List
-        Return
-          Numeral NUMERAL="5"
+      StmtBlock
+        List
+          Return
+            Numeral NUMERAL="5"

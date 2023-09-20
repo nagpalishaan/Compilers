@@ -4,4 +4,5 @@ Program
       IdDecl ID="a"
       ParamList
         List
-      List
+      StmtBlock
+        List

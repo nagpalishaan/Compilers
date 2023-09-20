@@ -10,7 +10,8 @@ Program
             IdDecl ID="b"
           Param
             IdDecl ID="c"
-      List
-        DeclareVar
-          IdDecl ID="d"
-          Opt
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="d"
+            Opt

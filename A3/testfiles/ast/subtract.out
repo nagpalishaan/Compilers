@@ -4,21 +4,22 @@ Program
       IdDecl ID="sub"
       ParamList
         List
-      List
-        DeclareVar
-          IdDecl ID="a"
-          Opt
-        DeclareVar
-          IdDecl ID="b"
-          Opt
-        AssignVar
-          IdUse ID="a"
-          Numeral NUMERAL="10"
-        AssignVar
-          IdUse ID="b"
-          Numeral NUMERAL="5"
-        AssignVar
-          IdUse ID="c"
-          Sub
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="a"
+            Opt
+          DeclareVar
+            IdDecl ID="b"
+            Opt
+          AssignVar
             IdUse ID="a"
+            Numeral NUMERAL="10"
+          AssignVar
             IdUse ID="b"
+            Numeral NUMERAL="5"
+          AssignVar
+            IdUse ID="c"
+            Sub
+              IdUse ID="a"
+              IdUse ID="b"

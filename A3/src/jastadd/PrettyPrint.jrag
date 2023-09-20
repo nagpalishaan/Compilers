@@ -52,13 +52,12 @@ aspect PrettyPrint {
 		
 		out.print(") {");
 		
-		if (hasStmt()){
+		out.println();
+		for(int i = 0; i < getStmtBlock().getNumStmt(); i++){
+			getStmtBlock().getStmt(i).prettyPrint(out, ind + "\t");
 			out.println();
-			for(int i = 0; i < getNumStmt(); i++){
-        	    getStmt(i).prettyPrint(out, ind + "\t");
-				out.println();
-			}
 		}
+
 		out.print("}");
 		out.println();
 	}
@@ -69,15 +68,11 @@ aspect PrettyPrint {
         out.print(") {");
         out.println();
 
-        if (hasStmt()){
-			for(int i = 0; i < getNumStmt(); i++){
-        	    getStmt(i).prettyPrint(out, ind + "\t");
-				out.println();
-			}
-		}
-		else {
+		for(int i = 0; i < getStmtBlock().getNumStmt(); i++){
+			getStmtBlock().getStmt(i).prettyPrint(out, ind + "\t");
 			out.println();
 		}
+	
         out.print(ind + "}");
 	}
 
@@ -86,15 +81,11 @@ aspect PrettyPrint {
         getExpr().prettyPrint(out, ind);
         out.println(") {");
 
-		if (hasStmt()){
-			for(int i = 0; i < getNumStmt(); i++){
-        	    getStmt(i).prettyPrint(out, ind + "\t");
-				out.println();
-			}
-		}
-		else{
+		for(int i = 0; i < getStmtBlock().getNumStmt(); i++){
+			getStmtBlock().getStmt(i).prettyPrint(out, ind + "\t");
 			out.println();
 		}
+		
         out.print(ind + "}");
 
 		StmtBlock elseBlock = getElseBlock();
