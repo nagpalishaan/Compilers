@@ -32,6 +32,7 @@ aspect Visitor {
 		public Object visit(AssignVar node, Object data);
 		public Object visit(FunctionCall node, Object data);
 		public Object visit(FunctionCallStmt node, Object data);
+		public Object visit(StmtBlock node, Object data);
 	}
 
 	public Object ASTNode.accept(Visitor visitor, Object data) {
@@ -119,6 +120,9 @@ aspect Visitor {
 		return visitor.visit(this, data);
 	}
 	public Object FunctionCallStmt.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object StmtBlock.accept(Visitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
 }
