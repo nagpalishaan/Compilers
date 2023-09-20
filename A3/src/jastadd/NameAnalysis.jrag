@@ -107,20 +107,18 @@ aspect NameAnalysis {
 
     public void IfElse.checkNames(PrintStream err, SymbolTable symbols) {
 		getExpr().checkNames(err, symbols);
-        symbols = symbols.push();
 
 		List stmts = getStmts();
         if (hasStmt()){
 			for(int i = 0; i < getNumStmt(); i++){
-        	    getStmt(i).checkNames(err, symbols);
+        	    getStmt(i).checkNames(err, symbols.push());
 			}
 		}
 
-		// TODO: check if else block should be in separate function
 		StmtBlock elseBlock = getElseBlock();
 		if (hasElseBlock()){
 			for(int i = 0; i < elseBlock.getNumStmt(); i++){
-        	    elseBlock.getStmt(i).checkNames(err, symbols);
+        	    elseBlock.getStmt(i).checkNames(err, symbols.push());
 			}
 		}
 	}
