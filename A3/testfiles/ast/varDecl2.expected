@@ -2,7 +2,8 @@ Program
   List
     Function
       IdDecl ID="n"
-      Opt
+      ParamList
+        List
       List
         DeclareVar
           IdDecl ID="x"
