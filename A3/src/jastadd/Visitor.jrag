@@ -9,6 +9,7 @@ aspect Visitor {
 		public Object visit(Program node, Object data);
 		public Object visit(Function node, Object data);
 		public Object visit(Param node, Object data);
+		public Object visit(ParamList node, Object data);
 		public Object visit(Return node, Object data);
 		public Object visit(While node, Object data);
 		public Object visit(IfElse node, Object data);
@@ -49,6 +50,9 @@ aspect Visitor {
 		return visitor.visit(this, data);
 	}
 	public Object Param.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object ParamList.accept(Visitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
 	public Object Return.accept(Visitor visitor, Object data) {
