@@ -1,0 +1,124 @@
+%class "LangParser";
+%package "lang.ast";
+
+%embed {:
+	static public class SyntaxError extends RuntimeException { public SyntaxError(String msg) {super(msg);}}
+	// Disable syntax error recovery
+	protected void recoverFromError(Symbol token, TokenStream in) {
+		throw new SyntaxError("Cannot recover from the syntax error");
+	}
+:};
+
+%terminals ID, INT, LPARANTH, RPARANTH, LCURLY, RCURLY, NUMERAL, ASSIGN, SEMICOLON;
+%terminals MUL, ADD, DIV, SUB, MOD, LT, LTE, GT, GTE, NOT, EQUAL, IF, ELSE, WHILE, RETURN, COMMA;
+
+%typeof program = "Program";
+%typeof id_decl = "IdDecl";
+%typeof function = "Function";
+%typeof numeral = "Numeral";
+%typeof functionDecls = "List";
+%typeof exp = "Expr";
+%typeof factor = "Expr";
+%typeof term = "Expr";
+%typeof statement = "Stmt";
+%typeof statementList = "List";
+%typeof id_use = "IdUse";
+%typeof assign = "AssignVar";
+%typeof declare = "DeclareVar";
+%typeof paramList = "List";
+%typeof param = "Param";
+%typeof functionCallParamList = "List";
+%typeof functionCall = "FunctionCall";
+%typeof functionCallStmt = "FunctionCallStmt";
+%typeof add_expr = "Expr";
+%typeof neg = "Neg";
+
+
+%goal program;
+
+program = functionDecls.a {: return new Program(a); :} ;
+
+function = 
+	INT id_decl.a LPARANTH RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, new ParamList(new List()), c); :} 
+   	| INT id_decl.a LPARANTH paramList.b RPARANTH LCURLY statementList.c RCURLY {: return new Function(a, new ParamList(b), c); :} 
+	;
+
+functionDecls =
+    function.a {: return new List().add(a); :}
+    | functionDecls.a function.b {: return a.add(b); :} 
+	;
+
+paramList =
+	param.a {: return new List().add(a); :}
+    | paramList.a COMMA param.b {: return a.add(b); :}
+    ;
+
+param =
+    INT id_decl.a {: return new Param(a); :}
+    ;
+
+exp =
+    add_expr
+	| add_expr.a LT add_expr.b {: return new Less(a, b); :}
+	| add_expr.a LTE add_expr.b {: return new LessEqual(a, b); :}
+	| add_expr.a GT add_expr.b {: return new Greater(a, b); :}
+	| add_expr.a GTE add_expr.b {: return new GreaterEqual(a, b); :}
+	| add_expr.a NOT add_expr.b {: return new Not(a, b); :}
+	| add_expr.a EQUAL add_expr.b {: return new Equal(a, b); :}
+	;
+
+add_expr =
+	factor
+	| add_expr.a ADD factor.b {: return new Add(a, b); :}
+	| add_expr.a SUB factor.b {: return new Sub(a, b); :}
+	;
+
+factor =
+  	term
+	| factor.a MUL term.b {: return new Mul(a, b); :}
+	| factor.a DIV term.b {: return new Div(a, b); :}
+	| factor.a MOD term.b {: return new Mod(a, b); :}
+	;
+
+term =
+	numeral
+	| id_use
+	| LPARANTH exp.a RPARANTH {: return a; :}
+	| functionCall
+    | SUB term.a {: return new Neg(a); :}
+	;
+
+functionCallParamList =
+	exp.a {: return new List().add(a); :}
+	| functionCallParamList.a COMMA exp.b {: return a.add(b); :}
+	;
+
+functionCall = 
+	id_use.a LPARANTH RPARANTH {: return new FunctionCall(a, new List()); :}
+	| id_use.a LPARANTH functionCallParamList.b RPARANTH {: return new FunctionCall(a, b); :}
+	;
+
+functionCallStmt = functionCall.a SEMICOLON {: return new FunctionCallStmt(a); :};
+
+statement = 
+	id_use.a ASSIGN exp.b SEMICOLON {: return new AssignVar(a, b); :} 
+	| INT id_decl.a SEMICOLON {: return new DeclareVar(a, new Opt()); :} 
+	| INT id_decl.a ASSIGN exp.b SEMICOLON {: return new DeclareVar(a, new Opt(b)); :}
+	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new IfElse(a, b, new Opt()); :}
+	| IF LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY ELSE LCURLY statementList.c RCURLY {: return new IfElse(a, b, new Opt(new StmtBlock(c))); :}
+	| WHILE LPARANTH exp.a RPARANTH LCURLY statementList.b RCURLY {: return new While(a, b); :}
+	| RETURN exp.a SEMICOLON {: return new Return(a); :}
+	| functionCallStmt
+	;
+
+statementList = 
+	{: return new List(); :}
+    | statementList.a statement.b {: return a.add(b); :} 
+	;
+
+numeral = NUMERAL.num {: return new Numeral(num); :} ;
+
+id_decl = ID.id {: return new IdDecl(id); :} ;
+
+id_use = ID.id {: return new IdUse(id); :} ;
+

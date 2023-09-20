@@ -1,0 +1,13 @@
+Program
+  List
+    Function
+      IdDecl ID="n"
+      ParamList
+        List
+      List
+        DeclareVar
+          IdDecl ID="a"
+          Opt
+            Numeral NUMERAL="5"
+        Return
+          IdUse ID="a"

@@ -1,0 +1,9 @@
+Program
+  List
+    Function
+      IdDecl ID="n"
+      ParamList
+        List
+      List
+        Return
+          Numeral NUMERAL="5"

@@ -1,0 +1,7 @@
+Program
+  List
+    Function
+      IdDecl ID="a"
+      ParamList
+        List
+      List

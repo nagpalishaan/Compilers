@@ -1,0 +1,16 @@
+Program
+  List
+    Function
+      IdDecl ID="main"
+      ParamList
+        List
+          Param
+            IdDecl ID="a"
+          Param
+            IdDecl ID="b"
+          Param
+            IdDecl ID="c"
+      List
+        DeclareVar
+          IdDecl ID="d"
+          Opt

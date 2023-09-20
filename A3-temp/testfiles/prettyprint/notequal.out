@@ -1,0 +1,6 @@
+int n() {
+	int a;
+	int b;
+	c = a != b;
+}
+

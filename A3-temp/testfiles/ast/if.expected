@@ -1,0 +1,20 @@
+Program
+  List
+    Function
+      IdDecl ID="n"
+      ParamList
+        List
+      List
+        DeclareVar
+          IdDecl ID="a"
+          Opt
+            Numeral NUMERAL="2"
+        IfElse
+          Equal
+            IdUse ID="a"
+            Numeral NUMERAL="2"
+          List
+            AssignVar
+              IdUse ID="b"
+              Numeral NUMERAL="3"
+          Opt
