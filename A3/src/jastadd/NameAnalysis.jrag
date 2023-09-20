@@ -93,6 +93,7 @@ aspect NameAnalysis {
 		if (!symbols.declare(getID())) {
 			err.format("Error at line %d: symbol \'%s\' is already declared!", getLine(), getID());
 			err.println();
+			System.exit(1);
 		}
 	}
 
@@ -100,6 +101,7 @@ aspect NameAnalysis {
 		if (!symbols.lookup(getID())) {
 			err.format("Error at line %d: symbol \'%s\' has not been declared before this use!", getLine(), getID());
 			err.println();
+			System.exit(1);
 		}
 	}
 
