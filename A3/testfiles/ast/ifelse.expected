@@ -2,7 +2,8 @@ Program
   List
     Function
       IdDecl ID="n"
-      Opt
+      ParamList
+        List
       List
         DeclareVar
           IdDecl ID="a"
@@ -20,10 +21,11 @@ Program
               IdUse ID="c"
               Numeral NUMERAL="4"
           Opt
-            List
-              AssignVar
-                IdUse ID="b"
-                Numeral NUMERAL="4"
-              AssignVar
-                IdUse ID="c"
-                Numeral NUMERAL="5"
+            StmtBlock
+              List
+                AssignVar
+                  IdUse ID="b"
+                  Numeral NUMERAL="4"
+                AssignVar
+                  IdUse ID="c"
+                  Numeral NUMERAL="5"
