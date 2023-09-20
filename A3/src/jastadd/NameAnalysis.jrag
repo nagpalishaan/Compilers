@@ -72,9 +72,6 @@ aspect NameAnalysis {
 		}
 	}
 
-	public void StmtBlock.checkNames(PrintStream err, SymbolTable symbols) {
-		// TODO
-	}
 
 
 	public void AssignVar.checkNames(PrintStream err, SymbolTable symbols) {
@@ -167,6 +164,13 @@ aspect NameAnalysis {
 
 	public void FunctionCallStmt.checkNames(PrintStream err, SymbolTable symbols) {
 		getFunctionCall().checkNames(err, symbols);
+	}
+
+	public void StmtBlock.checkNames(PrintStream err, SymbolTable symbols) {
+		symbols = symbols.push();
+		for (Stmt s : getStmts()) {
+			s.checkNames(err, symbols);
+		}
 	}
 
 	/**
