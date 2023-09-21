@@ -21,6 +21,8 @@ aspect NameAnalysis {
 
 		public SymbolTable() {
 			tail = BOTTOM;
+			// declare("print");
+			// declare("read");
 		}
 
 		public SymbolTable(SymbolTable tail) {
@@ -72,23 +74,22 @@ aspect NameAnalysis {
 		}
 	}
 
+	// public void AssignVar.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getIdUse().checkNames(err, symbols);
+    //     getExpr().checkNames(err, symbols);
+	// }
 
-	public void AssignVar.checkNames(PrintStream err, SymbolTable symbols) {
-		getIdUse().checkNames(err, symbols);
-        getExpr().checkNames(err, symbols);
-	}
+    // public void DeclareVar.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getIdDecl().checkNames(err, symbols);
 
-    public void DeclareVar.checkNames(PrintStream err, SymbolTable symbols) {
-		getIdDecl().checkNames(err, symbols);
+	// 	if (hasExpr()) {
+    //     	getExpr().checkNames(err, symbols);
+	// 	}
+	// }
 
-		if (hasExpr()) {
-        	getExpr().checkNames(err, symbols);
-		}
-	}
-
-    public void Return.checkNames(PrintStream err, SymbolTable symbols) {
-        getExpr().checkNames(err, symbols);
-	}
+    // public void Return.checkNames(PrintStream err, SymbolTable symbols) {
+    //     getExpr().checkNames(err, symbols);
+	// }
 
 	public void IdDecl.checkNames(PrintStream err, SymbolTable symbols) {
 		if (!symbols.declare(getID())) {
@@ -148,20 +149,20 @@ aspect NameAnalysis {
 		
 	}
 
-	public void FunctionCall.checkNames(PrintStream err, SymbolTable symbols) {
-		getIdUse().checkNames(err, symbols);
-		symbols = symbols.push(); // TODO: check if need to push here
+	// public void FunctionCall.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getIdUse().checkNames(err, symbols);
+	// 	symbols = symbols.push(); // only push when declaring
 
-		if (hasExpr()){
-            for(int i = 0; i < getNumExpr(); i++){
-        	    getExpr(i).checkNames(err, symbols);
-			}
-        }
-	}
+	// 	if (hasExpr()){
+    //         for(int i = 0; i < getNumExpr(); i++){
+    //     	    getExpr(i).checkNames(err, symbols);
+	// 		}
+    //     }
+	// }
 
-	public void FunctionCallStmt.checkNames(PrintStream err, SymbolTable symbols) {
-		getFunctionCall().checkNames(err, symbols);
-	}
+	// public void FunctionCallStmt.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getFunctionCall().checkNames(err, symbols);
+	// }
 
 	public void StmtBlock.checkNames(PrintStream err, SymbolTable symbols) {
 		SymbolTable a = symbols.push();
