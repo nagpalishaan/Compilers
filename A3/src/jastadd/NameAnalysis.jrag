@@ -74,6 +74,43 @@ aspect NameAnalysis {
 		}
 	}
 
+	public void IdDecl.checkNames(PrintStream err, SymbolTable symbols) {
+		if (!symbols.declare(getID())) {
+			err.format("Error at line %d: symbol \'%s\' is already declared!", getLine(), getID());
+			err.println();
+			System.exit(1);
+		}
+	}
+
+	public void IdUse.checkNames(PrintStream err, SymbolTable symbols) {
+		if (!symbols.lookup(getID())) {
+			err.format("Error at line %d: symbol \'%s\' has not been declared before this use!", getLine(), getID());
+			err.println();
+			System.exit(1);
+		}
+	}
+
+	public void StmtBlock.checkNames(PrintStream err, SymbolTable symbols) {
+		SymbolTable a = symbols.push();
+		for (Stmt s : getStmts()) {
+			s.checkNames(err, a);
+		}
+	}
+
+	public void Function.checkNames(PrintStream err, SymbolTable symbols) {
+		getIdDecl().checkNames(err, symbols);
+	 	SymbolTable a = symbols.push();
+
+	 	ParamList paramList = getParamList();
+	 	for(int i = 0; i < paramList.getNumParam(); i++){
+	 		paramList.getParam(i).checkNames(err, a);
+	 	}
+
+	 	StmtBlock stmtList = getStmtBlock();
+	 	stmtList.checkNames(err, a);
+		
+	}
+
 	// public void AssignVar.checkNames(PrintStream err, SymbolTable symbols) {
 	// 	getIdUse().checkNames(err, symbols);
     //     getExpr().checkNames(err, symbols);
@@ -90,22 +127,6 @@ aspect NameAnalysis {
     // public void Return.checkNames(PrintStream err, SymbolTable symbols) {
     //     getExpr().checkNames(err, symbols);
 	// }
-
-	public void IdDecl.checkNames(PrintStream err, SymbolTable symbols) {
-		if (!symbols.declare(getID())) {
-			err.format("Error at line %d: symbol \'%s\' is already declared!", getLine(), getID());
-			err.println();
-			System.exit(1);
-		}
-	}
-
-	public void IdUse.checkNames(PrintStream err, SymbolTable symbols) {
-		if (!symbols.lookup(getID())) {
-			err.format("Error at line %d: symbol \'%s\' has not been declared before this use!", getLine(), getID());
-			err.println();
-			System.exit(1);
-		}
-	}
 
     // public void IfElse.checkNames(PrintStream err, SymbolTable symbols) {
 	// 	getExpr().checkNames(err, symbols);
@@ -135,20 +156,6 @@ aspect NameAnalysis {
 	// 	}
 	// }
 
-	public void Function.checkNames(PrintStream err, SymbolTable symbols) {
-		getIdDecl().checkNames(err, symbols);
-	 	SymbolTable a = symbols.push();
-
-	 	ParamList paramList = getParamList();
-	 	for(int i = 0; i < paramList.getNumParam(); i++){
-	 		paramList.getParam(i).checkNames(err, a);
-	 	}
-
-	 	StmtBlock stmtList = getStmtBlock();
-	 	stmtList.checkNames(err, a);
-		
-	}
-
 	// public void FunctionCall.checkNames(PrintStream err, SymbolTable symbols) {
 	// 	getIdUse().checkNames(err, symbols);
 	// 	symbols = symbols.push(); // only push when declaring
@@ -163,13 +170,7 @@ aspect NameAnalysis {
 	// public void FunctionCallStmt.checkNames(PrintStream err, SymbolTable symbols) {
 	// 	getFunctionCall().checkNames(err, symbols);
 	// }
-
-	public void StmtBlock.checkNames(PrintStream err, SymbolTable symbols) {
-		SymbolTable a = symbols.push();
-		for (Stmt s : getStmts()) {
-			s.checkNames(err, a);
-		}
-	}
+	
 
 	/**
 	 * Helper method
