@@ -32,6 +32,7 @@
 %typeof functionCallStmt = "FunctionCallStmt";
 %typeof add_expr = "Expr";
 %typeof neg = "Neg";
+%typeof binExpr = "BinExpr";
 
 
 %goal program;
@@ -59,25 +60,25 @@ param =
 
 exp =
     add_expr
-	| add_expr.a LT add_expr.b {: return new Less(a, b); :}
-	| add_expr.a LTE add_expr.b {: return new LessEqual(a, b); :}
-	| add_expr.a GT add_expr.b {: return new Greater(a, b); :}
-	| add_expr.a GTE add_expr.b {: return new GreaterEqual(a, b); :}
-	| add_expr.a NOT add_expr.b {: return new Not(a, b); :}
-	| add_expr.a EQUAL add_expr.b {: return new Equal(a, b); :}
+	| add_expr.a LT add_expr.b {: return new Less(new BinExpr(a, b)); :}
+	| add_expr.a LTE add_expr.b {: return new LessEqual(new BinExpr(a, b)); :}
+	| add_expr.a GT add_expr.b {: return new Greater(new BinExpr(a, b)); :}
+	| add_expr.a GTE add_expr.b {: return new GreaterEqual(new BinExpr(a, b)); :}
+	| add_expr.a NOT add_expr.b {: return new Not(new BinExpr(a, b)); :}
+	| add_expr.a EQUAL add_expr.b {: return new Equal(new BinExpr(a, b)); :}
 	;
 
 add_expr =
 	factor
-	| add_expr.a ADD factor.b {: return new Add(a, b); :}
-	| add_expr.a SUB factor.b {: return new Sub(a, b); :}
+	| add_expr.a ADD factor.b {: return new Add(new BinExpr(a, b)); :}
+	| add_expr.a SUB factor.b {: return new Sub(new BinExpr(a, b)); :}
 	;
 
 factor =
   	term
-	| factor.a MUL term.b {: return new Mul(a, b); :}
-	| factor.a DIV term.b {: return new Div(a, b); :}
-	| factor.a MOD term.b {: return new Mod(a, b); :}
+	| factor.a MUL term.b {: return new Mul(new BinExpr(a, b)); :}
+	| factor.a DIV term.b {: return new Div(new BinExpr(a, b)); :}
+	| factor.a MOD term.b {: return new Mod(new BinExpr(a, b)); :}
 	;
 
 term =
