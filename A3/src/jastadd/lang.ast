@@ -21,9 +21,11 @@ FunctionCall : Expr ::= IdUse Expr*;
 
 abstract Expr;
 BinExpr : Expr ::= Left:Expr Right:Expr;
+
 Numeral : Expr ::= <NUMERAL>;
 IdUse : Expr ::= <ID>;
 Neg : Expr ::= Expr;
+
 Add : Expr ::= BinExpr;
 Mul : Expr ::= BinExpr;
 Div : Expr ::= BinExpr;
