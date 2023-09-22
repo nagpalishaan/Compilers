@@ -26,16 +26,16 @@ Numeral : Expr ::= <NUMERAL>;
 IdUse : Expr ::= <ID>;
 Neg : Expr ::= Expr;
 
-Add : Expr ::= BinExpr;
-Mul : Expr ::= BinExpr;
-Div : Expr ::= BinExpr;
-Sub : Expr ::= BinExpr;
-Mod : Expr ::= BinExpr;
-Less : Expr ::= BinExpr;
-LessEqual : Expr ::= BinExpr;
-Greater : Expr ::= BinExpr;
-GreaterEqual : Expr ::= BinExpr;
-Not : Expr ::= BinExpr;
-Equal : Expr ::= BinExpr;
+Add : BinExpr;
+Mul : BinExpr;
+Div : BinExpr;
+Sub : BinExpr;
+Mod : BinExpr;
+Less : BinExpr;
+LessEqual : BinExpr;
+Greater : BinExpr;
+GreaterEqual : BinExpr;
+Not : BinExpr;
+Equal : BinExpr;
 
 IdDecl ::= <ID>;
