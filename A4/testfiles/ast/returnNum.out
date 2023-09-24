@@ -1,0 +1,10 @@
+Program
+  List
+    Function
+      IdDecl ID="n"
+      ParamList
+        List
+      StmtBlock
+        List
+          Return
+            Numeral NUMERAL="5"

@@ -1,0 +1,4 @@
+int n() { 
+    int a = 5;
+    return a;
+}
