@@ -69,7 +69,7 @@ task generateJava(type: org.jastadd.JastAddTask) {
   description 'Generates the compiler AST classes from JastAdd specifications.'
   outputDir = file('src/gen')
   sources = fileTree(dir: 'src/jastadd', includes: [ '**/*.jrag', '**/*.jadd', '**/*.ast' ])
-  options = [ '--package=lang.ast', '--beaver', '--cache=all' ]
+  options = [ '--package=lang.ast', '--beaver', '--cache=all', '--tracing=compute']
 }
 
 task generateScanner(type: JavaExec) {
