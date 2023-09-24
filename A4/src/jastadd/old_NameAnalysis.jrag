@@ -1,0 +1,182 @@
+import java.util.Set;
+import java.util.HashSet;
+
+aspect NameAnalysis {
+	public class SymbolTable {
+		private static final SymbolTable BOTTOM = new SymbolTable() {
+			@Override
+			public boolean declare(String name) {
+				throw new UnsupportedOperationException(
+						"cannot add name to bottom of name stack");
+			}
+			@Override
+			public boolean lookup(String name) {
+				return false;
+			}
+		};
+
+		private final SymbolTable tail;
+
+		private final Set<String> names = new HashSet<String>();
+
+		public SymbolTable() {
+			tail = BOTTOM;
+			// declare("print");
+			// declare("read");
+		}
+
+		public SymbolTable(SymbolTable tail) {
+			this.tail = tail;
+		}
+
+		/**
+		 * Attempt to add a new name to the symbol table.
+		 * @return true if name was not already declared
+		 */
+		public boolean declare(String name) {
+			return names.add(name);
+		}
+
+		/**
+		 * @return true if name has been declared
+		 */
+		public boolean lookup(String name) {
+			return names.contains(name) || tail.lookup(name);
+		}
+
+		/**
+		 * Push a new table on the stack.
+		 * @return the new top of the stack
+		 */
+		public SymbolTable push() {
+			SymbolTable newTable = new SymbolTable(this);
+			newTable.declare("print");
+			newTable.declare("read");
+			return newTable;
+		}
+	}
+
+	/**
+	 * @param err where to write error messages
+	 */
+	public void Program.checkNames(PrintStream err) {
+		SymbolTable symbols = new SymbolTable();
+		checkNames(err, symbols);
+	}
+
+	/**
+	 * @param err where to write error messages
+	 * @param symbols symbol table
+	 */
+	public void ASTNode.checkNames(PrintStream err, SymbolTable symbols) {
+    for (ASTNode child : astChildren()) {
+		  child.checkNames(err, symbols);
+		}
+	}
+
+	public void IdDecl.checkNames(PrintStream err, SymbolTable symbols) {
+		if (!symbols.declare(getID())) {
+			err.format("Error at line %d: symbol \'%s\' is already declared!", getLine(), getID());
+			err.println();
+			System.exit(1);
+		}
+	}
+
+	public void IdUse.checkNames(PrintStream err, SymbolTable symbols) {
+		if (!symbols.lookup(getID())) {
+			err.format("Error at line %d: symbol \'%s\' has not been declared before this use!", getLine(), getID());
+			err.println();
+			System.exit(1);
+		}
+	}
+
+	public void StmtBlock.checkNames(PrintStream err, SymbolTable symbols) {
+		SymbolTable a = symbols.push();
+		for (Stmt s : getStmts()) {
+			s.checkNames(err, a);
+		}
+	}
+
+	public void Function.checkNames(PrintStream err, SymbolTable symbols) {
+		getIdDecl().checkNames(err, symbols);
+	 	SymbolTable a = symbols.push();
+
+	 	ParamList paramList = getParamList();
+	 	for(int i = 0; i < paramList.getNumParam(); i++){
+	 		paramList.getParam(i).checkNames(err, a);
+	 	}
+
+	 	StmtBlock stmtList = getStmtBlock();
+	 	stmtList.checkNames(err, a);
+		
+	}
+
+	// public void AssignVar.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getIdUse().checkNames(err, symbols);
+    //     getExpr().checkNames(err, symbols);
+	// }
+
+    // public void DeclareVar.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getIdDecl().checkNames(err, symbols);
+
+	// 	if (hasExpr()) {
+    //     	getExpr().checkNames(err, symbols);
+	// 	}
+	// }
+
+    // public void Return.checkNames(PrintStream err, SymbolTable symbols) {
+    //     getExpr().checkNames(err, symbols);
+	// }
+
+    // public void IfElse.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getExpr().checkNames(err, symbols);
+
+	// 	StmtBlock stmtList = getStmtBlock();
+	// 	SymbolTable a = symbols.push();
+	// 	for(int i = 0; i < stmtList.getNumStmt(); i++){
+	// 		stmtList.getStmt(i).checkNames(err, a);
+	// 	}
+
+	// 	StmtBlock elseBlock = getElseBlock();
+	// 	if (hasElseBlock()){
+	// 		SymbolTable b = symbols.push();
+	// 		for(int i = 0; i < elseBlock.getNumStmt(); i++){
+    //     	    elseBlock.getStmt(i).checkNames(err, b);
+	// 		}
+	// 	}
+	// }
+
+	// public void While.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getExpr().checkNames(err, symbols);
+    //     symbols = symbols.push();
+
+	// 	StmtBlock stmtList = getStmtBlock();
+	// 	for(int i = 0; i < stmtList.getNumStmt(); i++){
+	// 		stmtList.getStmt(i).checkNames(err, symbols);
+	// 	}
+	// }
+
+	// public void FunctionCall.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getIdUse().checkNames(err, symbols);
+	// 	symbols = symbols.push(); // only push when declaring
+
+	// 	if (hasExpr()){
+    //         for(int i = 0; i < getNumExpr(); i++){
+    //     	    getExpr(i).checkNames(err, symbols);
+	// 		}
+    //     }
+	// }
+
+	// public void FunctionCallStmt.checkNames(PrintStream err, SymbolTable symbols) {
+	// 	getFunctionCall().checkNames(err, symbols);
+	// }
+	
+
+	/**
+	 * Helper method
+	 * @return line number of this token
+	 */
+	public int ASTNode.getLine() {
+		return getLine(getStart());
+	}
+}
