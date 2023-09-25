@@ -2,36 +2,15 @@ aspect NameAnalysis {
 	syn IdDecl IdUse.decl() = lookup(getID());
 	inh IdDecl IdUse.lookup(String name);
 
-    eq Program.getChild().lookup(String name) = unknownDecl();    
+    eq Program.getChild().lookup(String name) = unknownDecl(); 
+    
+    syn IdDecl Function.decl() = lookup(getID());
     inh IdDecl Function.lookup(String name);
 
-    // change from getStmt() to ??
-    eq Function.getStmt().lookup(String name){
-        IdDecl decl = localLookup(name);
-		return !decl.isUnknown() ? decl : lookup(name);
-    }
+    eq StmtBlock.lookup(String name) = unknownDecl();
 
-    syn IdDecl Function.localLookup(String name){
-        for (Param p : getParamList()) {
-            if (p.getIdDecl().getID().equals(name)) {
-                return p.getIdDecl();
-            }
-        }
-
-        for (Param p : getStmts()) {
-            if (s.getIdDecl().getID().equals(name)) {
-                return s.getIdDecl();
-            }
-        }
-        return unknownDecl();
-    }
-
-    eq Function.getParam(int index).lookup(String name) {
-        IdDecl decl = localLookup(name, index);
-		return !decl.isUnknown() ? decl : lookup(name);
-    }
-
-    // Change from function to work with all statement blocks
+    // Lookup 
+    // TODO: change from function to work with all statement blocks
     eq Function.getStmt(int index).lookup(String name) {
         IdDecl decl = localLookup(name, index);
 		return !decl.isUnknown() ? decl : lookup(name);
@@ -42,9 +21,47 @@ aspect NameAnalysis {
 		return !decl.isUnknown() ? decl : lookup(name);
     }
 
+    // Local lookup
+    syn IdDecl Function.localLookup(String name){
+        for (Param p : getParamList()) {
+            if (p.getIdDecl().getID().equals(name)) {
+                return p.getIdDecl();
+            }
+        }
+
+        for (Stmt s : getStmts()) {
+            if (s.getIdDecl().getID().equals(name)) {
+                return s.getIdDecl();
+            }
+        }
+        return unknownDecl();
+    }
+
+    syn IdDecl StmtBlock.localLookup(String name){
+        for (Stmt s : getStmts()) {
+            if (s.getIdDecl().getID().equals(name)) {
+                return s.getIdDecl();
+            }
+        }
+        return unknownDecl();
+    }
+
     inh IdDecl IdDecl.lookup(String name);
 	syn boolean IdDecl.isMultiDeclared() = lookup(getID()) != this;
 
+    // Inherit equations for all statements
+    inh IdDecl DeclareVar.lookup(String name);
+    inh IdDecl AssignVar.lookup(String name);
+    inh IdDecl IfElse.lookup(String name);
+    inh IdDecl While.lookup(String name);
+
+    // Predefined functions
+    // syn nta List<FunctionDecl> Program.predefinedFunctions() {
+    //     List<FunctionDecl> list = newList <FunctionDecl>();
+    //     list.add(new FunctionDecl(new IdDecl("print"), ?? , ??));
+    //     list.add(new FunctionDecl(new IdDecl("read"), ??, ??));
+    //     return list;
+    // }
 }
 
 aspect CircularDefinitions {
