@@ -47,7 +47,7 @@ aspect ErrorContributions {
 		when type() != expectedType()
 		to Program.errors() for program();
 
-	Expr contributes error("incorrect types")
+	BinExpr contributes error("incorrect types")
 		when getLeft().expectedType().compatibleType(getRight().expectedType()) == false
 		to Program.errors() for program();
 
