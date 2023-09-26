@@ -28,7 +28,6 @@ aspect TypeAnalysis {
 
 
     inh Type Expr.type();
-    eq Expr.getChild().type() = intType();
     eq DeclareVar.getExpr().type() = intType();
     eq AssignVar.getExpr().type() = intType();
     eq IfElse.getExpr().type() = boolType();
