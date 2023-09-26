@@ -7,11 +7,11 @@ aspect NameAnalysis {
     // Program
     eq Program.getChild().lookup(String name) {
         // TODO: finish implementing predefinedFunctions()
-        // for (Function pf : predefinedFunctions()) {
-        //     if (pf.getIdDecl().getID().equals(name)) {
-        //         return pf.getIdDecl();
-        //     }
-        // }
+        for (Function pf : predefinedFunctions()) {
+            if (pf.getIdDecl().getID().equals(name)) {
+                return pf.getIdDecl();
+            }
+        }
 
         // TODO: do we need to check this since order of functions doesn't matter?
         for (Function f : getFunctionList()) {
@@ -41,16 +41,6 @@ aspect NameAnalysis {
         // }
         return unknownDecl();
     }
-
-    // eq Function.getParam(int index).lookup(String name) {
-    //     IdDecl decl = localLookup(name, index);
-	// 	return !decl.isUnknown() ? decl : lookup(name);
-    // }
-
-    // eq Function.getStmt(int index).lookup(String name) {
-    //     IdDecl decl = localLookup(name, index);
-	// 	return !decl.isUnknown() ? decl : lookup(name);
-    // }
 
     // Statement Block
     inh IdDecl StmtBlock.lookup(String name);
@@ -85,13 +75,13 @@ aspect NameAnalysis {
     // IdDecl Multi Declared
 	syn boolean IdDecl.isMultiDeclared() = lookup(getID()) != this;
 
-    // TODO: Predefined functions
-    // syn nta List<FunctionDecl> Program.predefinedFunctions() {
-    //     List<FunctionDecl> list = newList <FunctionDecl>();
-    //     list.add(new FunctionDecl(new IdDecl("print"), ??, ??));
-    //     list.add(new FunctionDecl(new IdDecl("read"), ??, ??));
-    //     return list;
-    // }
+    // TODO: check if parameters are correctly defined
+    syn nta List<Function> Program.predefinedFunctions() {
+        List<Function> list = new List <Function>();
+        list.add(new Function(new IdDecl("print"), new ParamList(), new StmtBlock()));
+        list.add(new Function(new IdDecl("read"), new ParamList(), new StmtBlock()));
+        return list;
+    }
 }
 
 aspect CircularDefinitions {
