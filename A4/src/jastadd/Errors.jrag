@@ -48,7 +48,7 @@ aspect ErrorContributions {
 		to Program.errors() for program();
 
 	Expr contributes error("incorrect types")
-		when getLeft().expectedType().compatibleWith(getRight().expectedType()) == false
+		when getLeft().expectedType().compatibleType(getRight().expectedType()) == false
 		to Program.errors() for program();
 
 

@@ -2,16 +2,22 @@ aspect TypeAnalysis {
     syn nta IntType Program.intType() = new IntType();
     inh IntType ASTNode.intType();
     eq Program.getChild().intType() = intType();
+    syn boolean Type.isIntType() = false;
+    eq IntType.isIntType() = true;
 
     syn nta BoolType Program.boolType() = new BoolType();
     inh BoolType ASTNode.boolType();
     eq Program.getChild().boolType() = boolType();
+    syn boolean Type.isBoolType() = false;
+    eq BoolType.isBoolType() = true;
 
     syn nta UnknownType Program.unknownType() = new UnknownType();
     inh UnknownType ASTNode.unknownType();
     eq Program.getChild().unknownType() = unknownType();
     syn boolean Type.isUnknown() = false;
     eq UnknownType.isUnknown() = true;
+    syn boolean Type.isUnknownType() = false;
+    eq UnknownType.isUnknownType() = true;
 
     syn Type Expr.expectedType();
     eq Less.expectedType() = boolType();
@@ -22,7 +28,7 @@ aspect TypeAnalysis {
     eq Equal.expectedType() = boolType();
     eq FunctionCall.expectedType() = intType();
     eq Numeral.expectedType() = intType();
-    eq IdUse.expectedType() = getId().type();
+    eq IdUse.expectedType() = intType();
     eq Neg.expectedType() = intType();
     eq BinExpr.expectedType() = intType();
 
@@ -40,13 +46,10 @@ aspect TypeAnalysis {
     eq Function.getChild().type() = intType();
 
 
-
-
-
     syn boolean Type.compatibleType(Type other);
     eq IntType.compatibleType(Type other) = other.isIntType();
     eq BoolType.compatibleType(Type other) = other.isBoolType();
-    eq UnknownType.compatibleType(Type other) = other.isUnknownType() || other.isIntType() || other.isBoolType();
+    eq UnknownType.compatibleType(Type other) = true;
 
 
 
