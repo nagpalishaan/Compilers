@@ -1,0 +1,55 @@
+aspect TypeAnalysis {
+    syn nta IntType Program.intType() = new IntType();
+    inh IntType ASTNode.intType();
+    eq Program.getChild().intType() = intType();
+
+    syn nta BoolType Program.boolType() = new BoolType();
+    inh BoolType ASTNode.boolType();
+    eq Program.getChild().boolType() = boolType();
+
+    syn nta UnknownType Program.unknownType() = new UnknownType();
+    inh UnknownType ASTNode.unknownType();
+    eq Program.getChild().unknownType() = unknownType();
+    syn boolean Type.isUnknown() = false;
+    eq UnknownType.isUnknown() = true;
+
+    syn Type Expr.expectedType();
+    eq Less.expectedType() = boolType();
+    eq LessEqual.expectedType() = boolType();
+    eq Greater.expectedType() = boolType();
+    eq GreaterEqual.expectedType() = boolType();
+    eq Not.expectedType() = boolType();
+    eq Equal.expectedType() = boolType();
+    eq FunctionCall.expectedType() = intType();
+    eq Numeral.expectedType() = intType();
+    eq IdUse.expectedType() = getId().type();
+    eq Neg.expectedType() = intType();
+    eq BinExpr.expectedType() = intType();
+
+
+    inh Type Expr.type();
+    eq Expr.getChild().type() = intType();
+    eq DeclareVar.getExpr().type() = intType();
+    eq AssignVar.getExpr().type() = intType();
+    eq IfElse.getExpr().type() = boolType();
+    eq While.getExpr().type() = boolType();
+    eq Return.getExpr().type() = intType();
+
+    inh Type IdDecl.type();
+    eq IdDecl.getChild().type() = intType();
+    eq Program.unknownDecl().type() = unknownType();
+    eq Function.getChild().type() = intType();
+
+
+
+
+
+    syn boolean Type.compatibleType(Type other);
+    eq IntType.compatibleType(Type other) = other.isIntType();
+    eq BoolType.compatibleType(Type other) = other.isBoolType();
+    eq UnknownType.compatibleType(Type other) = other.isUnknownType() || other.isIntType() || other.isBoolType();
+
+
+
+
+}
