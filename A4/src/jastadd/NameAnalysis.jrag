@@ -1,64 +1,97 @@
 aspect NameAnalysis {
+
+    // IdUse
 	syn IdDecl IdUse.decl() = lookup(getID());
 	inh IdDecl IdUse.lookup(String name);
 
-    eq Program.getChild().lookup(String name) = unknownDecl(); 
+    // Program
+    eq Program.getChild().lookup(String name) {
+        for (Function pf : predefinedFunctions()) {
+            if (pf.getIdDecl().getID().equals(name)) {
+                return pf.getIdDecl();
+            }
+        }
+
+        // TODO: do we need to check this since order of functions doesn't matter?
+        for (Function f : getFunctionList()) {
+            if (f.getIdDecl().getID().equals(name)) {
+                return f.getIdDecl();
+            }
+        }
+        return unknownDecl();
+    }
     
-    syn IdDecl Function.decl() = lookup(getID());
+    // Function
     inh IdDecl Function.lookup(String name);
 
-    eq StmtBlock.lookup(String name) = unknownDecl();
+    syn IdDecl Function.localLookup(String name, int until){
+        ParamList paramList = getParamList();
+        for (int i = 0; i <= until; i++) {
+            if (paramList.getParam(i).getIdDecl().getID().equals(name)) {
+                return paramList.getParam(i).getIdDecl();
+            }
+        }
 
-    // Lookup 
-    // TODO: change from function to work with all statement blocks
-    eq Function.getStmt(int index).lookup(String name) {
-        IdDecl decl = localLookup(name, index);
-		return !decl.isUnknown() ? decl : lookup(name);
+        // TODO: can we replace this with a call to StmtBlock.localLookup?
+        // for (int i = 0; i <= until; i++) {
+        //     if (getStmtBlock().getStmt(i).getIdDecl().getID().equals(name)) {
+        //         return getStmtBlock().getStmt(i).getIdDecl();
+        //     }
+        // }
+        return unknownDecl();
     }
+
+    // eq Function.getParam(int index).lookup(String name) {
+    //     IdDecl decl = localLookup(name, index);
+	// 	return !decl.isUnknown() ? decl : lookup(name);
+    // }
+
+    // eq Function.getStmt(int index).lookup(String name) {
+    //     IdDecl decl = localLookup(name, index);
+	// 	return !decl.isUnknown() ? decl : lookup(name);
+    // }
+
+    // Statement Block
+    inh IdDecl StmtBlock.lookup(String name);
 
     eq StmtBlock.getStmt(int index).lookup(String name) {
         IdDecl decl = localLookup(name, index);
 		return !decl.isUnknown() ? decl : lookup(name);
     }
 
-    // Local lookup
-    syn IdDecl Function.localLookup(String name){
-        for (Param p : getParamList()) {
-            if (p.getIdDecl().getID().equals(name)) {
-                return p.getIdDecl();
-            }
+    syn IdDecl Stmt.localLookup(String name) {
+        if (getIdDecl().getID().equals(name)) {
+            return getIdDecl();
         }
+        return unknownDecl();
+    }
 
-        for (Stmt s : getStmts()) {
-            if (s.getIdDecl().getID().equals(name)) {
-                return s.getIdDecl();
+    syn IdDecl StmtBlock.localLookup(String name, int until){
+        for (int i = 0; i <= until; i++) {
+            IdDecl decl = getStmt(i).localLookup(name);
+            if (decl.getID().equals(name)) {
+                return decl;
             }
         }
         return unknownDecl();
     }
 
-    syn IdDecl StmtBlock.localLookup(String name){
-        for (Stmt s : getStmts()) {
-            if (s.getIdDecl().getID().equals(name)) {
-                return s.getIdDecl();
-            }
-        }
-        return unknownDecl();
-    }
-
+    // IdDecl
     inh IdDecl IdDecl.lookup(String name);
+
+    // IdDecl Multi Declared
 	syn boolean IdDecl.isMultiDeclared() = lookup(getID()) != this;
 
     // Inherit equations for all statements
-    inh IdDecl DeclareVar.lookup(String name);
-    inh IdDecl AssignVar.lookup(String name);
-    inh IdDecl IfElse.lookup(String name);
-    inh IdDecl While.lookup(String name);
+    // inh IdDecl DeclareVar.lookup(String name);
+    // inh IdDecl AssignVar.lookup(String name);
+    // inh IdDecl IfElse.lookup(String name);
+    // inh IdDecl While.lookup(String name);
 
-    // Predefined functions
+    // TODO: Predefined functions
     // syn nta List<FunctionDecl> Program.predefinedFunctions() {
     //     List<FunctionDecl> list = newList <FunctionDecl>();
-    //     list.add(new FunctionDecl(new IdDecl("print"), ?? , ??));
+    //     list.add(new FunctionDecl(new IdDecl("print"), ??, ??));
     //     list.add(new FunctionDecl(new IdDecl("read"), ??, ??));
     //     return list;
     // }
