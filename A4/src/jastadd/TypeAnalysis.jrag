@@ -19,31 +19,69 @@ aspect TypeAnalysis {
     syn boolean Type.isUnknownType() = false;
     eq UnknownType.isUnknownType() = true;
 
-    syn Type Expr.expectedType();
-    eq Less.expectedType() = boolType();
-    eq LessEqual.expectedType() = boolType();
-    eq Greater.expectedType() = boolType();
-    eq GreaterEqual.expectedType() = boolType();
-    eq Not.expectedType() = boolType();
-    eq Equal.expectedType() = boolType();
-    eq FunctionCall.expectedType() = intType();
-    eq Numeral.expectedType() = intType();
-    eq IdUse.expectedType() = intType();
-    eq Neg.expectedType() = intType();
-    eq BinExpr.expectedType() = intType();
+    syn Type Expr.type();
+    eq Less.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
+            return boolType();
+        }
+        return unknownType();
+    }
+    eq LessEqual.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
+            return boolType();
+        }
+        return unknownType();
+    }
+    eq Greater.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
+            return boolType();
+        }
+        return unknownType();
+    }
+    eq GreaterEqual.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
+            return boolType();
+        }
+        return unknownType();
+    }
+    eq Not.type() {
+        if(getLeft().type().compatibleType(getRight().type())){
+            return boolType();
+        }
+        return unknownType();
+    }
+    eq Equal.type() {
+        if(getLeft().type().compatibleType(getRight().type())){
+            return boolType();
+        }
+        return unknownType();
+    }
+    eq FunctionCall.type() = intType();
+    eq Numeral.type() = intType();
+    eq IdUse.type() = intType();
+    eq Neg.type() = intType();
+    eq BinExpr.type() {
+        if(getLeft().expectedType()==intType() && getRight().expectedType()==intType()){
+            return intType();
+        }
+        return unknownType();
+    }
 
 
-    inh Type Expr.type();
-    eq DeclareVar.getExpr().type() = intType();
-    eq AssignVar.getExpr().type() = intType();
-    eq IfElse.getExpr().type() = boolType();
-    eq While.getExpr().type() = boolType();
-    eq Return.getExpr().type() = intType();
+    inh Type Expr.expectedType();
+    eq DeclareVar.getExpr().expectedType() = intType();
+    eq AssignVar.getExpr().expectedType() = intType();
+    eq IfElse.getExpr().expectedType() {
+        return boolType();
+        
+    }
+    eq While.getExpr().expectedType() = boolType();
+    eq Return.getExpr().expectedType() = intType();
 
-    inh Type IdDecl.type();
-    eq IdDecl.getChild().type() = intType();
-    eq Program.unknownDecl().type() = unknownType();
-    eq Function.getChild().type() = intType();
+    inh Type IdDecl.expectedType();
+    eq IdDecl.getChild().expectedType() = intType();
+    eq Program.unknownDecl().expectedType() = unknownType();
+    eq Function.getChild().expectedType() = intType();
 
 
     syn boolean Type.compatibleType(Type other);
