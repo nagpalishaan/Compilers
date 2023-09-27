@@ -4,14 +4,20 @@ aspect NameAnalysis {
 	syn IdDecl IdUse.decl() = lookup(getID());
 	inh IdDecl IdUse.lookup(String name);
 
+    // IdDecl
+    inh IdDecl IdDecl.lookup(String name);
+
+    // IdDecl Multi Declared
+	syn boolean IdDecl.isMultiDeclared() = lookup(getID()) != this;
+
     // Program
     eq Program.getChild().lookup(String name) {
         // TODO: finish implementing predefinedFunctions()
-        // for (Function pf : predefinedFunctions()) {
-        //     if (pf.getIdDecl().getID().equals(name)) {
-        //         return pf.getIdDecl();
-        //     }
-        // }
+        for (Function pf : predefinedFunctions()) {
+            if (pf.getIdDecl().getID().equals(name)) {
+                return pf.getIdDecl();
+            }
+        }
 
         // TODO: do we need to check this since order of functions doesn't matter?
         for (Function f : getFunctionList()) {
@@ -25,20 +31,17 @@ aspect NameAnalysis {
     // Function
     inh IdDecl Function.lookup(String name);
 
-    syn IdDecl Function.localLookup(String name, int until){
+    eq Function.getChild().lookup(String name) {
+        return localLookup(name);
+    }
+
+    syn IdDecl Function.localLookup(String name){
         ParamList paramList = getParamList();
-        for (int i = 0; i <= until; i++) {
+        for (int i = 0; i < paramList.getNumParam(); i++) {
             if (paramList.getParam(i).getIdDecl().getID().equals(name)) {
                 return paramList.getParam(i).getIdDecl();
             }
         }
-
-        // TODO: can we replace this with a call to StmtBlock.localLookup?
-        // for (int i = 0; i <= until; i++) {
-        //     if (getStmtBlock().getStmt(i).getIdDecl().getID().equals(name)) {
-        //         return getStmtBlock().getStmt(i).getIdDecl();
-        //     }
-        // }
         return unknownDecl();
     }
 
@@ -69,19 +72,13 @@ aspect NameAnalysis {
 
     syn IdDecl Stmt.localLookup(String name) = unknownDecl();
 
-    // IdDecl
-    inh IdDecl IdDecl.lookup(String name);
-
-    // IdDecl Multi Declared
-	syn boolean IdDecl.isMultiDeclared() = lookup(getID()) != this;
-
     // TODO: check if parameters are correctly defined
-    // syn nta List<Function> Program.predefinedFunctions() {
-    //     List<Function> list = new List <Function>();
-    //     list.add(new Function(new IdDecl("print"), new ParamList(), new StmtBlock()));
-    //     list.add(new Function(new IdDecl("read"), new ParamList(), new StmtBlock()));
-    //     return list;
-    // }
+    syn nta List<Function> Program.predefinedFunctions() {
+        List<Function> list = new List <Function>();
+        list.add(new Function(new IdDecl("print"), new ParamList(new List()), new StmtBlock(new List())));
+        list.add(new Function(new IdDecl("read"), new ParamList(new List()), new StmtBlock(new List())));
+        return list;
+    }
 }
 
 aspect CircularDefinitions {

@@ -1,4 +1,4 @@
 int main() {
-    int a = read();
-    print(a);
+    int a = read(a);
+    print();
 }
