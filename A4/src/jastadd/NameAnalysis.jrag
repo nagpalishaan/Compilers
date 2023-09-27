@@ -8,18 +8,16 @@ aspect NameAnalysis {
     inh IdDecl IdDecl.lookup(String name);
 
     // IdDecl Multi Declared
-	syn boolean IdDecl.isMultiDeclared() = lookup(getID()) != this;
+	syn boolean IdDecl.isMultiDeclared() = lookup(getID()) != this && !lookup(getID()).isUnknown();
 
     // Program
     eq Program.getChild().lookup(String name) {
-        // TODO: finish implementing predefinedFunctions()
         for (Function pf : predefinedFunctions()) {
             if (pf.getIdDecl().getID().equals(name)) {
                 return pf.getIdDecl();
             }
         }
-
-        // TODO: do we need to check this since order of functions doesn't matter?
+        
         for (Function f : getFunctionList()) {
             if (f.getIdDecl().getID().equals(name)) {
                 return f.getIdDecl();
@@ -32,7 +30,9 @@ aspect NameAnalysis {
     inh IdDecl Function.lookup(String name);
 
     eq Function.getChild().lookup(String name) {
-        return localLookup(name);
+        // return localLookup(name);
+        IdDecl decl = localLookup(name);
+		return !decl.isUnknown() ? decl : lookup(name);
     }
 
     syn IdDecl Function.localLookup(String name){
@@ -54,7 +54,7 @@ aspect NameAnalysis {
     }
 
     syn IdDecl StmtBlock.localLookup(String name, int until){
-        for (int i = 0; i <= until; i++) {
+        for (int i = 0; i < until; i++) {
             IdDecl decl = getStmt(i).localLookup(name);
             if (decl.getID().equals(name)) {
                 return decl;
@@ -63,14 +63,16 @@ aspect NameAnalysis {
         return unknownDecl();
     }
 
+    // Statement
+    // inh IdDecl Stmt.lookup(String name);
+    syn IdDecl Stmt.localLookup(String name) = unknownDecl();
+
     syn IdDecl DeclareVar.localLookup(String name) {
         if (getIdDecl().getID().equals(name)) {
             return getIdDecl();
         }
         return unknownDecl();
     }
-
-    syn IdDecl Stmt.localLookup(String name) = unknownDecl();
 
     // TODO: check if parameters are correctly defined
     syn nta List<Function> Program.predefinedFunctions() {

@@ -1,3 +1,1 @@
-Error at line 1: symbol 'x' is already declared!
-Error at line 3: expected type does not match
-Error at line 3: symbol 'x' is not declared
+Error at line 3: expected type does not match. Type: lang.ast.BoolType@1f59a598 != Expected type: lang.ast.IntType@8c3b9d
