@@ -1,4 +1,5 @@
 int f(int x) {
+    x = 2;
     if (x == 3) {
         int a = 3;
     } else {

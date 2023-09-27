@@ -74,7 +74,6 @@ aspect NameAnalysis {
         return unknownDecl();
     }
 
-    // TODO: check if parameters are correctly defined
     syn nta List<Function> Program.predefinedFunctions() {
         List<Function> list = new List <Function>();
         list.add(new Function(new IdDecl("print"), new ParamList(new List()), new StmtBlock(new List())));

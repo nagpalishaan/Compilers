@@ -1,0 +1,2 @@
+Error at line 3: expected type does not match. Type: lang.ast.BoolType@2898ac89 != Expected type: lang.ast.IntType@683dbc2c
+Error at line 4: expected type does not match. Type: lang.ast.BoolType@2898ac89 != Expected type: lang.ast.IntType@683dbc2c
