@@ -1,2 +1,2 @@
-Error at line 3: expected type does not match. Type: lang.ast.BoolType@6aaceffd != Expected type: lang.ast.IntType@5c671d7f
+Error at line 3: expected type does not match. Type: lang.ast.BoolType@c86b9e3 != Expected type: lang.ast.IntType@757277dc
 Error at line 3: symbol 'b' is not declared
