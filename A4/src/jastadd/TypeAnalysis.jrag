@@ -56,21 +56,55 @@ aspect TypeAnalysis {
         }
         return unknownType();
     }
-    eq FunctionCall.type() = intType();
-    eq Numeral.type() = intType();
-    eq IdUse.type() = intType();
-    eq Neg.type() = intType();
-    eq BinExpr.type() {
-        if(getLeft().expectedType()==intType() && getRight().expectedType()==intType()){
+    eq Add.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
             return intType();
         }
         return unknownType();
     }
+    eq Mul.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
+            return intType();
+        }
+        return unknownType();
+    }
+    eq Sub.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
+            return intType();
+        }
+        return unknownType();
+    }
+    eq Div.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
+            return intType();
+        }
+        return unknownType();
+    }
+    eq Mod.type() {
+        if(getLeft().type()==intType() && getRight().type()==intType()){
+            return intType();
+        }
+        return unknownType();
+    }
+    eq BinExpr.type() {
+        System.exit(1);
+        return unknownType();
+    }
+    eq FunctionCall.type() = intType();
+    eq Numeral.type() = intType();
+    eq IdUse.type() = intType();
+    eq Neg.type() = intType();
+    
 
 
     inh Type Expr.expectedType();
     eq DeclareVar.getExpr().expectedType() = intType();
-    eq AssignVar.getExpr().expectedType() = intType();
+    eq AssignVar.getExpr().expectedType() {
+        if(getExpr().type() == intType()){
+            return intType();
+        }
+        return unknownType();
+    }
     eq IfElse.getExpr().expectedType() {
         return boolType();
         
@@ -88,8 +122,5 @@ aspect TypeAnalysis {
     eq IntType.compatibleType(Type other) = other.isIntType();
     eq BoolType.compatibleType(Type other) = other.isBoolType();
     eq UnknownType.compatibleType(Type other) = true;
-
-
-
 
 }
