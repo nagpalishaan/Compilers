@@ -1,2 +1,2 @@
 int f(int x, int y, int z) { return x; }
-int g() { return g(3); }
+int g() { return f(3); }

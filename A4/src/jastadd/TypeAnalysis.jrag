@@ -138,7 +138,10 @@ aspect TypeAnalysis {
     eq DeclareVar.getIdDecl().isFunction() = false;
     eq DeclareVar.getIdDecl().isVariable() = true;
     
-
+    inh Function IdDecl.function();
+    eq Program.getChild().function() = null;
+    eq Function.getIdDecl().function() = this;
+    
     
     
 
