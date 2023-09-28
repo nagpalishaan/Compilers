@@ -96,10 +96,7 @@ aspect TypeAnalysis {
     inh Type Expr.expectedType();
     eq DeclareVar.getExpr().expectedType() = intType();
     eq AssignVar.getExpr().expectedType() {
-        if(getExpr().type() == intType()){
-            return intType();
-        }
-        return unknownType();
+        return intType();
     }
     eq IfElse.getExpr().expectedType() = boolType();
 
