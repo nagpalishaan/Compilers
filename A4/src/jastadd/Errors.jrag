@@ -63,11 +63,11 @@ aspect ErrorContributions {
 		when getIdUse().decl().isFunction()
 		to Program.errors() for program();
 
-	FunctionCall contributes error("wrong num of prams")
+	FunctionCall contributes error("wrong num of parameters")
 		when getIdUse().decl().function() != null && getIdUse().decl().function().getParamList().getNumParam() != getNumExpr() && getIdUse().decl().getID() != "print"
 		to Program.errors() for program();
 
-	FunctionCall contributes error("wrong num of prams")
+	FunctionCall contributes error("wrong num of parameters")
 		when getIdUse().decl().function() != null && 1 != getNumExpr() && getIdUse().decl().getID() == "print"
 		to Program.errors() for program();
 }
