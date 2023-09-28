@@ -55,6 +55,13 @@ aspect ErrorContributions {
 		when getIdUse().decl().isVariable()
 		to Program.errors() for program();
 
+	FunctionCallStmt contributes error("incorrectly using variable as a function call stmt")
+		when getFunctionCall().getIdUse().decl().isVariable()
+		to Program.errors() for program();
+
+	AssignVar contributes error("incorrectly using function as a variable")
+		when getIdUse().decl().isFunction()
+		to Program.errors() for program();
 
 
 }
