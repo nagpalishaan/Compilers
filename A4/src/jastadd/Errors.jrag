@@ -44,12 +44,9 @@ aspect ErrorContributions {
 	// 	to Program.errors() for program();
 
 	Expr contributes error("expected type does not match. Type: " + type() + " != Expected type: "+ expectedType())
-		when type() != expectedType()
+		when expectedType().compatibleType(type()) == false
 		to Program.errors() for program();
 
-	BinExpr contributes error("incorrect types")
-		when getLeft().expectedType().compatibleType(getRight().expectedType()) == false
-		to Program.errors() for program();
 
 
 }

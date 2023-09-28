@@ -1,1 +1,0 @@
-Error at line 3: expected type does not match. Type: lang.ast.BoolType@6ab778a != Expected type: lang.ast.IntType@4e3958e7

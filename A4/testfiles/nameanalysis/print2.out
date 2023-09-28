@@ -1,2 +1,1 @@
-Error at line 3: expected type does not match. Type: lang.ast.BoolType@7b02881e != Expected type: lang.ast.IntType@1ebd319f
 Error at line 3: symbol 'y' is not declared

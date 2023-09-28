@@ -1,5 +1,0 @@
-Error at line 2: expected type does not match. Type: lang.ast.BoolType@58a9760d != Expected type: lang.ast.IntType@71e9ddb4
-Error at line 3: expected type does not match. Type: lang.ast.IntType@71e9ddb4 != Expected type: lang.ast.BoolType@58a9760d
-Error at line 3: expected type does not match. Type: lang.ast.UnknownType@75db5df9 != Expected type: lang.ast.BoolType@58a9760d
-Error at line 6: expected type does not match. Type: lang.ast.BoolType@58a9760d != Expected type: lang.ast.IntType@71e9ddb4
-Error at line 6: symbol 'a' is not declared

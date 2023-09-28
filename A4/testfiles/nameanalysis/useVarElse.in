@@ -1,9 +1,9 @@
 int f(int x) {
-    x = 2;
-    if (x == 3) {
-        int a = 3;
+    int b = 2;
+    if (b == 3) {
+
     } else {
-        return a;
+        
     }
     return 0;
 }
