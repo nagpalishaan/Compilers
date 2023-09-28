@@ -54,8 +54,18 @@ aspect NameAnalysis {
     }
 
     syn IdDecl StmtBlock.localLookup(String name, int until){
-        for (int i = 0; i < until; i++) {
+        for (int i = 0; i <= until; i++) {
             IdDecl decl = getStmt(i).localLookup(name);
+
+            // Check if the statement is a declare var
+            // if (getStmt(i) instanceof DeclareVar) {
+            //     DeclareVar decl2 = (DeclareVar) getStmt(i);
+            //     //decl2.localLookup(name);
+            //     if (decl2.getIdDecl().getID().equals(name)) {
+            //         return decl2.getIdDecl();
+            //     }
+            // }
+
             if (decl.getID().equals(name)) {
                 return decl;
             }
@@ -64,7 +74,6 @@ aspect NameAnalysis {
     }
 
     // Statement
-    // inh IdDecl Stmt.lookup(String name);
     syn IdDecl Stmt.localLookup(String name) = unknownDecl();
 
     syn IdDecl DeclareVar.localLookup(String name) {
@@ -86,8 +95,5 @@ aspect CircularDefinitions {
 	/* Identify circular definitions in functions */
 	syn boolean IdUse.isCircular() = inExprOf(decl());
 	inh boolean IdUse.inExprOf(IdDecl decl);
-
-    // TODO
-
     eq Program.getChild().inExprOf(IdDecl decl) = false;
 }
