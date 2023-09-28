@@ -51,6 +51,10 @@ aspect ErrorContributions {
 		when expectedType().compatibleType(type()) == false
 		to Program.errors() for program();
 
+	FunctionCall contributes error("incorrectly using variable as a function call")
+		when getIdUse().decl().isVariable()
+		to Program.errors() for program();
+
 
 
 }

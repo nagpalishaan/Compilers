@@ -1,25 +1,37 @@
 aspect TypeAnalysis {
+    // intType
     syn nta IntType Program.intType() = new IntType();
     inh IntType ASTNode.intType();
     eq Program.getChild().intType() = intType();
+    // give all the children of Program the isIntType attribute
     syn boolean Type.isIntType() = false;
+    // set the isIntType attribute of intType to true
     eq IntType.isIntType() = true;
 
+    // boolType
     syn nta BoolType Program.boolType() = new BoolType();
     inh BoolType ASTNode.boolType();
     eq Program.getChild().boolType() = boolType();
+    // give all the children of Program the isBoolType attribute
     syn boolean Type.isBoolType() = false;
+    // set the isBoolType attribute of boolType to true
     eq BoolType.isBoolType() = true;
 
+    // unknownType
     syn nta UnknownType Program.unknownType() = new UnknownType();
     inh UnknownType ASTNode.unknownType();
     eq Program.getChild().unknownType() = unknownType();
+    // give all the children of Program the isUnknownType attribute
     syn boolean Type.isUnknown() = false;
+    // set the isUnknownType attribute of unknownType to true
     eq UnknownType.isUnknown() = true;
     syn boolean Type.isUnknownType() = false;
     eq UnknownType.isUnknownType() = true;
 
+    // give all Expr nodes the type attribute and set default to unknownType
     syn Type Expr.type() = unknownType();
+
+    // set the type of all operations
     eq Less.type() {
         if(getLeft().type()==intType() && getRight().type()==intType()){
             return boolType();
@@ -91,8 +103,7 @@ aspect TypeAnalysis {
     eq IdUse.type() = intType();
     eq Neg.type() = intType();
     
-
-
+    // set the expected type of all statements
     inh Type Expr.expectedType();
     eq DeclareVar.getExpr().expectedType() = intType();
     eq AssignVar.getExpr().expectedType() {
@@ -105,15 +116,29 @@ aspect TypeAnalysis {
     eq BinExpr.getLeft().expectedType() = intType();
     eq BinExpr.getRight().expectedType() = intType();
 
+    // set the expected type of all declarations
     inh Type IdDecl.expectedType();
     eq IdDecl.getChild().expectedType() = intType();
     eq Program.unknownDecl().expectedType() = unknownType();
     eq Function.getChild().expectedType() = intType();
 
-
+    // make compatibleType
     syn boolean Type.compatibleType(Type other);
     eq IntType.compatibleType(Type other) = other.isIntType();
     eq BoolType.compatibleType(Type other) = other.isBoolType();
     eq UnknownType.compatibleType(Type other) = true;
+
+    inh boolean IdDecl.isFunction();
+    inh boolean IdDecl.isVariable();
+
+    eq Program.getChild().isFunction() = false;
+    eq Program.getChild().isVariable() = false;
+    eq Function.getIdDecl().isFunction() = true;
+    eq Function.getIdDecl().isVariable() = false;
+    eq DeclareVar.getIdDecl().isFunction() = false;
+    eq DeclareVar.getIdDecl().isVariable() = true;
+
+    
+    
 
 }
