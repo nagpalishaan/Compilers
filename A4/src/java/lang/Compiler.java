@@ -36,7 +36,9 @@ public class Compiler {
 			LangParser parser = new LangParser();
 			Program program = (Program) parser.parse(scanner);
 			DrAST_root_node = program; //Enable debugging with DrAST
-			program.checkNames(System.err);
+			if (program.errors().size() != 0) {
+				System.exit(1);
+			}
 			System.out.println(program.dumpTree());
 			System.out.println("The Maximal Statement Nesting for the program is: " + MSN.result(program));
 		} catch (FileNotFoundException e) {
