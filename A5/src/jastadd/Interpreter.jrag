@@ -1,10 +1,10 @@
-import java.util.Map;
+import java.util.*;
     
 aspect Interpreter {
 
     public class ActivationRecord {
 
-        private Map<String, Integer> vars;
+        private HashMap<String, Integer> vars;
     
         // TODO: put method to store variable/parameter values
         public void put(String name, int value) {
@@ -19,8 +19,12 @@ aspect Interpreter {
     }
 
     public void Program.eval(){
+
+        // Declare main IDDecl as unknown
         IdDecl main = unknownDecl();
         boolean mainFunctionFound = false;
+
+        // Loop through all functions to find main function
 		for(Function func : getFunctionList()) {
 			if(func.getIdDecl().getID() == "main"){
 				main = func.getIdDecl();
@@ -28,10 +32,13 @@ aspect Interpreter {
 			}
 		}
 
+        // Report runtime error if main function never found
         if(!mainFunctionFound) {
             throw new RuntimeException("main function is missing");
         }
 
+        // Call eval() on main function (if it exists); function should be given a new ActivationRecord
+            // See TypeAnalysis.jrag for function() method
         main.function().eval(new ActivationRecord());
     }
 
@@ -39,8 +46,8 @@ aspect Interpreter {
         throw new RuntimeException("Function is not implemented yet");
     }
 
-    public void Stmt.eval(ActivationRecord actrec){
-        throw new RuntimeException("Stmt is not implemented yet");
+    public void StmtBlock.eval(ActivationRecord actrec){
+        throw new RuntimeException("StmtBlock is not implemented yet");
     }
 
     // Evaluation of an expression returns an integer
