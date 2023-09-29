@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import lang.Util;
 import lang.ast.ErrorMessage;
 import lang.ast.Program;
 
@@ -32,8 +33,13 @@ public class TestInterpreter {
             Program program = (Program) parse(inFile);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             System.setOut(new PrintStream(baos));
-            // TODO: check for errors before the program is interpreted
+
+			// Check for errors before program is interpreted
+			if (program.errors().size() != 0) {
+				System.exit(1);
+			}
             program.eval();
+
             compareOutput(baos.toString(), outFile, expectedFile);
         } finally {
             System.setOut(out);
