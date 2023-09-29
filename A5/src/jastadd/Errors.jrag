@@ -47,7 +47,7 @@ aspect ErrorContributions {
 	// 	when isCircular()
 	// 	to Program.errors() for program();
 
-	Expr contributes error("expected type does not match. Type: " + type() + " != Expected type: "+ expectedType())
+	Expr contributes error("expected type does not match")
 		when expectedType().compatibleType(type()) == false
 		to Program.errors() for program();
 
