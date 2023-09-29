@@ -1,2 +1,2 @@
-Error at line 3: expected type does not match. Type: lang.ast.BoolType@1dac5ef != Expected type: lang.ast.IntType@6ab778a
+Error at line 3: expected type does not match
 Error at line 3: incorrect types for AssignVar
