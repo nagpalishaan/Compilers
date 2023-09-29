@@ -1,0 +1,99 @@
+aspect NameAnalysis {
+
+    // IdUse
+	syn IdDecl IdUse.decl() = lookup(getID());
+	inh IdDecl IdUse.lookup(String name);
+
+    // IdDecl
+    inh IdDecl IdDecl.lookup(String name);
+
+    // IdDecl Multi Declared
+	syn boolean IdDecl.isMultiDeclared() = lookup(getID()) != this && !lookup(getID()).isUnknown();
+
+    // Program
+    eq Program.getChild().lookup(String name) {
+        for (Function pf : predefinedFunctions()) {
+            if (pf.getIdDecl().getID().equals(name)) {
+                return pf.getIdDecl();
+            }
+        }
+        
+        for (Function f : getFunctionList()) {
+            if (f.getIdDecl().getID().equals(name)) {
+                return f.getIdDecl();
+            }
+        }
+        return unknownDecl();
+    }
+    
+    // Function
+    inh IdDecl Function.lookup(String name);
+
+    eq Function.getChild().lookup(String name) {
+        // return localLookup(name);
+        IdDecl decl = localLookup(name);
+		return !decl.isUnknown() ? decl : lookup(name);
+    }
+
+    syn IdDecl Function.localLookup(String name){
+        ParamList paramList = getParamList();
+        for (int i = 0; i < paramList.getNumParam(); i++) {
+            if (paramList.getParam(i).getIdDecl().getID().equals(name)) {
+                return paramList.getParam(i).getIdDecl();
+            }
+        }
+        return unknownDecl();
+    }
+
+    // Statement Block
+    inh IdDecl StmtBlock.lookup(String name);
+
+    eq StmtBlock.getStmt(int index).lookup(String name) {
+        IdDecl decl = localLookup(name, index);
+		return !decl.isUnknown() ? decl : lookup(name);
+    }
+
+    syn IdDecl StmtBlock.localLookup(String name, int until){
+        for (int i = 0; i <= until; i++) {
+            IdDecl decl = getStmt(i).localLookup(name);
+
+            // Check if the statement is a declare var
+            // if (getStmt(i) instanceof DeclareVar) {
+            //     DeclareVar decl2 = (DeclareVar) getStmt(i);
+            //     //decl2.localLookup(name);
+            //     if (decl2.getIdDecl().getID().equals(name)) {
+            //         return decl2.getIdDecl();
+            //     }
+            // }
+
+            if (decl.getID().equals(name)) {
+                return decl;
+            }
+        }
+        return unknownDecl();
+    }
+
+    // Statement
+    syn IdDecl Stmt.localLookup(String name) = unknownDecl();
+
+    syn IdDecl DeclareVar.localLookup(String name) {
+        if (getIdDecl().getID().equals(name)) {
+            return getIdDecl();
+        }
+        return unknownDecl();
+    }
+
+    syn nta List<Function> Program.predefinedFunctions() {
+        List<Function> list = new List <Function>();
+        list.add(new Function(new IdDecl("print"), new ParamList(new List()), new StmtBlock(new List())));
+        list.add(new Function(new IdDecl("read"), new ParamList(new List()), new StmtBlock(new List())));
+        return list;
+    }
+}
+
+aspect CircularDefinitions {
+	/* Identify circular definitions in functions */
+	syn boolean IdUse.isCircular() = inExprOf(decl());
+	inh boolean IdUse.inExprOf(IdDecl decl);
+    eq Program.getChild().inExprOf(IdDecl decl) = false;
+}

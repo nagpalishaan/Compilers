@@ -1,0 +1,8 @@
+int test(){
+    int a = 4;
+    if (b == 2) {
+        a = 3;
+    } else {
+        a = 5;
+    }
+}

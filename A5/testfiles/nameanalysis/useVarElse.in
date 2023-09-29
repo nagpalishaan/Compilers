@@ -1,0 +1,9 @@
+int f(int x) {
+    int b = 2;
+    if (b == 3) {
+
+    } else {
+        
+    }
+    return 0;
+}
