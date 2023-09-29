@@ -23,7 +23,7 @@ public class TestInterpreter {
 	private static final File TEST_DIRECTORY = new File("testfiles/interpreter");
 
 	private final String filename;
-	public TestNameAnalysis(String testFile) {
+	public TestInterpreter(String testFile) {
 		filename = testFile;
 	}
 
