@@ -1,0 +1,39 @@
+import java.util.Map;
+    
+aspect Interpreter {
+
+    public class ActivationRecord {
+
+        private Map<String, Integer> vars;
+    
+        // TODO: put method to store variable/parameter values
+        public void put(String name, int value) {
+            vars.put(name, value);
+        }
+    
+        // TODO: get method to retrieve variable/parameter values
+        public void get(String name) {
+            vars.get(name);
+            // TODO: throw exception if variable not found
+        }
+    }
+
+    public void Program.eval(){
+        throw new RuntimeException("Program is not implemented yet");
+    }
+
+    public int FunctionDecl.eval(ActivationRecord actrec){
+        throw new RuntimeException("FunctionDecl is not implemented yet");
+    }
+
+    public void Stmt.eval(ActivationRecord actrec){
+        throw new RuntimeException("Stmt is not implemented yet");
+    }
+
+    // Evaluation of an expression returns an integer
+        // Boolen values should be mapped to integers
+    public int Expr.eval(ActivationRecord actrec){
+        throw new RuntimeException("Expr is not implemented yet");
+    }
+
+}
