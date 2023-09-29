@@ -19,11 +19,24 @@ aspect Interpreter {
     }
 
     public void Program.eval(){
-        throw new RuntimeException("Program is not implemented yet");
+        IdDecl main = unknownDecl();
+        boolean mainFunctionFound = false;
+		for(Function func : getFunctionList()) {
+			if(func.getIdDecl().getID() == "main"){
+				main = func.getIdDecl();
+                mainFunctionFound = true;
+			}
+		}
+
+        if(!mainFunctionFound) {
+            throw new RuntimeException("main function is missing");
+        }
+
+        main.function().eval(new ActivationRecord());
     }
 
-    public int FunctionDecl.eval(ActivationRecord actrec){
-        throw new RuntimeException("FunctionDecl is not implemented yet");
+    public int Function.eval(ActivationRecord actrec){
+        throw new RuntimeException("Function is not implemented yet");
     }
 
     public void Stmt.eval(ActivationRecord actrec){
