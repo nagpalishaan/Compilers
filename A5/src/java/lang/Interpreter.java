@@ -1,10 +1,21 @@
 public class Interpreter {
+
     // Parses in an AST
+    public static void main(String[] args) {
 
-    // Checks that no compile-time errors
+        // Define program AST
+        Program program = ??;
 
-    // Runs by calling eval on a program AST
+        // Check for compile-time errors
+        if (??) {
+            System.exit(1);
+        }
+        else {
+            // Runs by calling eval on a program AST
+            program.eval();
+        }
 
+    }
 }
 
 
