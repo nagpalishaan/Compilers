@@ -30,7 +30,7 @@ public class TestInterpreter {
 	@Test public void runTest() throws Exception {
         PrintStream out = System.out;
         try {
-            Program program = (Program) parse(inFile);
+            Program program = (Program) Util.parse(new File(TEST_DIRECTORY, filename));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             System.setOut(new PrintStream(baos));
 
@@ -40,7 +40,7 @@ public class TestInterpreter {
 			}
             program.eval();
 
-            compareOutput(baos.toString(), outFile, expectedFile);
+            Util.compareOutput(baos.toString(), new File(TEST_DIRECTORY, Util.changeExtension(filename, ".out")), new File(TEST_DIRECTORY, Util.changeExtension(filename, ".expected")));
         } finally {
             System.setOut(out);
         }
