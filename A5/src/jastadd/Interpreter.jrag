@@ -43,17 +43,47 @@ aspect Interpreter {
     }
 
     public int Function.eval(ActivationRecord actrec){
+        for(Stmt stmt : getStmtBlock().getStmts()) {
+            stmt.eval(actrec);
+        }
         throw new RuntimeException("Function is not implemented yet");
     }
 
-    public void StmtBlock.eval(ActivationRecord actrec){
-        throw new RuntimeException("StmtBlock is not implemented yet");
+    public void Stmt.eval(ActivationRecord actrec){
+        throw new RuntimeException("Stmt is not implemented yet");
+    }
+
+    public void DeclareVar.eval(ActivationRecord actrec) {
+        int exprEvaluated;
+        if (hasExpr()) {
+            getExpr().eval(actrec);
+            exprEvaluated = getExpr().eval(actrec);
+            System.out.println(exprEvaluated);
+        }
     }
 
     // Evaluation of an expression returns an integer
         // Boolen values should be mapped to integers
     public int Expr.eval(ActivationRecord actrec){
         throw new RuntimeException("Expr is not implemented yet");
+    }
+    public int Add.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) + getRight().eval(actrec); 
+    }
+    public int Sub.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) - getRight().eval(actrec); 
+    }
+    public int Mul.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) * getRight().eval(actrec); 
+    }
+    public int Mod.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) % getRight().eval(actrec); 
+    }
+    public int Div.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) / getRight().eval(actrec); 
+    }
+    public int Numeral.eval(ActivationRecord actrec) {
+        return Integer.valueOf(getNUMERAL());
     }
 
 }
