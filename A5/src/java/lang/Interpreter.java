@@ -14,7 +14,7 @@ import lang.ast.LangScanner;
 public class Interpreter {
     // Parses in an AST
 
-    public static Object DrAST_root_node; //Enable debugging with DrAST
+    public static Object DrAST_root_node; // Enable debugging with DrAST
     public static void main(String[] args) {
         try {
 			if (args.length != 1) {
@@ -32,7 +32,7 @@ public class Interpreter {
             // Define program AST
 			Program program = (Program) parser.parse(scanner);
 
-			DrAST_root_node = program; //Enable debugging with DrAST
+			DrAST_root_node = program; // Enable debugging with DrAST
 
             // Check for compile time errors
 			if (program.errors().size() != 0) {
