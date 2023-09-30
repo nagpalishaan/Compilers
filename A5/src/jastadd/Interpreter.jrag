@@ -83,6 +83,27 @@ aspect Interpreter {
     public int Div.eval(ActivationRecord actrec) {
         return getLeft().eval(actrec) / getRight().eval(actrec); 
     }
+    public int Neg.eval(ActivationRecord actrec) {
+        return -getExpr().eval(actrec); 
+    }
+    // public int Equal.eval(ActivationRecord actrec) {
+    //     return getLeft().eval(actrec) == getRight().eval(actrec) ? 1 : 0;
+    // }
+    // public int Not.eval(ActivationRecord actrec){
+    //     return getLeft().eval(actrec) != getRight().eval(actrec) ? 1 : 0;
+    // }
+    // public int Less.eval(ActivationRecord actrec) {
+    //     return getLeft().eval(actrec) < getRight().eval(actrec) ? 1 : 0;
+    // }
+    // public int Greater.eval(ActivationRecord actrec) {
+    //     return getLeft().eval(actrec) > getRight().eval(actrec) ? 1 : 0;
+    // }
+    // public int LessEqual.eval(ActivationRecord actrec) {
+    //     return getLeft().eval(actrec) <= getRight().eval(actrec) ? 1 : 0;
+    // }
+    // public int GreaterEqual.eval(ActivationRecord actrec) {
+    //     return getLeft().eval(actrec) >= getRight().eval(actrec) ? 1 : 0;
+    // }
     public int Numeral.eval(ActivationRecord actrec) {
         return Integer.valueOf(getNUMERAL());
     }
