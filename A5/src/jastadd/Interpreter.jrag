@@ -46,7 +46,8 @@ aspect Interpreter {
         for(Stmt stmt : getStmtBlock().getStmts()) {
             stmt.eval(actrec);
         }
-        throw new RuntimeException("Function is not implemented yet");
+        //throw new RuntimeException("Function is not implemented yet");
+        return 0;
     }
 
     public void Stmt.eval(ActivationRecord actrec){
