@@ -59,6 +59,8 @@ aspect Interpreter {
         if (hasExpr()) {
             getExpr().eval(actrec);
             exprEvaluated = getExpr().eval(actrec);
+
+            // TODO: temporary print statement
             System.out.println(exprEvaluated);
         }
     }
@@ -68,6 +70,8 @@ aspect Interpreter {
     public int Expr.eval(ActivationRecord actrec){
         throw new RuntimeException("Expr is not implemented yet");
     }
+
+    // Arithmetic Expressions
     public int Add.eval(ActivationRecord actrec) {
         return getLeft().eval(actrec) + getRight().eval(actrec); 
     }
@@ -86,6 +90,8 @@ aspect Interpreter {
     public int Neg.eval(ActivationRecord actrec) {
         return -getExpr().eval(actrec); 
     }
+
+    // Boolean Expressions
     // public int Equal.eval(ActivationRecord actrec) {
     //     return getLeft().eval(actrec) == getRight().eval(actrec) ? 1 : 0;
     // }
@@ -104,8 +110,21 @@ aspect Interpreter {
     // public int GreaterEqual.eval(ActivationRecord actrec) {
     //     return getLeft().eval(actrec) >= getRight().eval(actrec) ? 1 : 0;
     // }
+
     public int Numeral.eval(ActivationRecord actrec) {
         return Integer.valueOf(getNUMERAL());
     }
 
+    public int FunctionCall.eval(ActivationRecord actrec) {
+        if(getIdUse().getID().equals("print")){
+            System.out.println(getExpr(0).eval(actrec)); // Note: print only has 1 parameter
+        }
+
+        // TODO: implement read and normal function calls
+        return 0;
+    }
+
+    public void FunctionCallStmt.eval(ActivationRecord actrec) {
+        getFunctionCall().eval(actrec);
+    }
 }
