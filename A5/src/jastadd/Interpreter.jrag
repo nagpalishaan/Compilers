@@ -78,21 +78,21 @@ aspect Interpreter {
 
     public void AssignVar.eval(ActivationRecord actrec) {
         int exprEvaluated = getExpr().eval(actrec);
-        actrec.put(getIdUse().getID(), exprEvaluated);
+        actrec.put(getIdUse().decl().uniqueName(), exprEvaluated);
     }
 
     public void DeclareVar.eval(ActivationRecord actrec) {
 
         if (hasExpr()) {
             int exprEvaluated = getExpr().eval(actrec);
-            actrec.put(getIdDecl().getID(), exprEvaluated);
+            actrec.put(getIdDecl().uniqueName(), exprEvaluated);
 
             // temporary print statement
             System.out.println(exprEvaluated);   
         }
         // Variable declared, but used w/o being assigned a value
         else{
-            actrec.put(getIdDecl().getID(), 0); // return default value
+            actrec.put(getIdDecl().uniqueName(), 0); // return default value
         }
     }
 
@@ -147,21 +147,27 @@ aspect Interpreter {
     }
 
     public int IdUse.eval(ActivationRecord actrec){
-        return actrec.get(decl().getID());
+        return actrec.get(decl().uniqueName());
     }
 
     public void Return.eval(ActivationRecord actrec) {
         int returnVal = getExpr().eval(actrec);
         actrec.completeReturn(returnVal);
     }
-
+    static Scanner Program.scanner = new Scanner(System.in);
     public int FunctionCall.eval(ActivationRecord actrec) {
         if(getIdUse().getID().equals("print")){
             System.out.println(getExpr(0).eval(actrec)); // print only has 1 parameter
             return 0;
         }
         else if(getIdUse().getID().equals("read")){
-            return 0;
+            String word = program().scanner.next();
+            try {
+                actrec.completeReturn(Integer.parseInt(word));
+            } catch (Exception e) {
+                actrec.completeReturn(0);
+            }
+            return actrec.getReturnValue();
         }
         else{
             ActivationRecord newActrec = new ActivationRecord(); // create new activation record
@@ -217,4 +223,24 @@ aspect Interpreter {
             }
         }
     }
+
+    syn String IdDecl.uniqueName() {
+        return  index() + getID();
+    }
+    eq Program.getChild().index() {
+        return "";
+    }
+    eq StmtBlock.getStmt(int index).index() {
+        return index() + index + "_";
+    }
+    eq Function.getIdDecl().index() {
+        return "";
+    }
+    eq Function.getStmtBlock().index() {
+        return "";
+    }
+    inh String IdDecl.index();
+    inh String StmtBlock.index();
+
+
 }
