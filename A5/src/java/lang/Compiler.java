@@ -39,8 +39,10 @@ public class Compiler {
 			if (program.errors().size() != 0) {
 				System.exit(1);
 			}
-			System.out.println(program.dumpTree());
-			System.out.println("The Maximal Statement Nesting for the program is: " + MSN.result(program));
+			// Self-grader got mad so I commented out
+			// System.out.println(program.dumpTree());
+			// System.out.println("The Maximal Statement Nesting for the program is: " + MSN.result(program));
+			program.eval();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 			System.exit(1);
