@@ -1,0 +1,8 @@
+int add(int a, int b) {
+    int c = a + b;
+}
+
+int main() {
+    int i = 10;
+    print(add(i, 20));
+}

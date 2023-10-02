@@ -10,12 +10,12 @@ aspect Interpreter {
             vars = new HashMap<String, Integer>();
         }
     
-        // TODO: put method to store variable/parameter values
+        // put method to store variable/parameter values
         public void put(String name, int value) {
             vars.put(name, value);
         }
     
-        // TODO: get method to retrieve variable/parameter values
+        // get method to retrieve variable/parameter values
         public int get(String name) {
             return vars.get(name);
             // TODO: throw exception if variable not found
@@ -70,14 +70,14 @@ aspect Interpreter {
             actrec.put(getIdDecl().getID(), exprEvaluated);
 
             // temporary print statement
-            System.out.println(exprEvaluated);   
+            System.out.println("test1 " + exprEvaluated);   
         }
         // Variable declared, but used w/o being assigned a value
         else{
             actrec.put(getIdDecl().getID(), 0); // return default value
 
             // temporary print statement
-            System.out.println("Variable used before assigned a value");   
+            System.out.println("test2 " + "Variable used before assigned a value");   
         }
     }
 
@@ -108,24 +108,24 @@ aspect Interpreter {
     }
 
     // Boolean Expressions
-    // public int Equal.eval(ActivationRecord actrec) {
-    //     return getLeft().eval(actrec) == getRight().eval(actrec) ? 1 : 0;
-    // }
-    // public int Not.eval(ActivationRecord actrec){
-    //     return getLeft().eval(actrec) != getRight().eval(actrec) ? 1 : 0;
-    // }
-    // public int Less.eval(ActivationRecord actrec) {
-    //     return getLeft().eval(actrec) < getRight().eval(actrec) ? 1 : 0;
-    // }
-    // public int Greater.eval(ActivationRecord actrec) {
-    //     return getLeft().eval(actrec) > getRight().eval(actrec) ? 1 : 0;
-    // }
-    // public int LessEqual.eval(ActivationRecord actrec) {
-    //     return getLeft().eval(actrec) <= getRight().eval(actrec) ? 1 : 0;
-    // }
-    // public int GreaterEqual.eval(ActivationRecord actrec) {
-    //     return getLeft().eval(actrec) >= getRight().eval(actrec) ? 1 : 0;
-    // }
+    public int Equal.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) == getRight().eval(actrec) ? 1 : 0;
+    }
+    public int Not.eval(ActivationRecord actrec){
+        return getLeft().eval(actrec) != getRight().eval(actrec) ? 1 : 0;
+    }
+    public int Less.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) < getRight().eval(actrec) ? 1 : 0;
+    }
+    public int Greater.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) > getRight().eval(actrec) ? 1 : 0;
+    }
+    public int LessEqual.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) <= getRight().eval(actrec) ? 1 : 0;
+    }
+    public int GreaterEqual.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) >= getRight().eval(actrec) ? 1 : 0;
+    }
 
     public int Numeral.eval(ActivationRecord actrec) {
         return Integer.valueOf(getNUMERAL());
@@ -135,12 +135,36 @@ aspect Interpreter {
         return actrec.get(decl().getID());
     }
 
+    public void Return.eval(ActivationRecord actrec) {
+        throw new RuntimeException(String.valueOf(getExpr().eval(actrec)));
+    }
+
     public int FunctionCall.eval(ActivationRecord actrec) {
         if(getIdUse().getID().equals("print")){
-            System.out.println(getExpr(0).eval(actrec)); // Note: print only has 1 parameter
+            System.out.println("test3: " + getExpr(0).eval(actrec)); // print only has 1 parameter
+            return 0;
+        }
+        else if(getIdUse().getID().equals("read")){
+            return 0;
+        }
+        else{
+            ActivationRecord newActrec = new ActivationRecord(); // create new activation record
+            Function function = getIdUse().decl().function(); // get function declaration
+           
+            //System.out.println("test5: " + "Calling " + getIdUse().getID() + "()");
+
+            if (hasExpr()){
+                for(int i = 0; i < getNumExpr(); i++){
+                    int exprEvaluated = getExpr(i).eval(actrec);
+                    newActrec.put(function.getParamList().getParam(i).getIdDecl().getID(), exprEvaluated);
+                    //System.out.println("test6: " + exprEvaluated);
+                }
+                // temporary print instead of returning value
+                //System.out.println("test7: " + function.eval(newActrec));
+                return function.eval(newActrec);
+            }
         }
 
-        // TODO: implement read and normal function calls
         return 0;
     }
 
