@@ -171,4 +171,25 @@ aspect Interpreter {
     public void FunctionCallStmt.eval(ActivationRecord actrec) {
         getFunctionCall().eval(actrec);
     }
+
+    public void IfElse.eval(ActivationRecord actrec) {
+        if(getExpr().eval(actrec) == 1) {
+            for(Stmt stmt : getStmtBlock().getStmts()) {
+                stmt.eval(actrec);
+            }
+        }
+        else if(hasElseBlock()) {
+            for(Stmt stmt : getElseBlock().getStmts()) {
+                stmt.eval(actrec);
+            }
+        }
+    }
+
+    public void While.eval(ActivationRecord actrec) {
+        while(getExpr().eval(actrec) == 1) {
+            for(Stmt stmt : getStmtBlock().getStmts()) {
+                stmt.eval(actrec);
+            }
+        }
+    }
 }
