@@ -5,6 +5,8 @@ aspect Interpreter {
     public class ActivationRecord {
 
         private HashMap<String, Integer> vars;
+        private boolean returnCalled = false;
+        private int returnValue = 0;
 
         public ActivationRecord() {
             vars = new HashMap<String, Integer>();
@@ -19,6 +21,19 @@ aspect Interpreter {
         public int get(String name) {
             return vars.get(name);
             // TODO: throw exception if variable not found
+        }
+
+        public int getReturnValue() {
+            return returnValue;
+        }
+
+        public void completeReturn(int num) {
+            returnCalled = true;
+            returnValue = num;
+        }
+
+        public boolean isReturnCalled() {
+            return returnCalled;
         }
     }
 
@@ -49,9 +64,12 @@ aspect Interpreter {
     public int Function.eval(ActivationRecord actrec){
         for(Stmt stmt : getStmtBlock().getStmts()) {
             stmt.eval(actrec);
+            if(actrec.isReturnCalled()) {
+                break;
+            }
         }
         //throw new RuntimeException("Function is not implemented yet");
-        return 0;
+        return actrec.getReturnValue();
     }
 
     public void Stmt.eval(ActivationRecord actrec){
@@ -70,14 +88,14 @@ aspect Interpreter {
             actrec.put(getIdDecl().getID(), exprEvaluated);
 
             // temporary print statement
-            System.out.println("test1 " + exprEvaluated);   
+            System.out.println(exprEvaluated);   
         }
         // Variable declared, but used w/o being assigned a value
         else{
             actrec.put(getIdDecl().getID(), 0); // return default value
 
             // temporary print statement
-            System.out.println("test2 " + "Variable used before assigned a value");   
+            System.out.println("Variable used before assigned a value");   
         }
     }
 
@@ -136,12 +154,13 @@ aspect Interpreter {
     }
 
     public void Return.eval(ActivationRecord actrec) {
-        throw new RuntimeException(String.valueOf(getExpr().eval(actrec)));
+        int returnVal = getExpr().eval(actrec);
+        actrec.completeReturn(returnVal);
     }
 
     public int FunctionCall.eval(ActivationRecord actrec) {
         if(getIdUse().getID().equals("print")){
-            System.out.println("test3: " + getExpr(0).eval(actrec)); // print only has 1 parameter
+            System.out.println(getExpr(0).eval(actrec)); // print only has 1 parameter
             return 0;
         }
         else if(getIdUse().getID().equals("read")){
@@ -161,11 +180,11 @@ aspect Interpreter {
                 }
                 // temporary print instead of returning value
                 //System.out.println("test7: " + function.eval(newActrec));
-                return function.eval(newActrec);
+                
             }
+            return function.eval(newActrec);
         }
 
-        return 0;
     }
 
     public void FunctionCallStmt.eval(ActivationRecord actrec) {
@@ -175,19 +194,28 @@ aspect Interpreter {
     public void IfElse.eval(ActivationRecord actrec) {
         if(getExpr().eval(actrec) == 1) {
             for(Stmt stmt : getStmtBlock().getStmts()) {
+                if(actrec.isReturnCalled()) {
+                    break;
+                }
                 stmt.eval(actrec);
             }
         }
         else if(hasElseBlock()) {
             for(Stmt stmt : getElseBlock().getStmts()) {
+                if(actrec.isReturnCalled()) {
+                    break;
+                }
                 stmt.eval(actrec);
             }
         }
     }
 
     public void While.eval(ActivationRecord actrec) {
-        while(getExpr().eval(actrec) == 1) {
+        while(getExpr().eval(actrec) == 1 && !actrec.isReturnCalled()) {
             for(Stmt stmt : getStmtBlock().getStmts()) {
+                if(actrec.isReturnCalled()) {
+                    break;
+                }
                 stmt.eval(actrec);
             }
         }
