@@ -93,9 +93,6 @@ aspect Interpreter {
         // Variable declared, but used w/o being assigned a value
         else{
             actrec.put(getIdDecl().getID(), 0); // return default value
-
-            // temporary print statement
-            System.out.println("Variable used before assigned a value");   
         }
     }
 
