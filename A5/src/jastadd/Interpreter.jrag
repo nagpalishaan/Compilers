@@ -5,6 +5,10 @@ aspect Interpreter {
     public class ActivationRecord {
 
         private HashMap<String, Integer> vars;
+
+        public ActivationRecord() {
+            vars = new HashMap<String, Integer>();
+        }
     
         // TODO: put method to store variable/parameter values
         public void put(String name, int value) {
@@ -12,8 +16,8 @@ aspect Interpreter {
         }
     
         // TODO: get method to retrieve variable/parameter values
-        public void get(String name) {
-            vars.get(name);
+        public int get(String name) {
+            return vars.get(name);
             // TODO: throw exception if variable not found
         }
     }
@@ -54,14 +58,26 @@ aspect Interpreter {
         throw new RuntimeException("Stmt is not implemented yet");
     }
 
-    public void DeclareVar.eval(ActivationRecord actrec) {
-        int exprEvaluated;
-        if (hasExpr()) {
-            getExpr().eval(actrec);
-            exprEvaluated = getExpr().eval(actrec);
+    public void AssignVar.eval(ActivationRecord actrec) {
+        int exprEvaluated = getExpr().eval(actrec);
+        actrec.put(getIdUse().getID(), exprEvaluated);
+    }
 
-            // TODO: temporary print statement
-            System.out.println(exprEvaluated);
+    public void DeclareVar.eval(ActivationRecord actrec) {
+
+        if (hasExpr()) {
+            int exprEvaluated = getExpr().eval(actrec);
+            actrec.put(getIdDecl().getID(), exprEvaluated);
+
+            // temporary print statement
+            System.out.println(exprEvaluated);   
+        }
+        // Variable declared, but used w/o being assigned a value
+        else{
+            actrec.put(getIdDecl().getID(), 0); // return default value
+
+            // temporary print statement
+            System.out.println("Variable used before assigned a value");   
         }
     }
 
@@ -113,6 +129,10 @@ aspect Interpreter {
 
     public int Numeral.eval(ActivationRecord actrec) {
         return Integer.valueOf(getNUMERAL());
+    }
+
+    public int IdUse.eval(ActivationRecord actrec){
+        return actrec.get(decl().getID());
     }
 
     public int FunctionCall.eval(ActivationRecord actrec) {
