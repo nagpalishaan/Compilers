@@ -195,7 +195,7 @@ aspect Interpreter {
             }
             return function.eval(newActrec);
         }
-
+        return 0;
     }
 
     public void FunctionCallStmt.eval(ActivationRecord actrec) {
@@ -233,7 +233,7 @@ aspect Interpreter {
     }
 
     syn String IdDecl.uniqueName() {
-        return  index() + getID();
+        return index() + getID();
     }
     eq Program.getChild().index() {
         return "";
