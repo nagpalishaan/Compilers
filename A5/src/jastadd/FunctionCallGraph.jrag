@@ -20,9 +20,20 @@ aspect FunctionCallGraph {
     }
 }
 
-
-aspect functionCallContributions {
+aspect FunctionCallContributions {
     FunctionCall contributes getIdUse().decl().function()
 		to Function.functionCalls()
         for enclosingFunction();
+}
+
+aspect Reachability {
+    syn Set<Function> Function.reachable() circular [new TreeSet<Function>()];
+    eq Function.reachable() {
+        Set<Function> reachableFuncs = new TreeSet<Function>();
+        for (Function f : functionCalls()) {
+            reachableFuncs.add(f);
+            reachableFuncs.addAll(f.reachable());
+        }
+        return reachableFuncs;
+    }
 }
