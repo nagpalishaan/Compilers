@@ -1,0 +1,28 @@
+import java.util.Set;
+import java.util.TreeSet;
+
+aspect FunctionCallGraph {
+
+    // Collection attribute
+    coll Set<Function> Function.functionCalls() [new TreeSet<Function>()] with add root Function;
+
+    // Inherited attribute enclosingFunction
+    inh Function Stmt.enclosingFunction();
+    inh Function FunctionCall.enclosingFunction();
+
+    eq Function.getStmtBlock().enclosingFunction() = this;
+
+    // Fix function comparable compile error
+    public class Function implements Comparable<Function> {
+        public int compareTo(Function f) {
+            return getIdDecl().getID().compareTo(f.getIdDecl().getID());
+        }
+    }
+}
+
+
+aspect functionCallContributions {
+    FunctionCall contributes getIdUse().decl().function()
+		to Function.functionCalls()
+        for enclosingFunction();
+}

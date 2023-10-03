@@ -1,0 +1,10 @@
+FUNCTION CALLS:
+fac calls fac
+f calls fac
+f calls print
+main calls f
+
+FUNCTION DECLARATIONS:
+fac;
+f;
+main;

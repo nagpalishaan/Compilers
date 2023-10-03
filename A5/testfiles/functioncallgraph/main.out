@@ -1,0 +1,12 @@
+FUNCTION CALLS:
+main calls a
+a calls b
+b calls c
+b calls d
+
+FUNCTION DECLARATIONS:
+main;
+a;
+b;
+c;
+d;

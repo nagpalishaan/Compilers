@@ -195,7 +195,6 @@ aspect Interpreter {
             }
             return function.eval(newActrec);
         }
-        return 0;
     }
 
     public void FunctionCallStmt.eval(ActivationRecord actrec) {
