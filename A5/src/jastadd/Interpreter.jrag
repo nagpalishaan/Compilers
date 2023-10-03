@@ -82,7 +82,6 @@ aspect Interpreter {
     }
 
     public void DeclareVar.eval(ActivationRecord actrec) {
-
         if (hasExpr()) {
             int exprEvaluated = getExpr().eval(actrec);
             actrec.put(getIdDecl().getID(), exprEvaluated);
