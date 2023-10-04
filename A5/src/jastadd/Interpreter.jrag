@@ -169,10 +169,9 @@ aspect Interpreter {
             return 0;
         }
         else if(getIdUse().getID().equals("read")){
-            String input = actrec.scanner.next();
             int returnValueForRead = 0;
             try {
-                returnValueForRead = Integer.parseInt(input);
+                returnValueForRead = Integer.parseInt(actrec.scanner.next());
             } catch (Exception e) {
                 returnValueForRead = 0;
             }
@@ -222,12 +221,12 @@ aspect Interpreter {
     }
 
     public void While.eval(ActivationRecord actrec) {
-        while(getExpr().eval(actrec) == 1 && !actrec.isReturnCalled()) {
+        while(!actrec.isReturnCalled() && getExpr().eval(actrec) == 1) {
             for(Stmt stmt : getStmtBlock().getStmts()) {
+                stmt.eval(actrec);
                 if(actrec.isReturnCalled()) {
                     break;
                 }
-                stmt.eval(actrec);
             }
         }
     }

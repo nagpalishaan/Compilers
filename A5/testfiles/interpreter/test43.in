@@ -1,0 +1,10 @@
+int f(int x) {
+  print(x);
+  return x;
+}
+int main() {
+  while (f(2) < 3) {
+    return 0;
+  }
+  return 1;
+}
