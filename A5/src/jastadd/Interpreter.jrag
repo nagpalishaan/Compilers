@@ -237,19 +237,23 @@ aspect Interpreter {
     syn String IdDecl.uniqueName() {
         return index() + getID();
     }
+    // return empty bc we don't want to add anything to the index here
     eq Program.getChild().index() {
         return "";
     }
-    // only Stn
+    // only StmtBlock and IdDecl have index() methods
     eq StmtBlock.getStmt(int index).index() {
         return index() + index + "_";
     }
+    // return empty bc we don't want to add anything to the index
     eq Function.getIdDecl().index() {
         return "";
     }
+    // return empty bc we don't want to add anything to the index
     eq Function.getStmtBlock().index() {
         return "";
     }
+    // add index to iddecl and stmtblock
     inh String IdDecl.index();
     inh String StmtBlock.index();
 
