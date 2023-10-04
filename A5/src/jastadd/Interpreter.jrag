@@ -28,7 +28,6 @@ aspect Interpreter {
         // get method to retrieve variable/parameter values
         public int get(String name) {
             return vars.get(name);
-            // TODO: throw exception if variable not found
         }
 
         public int getReturnValue() {
@@ -104,7 +103,7 @@ aspect Interpreter {
     }
 
     // Evaluation of an expression returns an integer
-        // Boolen values should be mapped to integers
+        // Boolean values should be mapped to integers
     public int Expr.eval(ActivationRecord actrec){
         throw new RuntimeException("Expr is not implemented yet");
     }
