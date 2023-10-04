@@ -169,6 +169,7 @@ aspect Interpreter {
             return 0;
         }
         else if(getIdUse().getID().equals("read")){
+            // don't use complete return bc it will end the function
             int returnValueForRead = 0;
             try {
                 returnValueForRead = Integer.parseInt(actrec.scanner.next());
@@ -202,6 +203,7 @@ aspect Interpreter {
     }
 
     public void IfElse.eval(ActivationRecord actrec) {
+        // ensure it evals to 1 bc that means true
         if(getExpr().eval(actrec) == 1) {
             for(Stmt stmt : getStmtBlock().getStmts()) {
                 if(actrec.isReturnCalled()) {
@@ -221,6 +223,8 @@ aspect Interpreter {
     }
 
     public void While.eval(ActivationRecord actrec) {
+        // check isReturnCalled() first bc if it is, then we don't need to eval the expression
+        // it calls a function as an expression sometimes and will print and we don't want that
         while(!actrec.isReturnCalled() && getExpr().eval(actrec) == 1) {
             for(Stmt stmt : getStmtBlock().getStmts()) {
                 stmt.eval(actrec);
