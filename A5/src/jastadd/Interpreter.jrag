@@ -79,7 +79,6 @@ aspect Interpreter {
                 break;
             }
         }
-        //throw new RuntimeException("Function is not implemented yet");
         return actrec.getReturnValue();
     }
 
@@ -93,6 +92,7 @@ aspect Interpreter {
     }
 
     public void DeclareVar.eval(ActivationRecord actrec) {
+        // Variable declared and assigned a value
         if (hasExpr()) {
             int exprEvaluated = getExpr().eval(actrec);
             actrec.put(getIdDecl().uniqueName(), exprEvaluated);
