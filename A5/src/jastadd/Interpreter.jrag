@@ -252,5 +252,4 @@ aspect Interpreter {
     inh String IdDecl.index();
     inh String StmtBlock.index();
 
-
 }
