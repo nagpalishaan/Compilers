@@ -1,10 +1,9 @@
-FUNCTION CALLS:
-fac calls fac
-f calls fac
-f calls print
-main calls f
-
-FUNCTION DECLARATIONS:
+digraph G {
+fac -> fac;
+f -> fac;
+f -> print;
+main -> f;
 fac;
 f;
 main;
+}

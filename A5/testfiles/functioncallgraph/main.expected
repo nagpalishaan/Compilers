@@ -1,12 +1,11 @@
-FUNCTION CALLS:
-main calls a
-a calls b
-b calls c
-b calls d
-
-FUNCTION DECLARATIONS:
+digraph G {
+main -> a;
+a -> b;
+b -> c;
+b -> d;
 main;
 a;
 b;
 c;
 d;
+}

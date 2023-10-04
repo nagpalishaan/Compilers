@@ -47,16 +47,16 @@ public class TestFunctionCallGraph {
 		// 	}
 		// }
 
-		sb.append("FUNCTION CALLS:\n");
+		sb.append("digraph G {\n");
 		for (Function f : program.getFunctionList()){
 			for (Function cf : f.functionCalls()){
-				sb.append(f.getIdDecl().getID()).append(" calls ").append(cf.getIdDecl().getID()).append("\n");
+				sb.append(f.getIdDecl().getID()).append(" -> ").append(cf.getIdDecl().getID()).append(";\n");
 			}
 		}
-		sb.append("\nFUNCTION DECLARATIONS:\n");
 		for (Function f : program.getFunctionList()){
 			sb.append(f.getIdDecl().getID()).append(";\n");
 		}
+		sb.append("}");
 
 		String actual = sb.toString();
 		Util.compareOutput(actual,
