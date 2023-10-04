@@ -170,12 +170,13 @@ aspect Interpreter {
         }
         else if(getIdUse().getID().equals("read")){
             String input = actrec.scanner.next();
+            int returnValueForRead = 0;
             try {
-                actrec.completeReturn(Integer.parseInt(input));
+                returnValueForRead = Integer.parseInt(input);
             } catch (Exception e) {
-                actrec.completeReturn(0);
+                returnValueForRead = 0;
             }
-            return actrec.getReturnValue();
+            return returnValueForRead;
         }
         else{
             ActivationRecord newActrec = new ActivationRecord(actrec.scanner); // create new activation record

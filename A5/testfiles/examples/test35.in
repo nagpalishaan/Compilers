@@ -1,4 +1,5 @@
 int main() {
   print(read());
+  print(read());
   return 0;
 }
