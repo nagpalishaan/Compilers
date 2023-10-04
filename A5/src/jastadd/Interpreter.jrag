@@ -15,6 +15,7 @@ aspect Interpreter {
             scanner = new Scanner(System.in);
         }
 
+        // to ensure activation record doesn't use a diff scanner object
         public ActivationRecord(Scanner scanner1) {
             vars = new HashMap<String, Integer>();
             scanner = scanner1;
@@ -30,15 +31,18 @@ aspect Interpreter {
             return vars.get(name);
         }
 
+        // gets the return value
         public int getReturnValue() {
             return returnValue;
         }
 
+        // sets the return value and sets returnCalled to true
         public void completeReturn(int num) {
             returnCalled = true;
             returnValue = num;
         }
 
+        // returns true if return has been called already. this helps with breaking stmtblocks and functions from executing
         public boolean isReturnCalled() {
             return returnCalled;
         }
