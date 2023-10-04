@@ -240,6 +240,7 @@ aspect Interpreter {
     eq Program.getChild().index() {
         return "";
     }
+    // only Stn
     eq StmtBlock.getStmt(int index).index() {
         return index() + index + "_";
     }
