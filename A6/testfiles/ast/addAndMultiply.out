@@ -1,0 +1,34 @@
+Program
+  List
+    Function
+      IdDecl ID="result"
+      ParamList
+        List
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="a"
+            Opt
+          DeclareVar
+            IdDecl ID="b"
+            Opt
+          AssignVar
+            IdUse ID="a"
+            Numeral NUMERAL="2"
+          AssignVar
+            IdUse ID="b"
+            Numeral NUMERAL="3"
+          AssignVar
+            IdUse ID="c"
+            Add
+              IdUse ID="a"
+              Mul
+                IdUse ID="b"
+                Numeral NUMERAL="2"
+          AssignVar
+            IdUse ID="d"
+            Add
+              Mul
+                Numeral NUMERAL="2"
+                IdUse ID="a"
+              IdUse ID="b"

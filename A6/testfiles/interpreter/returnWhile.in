@@ -1,0 +1,14 @@
+
+int rainbowRoad(int num) {
+    int a = 0;
+    while(1 == 1){
+        a = a + 1;
+        if(a == num){
+            return a;
+        }
+    }
+}
+
+int main(){
+    print(rainbowRoad(5));
+}

@@ -1,0 +1,264 @@
+import java.util.*;
+    
+aspect Interpreter {
+
+    public class ActivationRecord {
+
+        private HashMap<String, Integer> vars;
+        private boolean returnCalled = false;
+        private int returnValue = 0;
+        Scanner scanner;
+        
+
+        public ActivationRecord() {
+            vars = new HashMap<String, Integer>();
+            scanner = new Scanner(System.in);
+        }
+
+        // to ensure activation record doesn't use a diff scanner object
+        public ActivationRecord(Scanner scanner1) {
+            vars = new HashMap<String, Integer>();
+            scanner = scanner1;
+        }
+    
+        // put method to store variable/parameter values
+        public void put(String name, int value) {
+            vars.put(name, value);
+        }
+    
+        // get method to retrieve variable/parameter values
+        public int get(String name) {
+            return vars.get(name);
+        }
+
+        // gets the return value
+        public int getReturnValue() {
+            return returnValue;
+        }
+
+        // sets the return value and sets returnCalled to true
+        public void completeReturn(int num) {
+            returnCalled = true;
+            returnValue = num;
+        }
+
+        // returns true if return has been called already. this helps with breaking stmtblocks and functions from executing
+        public boolean isReturnCalled() {
+            return returnCalled;
+        }
+    }
+
+    public void Program.eval(){
+
+        // Declare main IDDecl as unknown
+        IdDecl main = unknownDecl();
+        boolean mainFunctionFound = false;
+
+        // Loop through all functions to find main function
+		for(Function func : getFunctionList()) {
+			if(func.getIdDecl().getID().equals("main")){
+				main = func.getIdDecl();
+                mainFunctionFound = true;
+			}
+		}
+
+        // Report runtime error if main function never found
+        if(!mainFunctionFound) {
+            throw new RuntimeException("main function is missing");
+        }
+
+        // Call eval() on main function (if it exists); function should be given a new ActivationRecord
+            // See TypeAnalysis.jrag for function() method
+        main.function().eval(new ActivationRecord());
+    }
+
+    public int Function.eval(ActivationRecord actrec){
+        for(Stmt stmt : getStmtBlock().getStmts()) {
+            stmt.eval(actrec);
+            if(actrec.isReturnCalled()) {
+                break;
+            }
+        }
+        return actrec.getReturnValue();
+    }
+
+    public void Stmt.eval(ActivationRecord actrec){
+        throw new RuntimeException("Stmt is not implemented yet");
+    }
+
+    public void AssignVar.eval(ActivationRecord actrec) {
+        int exprEvaluated = getExpr().eval(actrec);
+        actrec.put(getIdUse().decl().uniqueName(), exprEvaluated);
+    }
+
+    public void DeclareVar.eval(ActivationRecord actrec) {
+        // Variable declared and assigned a value
+        if (hasExpr()) {
+            int exprEvaluated = getExpr().eval(actrec);
+            actrec.put(getIdDecl().uniqueName(), exprEvaluated);
+
+            // temporary print statement
+            // System.out.println(exprEvaluated);   
+        }
+        // Variable declared, but used w/o being assigned a value
+        else{
+            actrec.put(getIdDecl().uniqueName(), 0); // return default value
+        }
+    }
+
+    // Evaluation of an expression returns an integer
+        // Boolean values should be mapped to integers
+    public int Expr.eval(ActivationRecord actrec){
+        throw new RuntimeException("Expr is not implemented yet");
+    }
+
+    // Arithmetic Expressions
+    public int Add.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) + getRight().eval(actrec); 
+    }
+    public int Sub.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) - getRight().eval(actrec); 
+    }
+    public int Mul.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) * getRight().eval(actrec); 
+    }
+    public int Mod.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) % getRight().eval(actrec); 
+    }
+    public int Div.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) / getRight().eval(actrec); 
+    }
+    public int Neg.eval(ActivationRecord actrec) {
+        return -getExpr().eval(actrec); 
+    }
+
+    // Boolean Expressions
+    public int Equal.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) == getRight().eval(actrec) ? 1 : 0;
+    }
+    public int Not.eval(ActivationRecord actrec){
+        return getLeft().eval(actrec) != getRight().eval(actrec) ? 1 : 0;
+    }
+    public int Less.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) < getRight().eval(actrec) ? 1 : 0;
+    }
+    public int Greater.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) > getRight().eval(actrec) ? 1 : 0;
+    }
+    public int LessEqual.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) <= getRight().eval(actrec) ? 1 : 0;
+    }
+    public int GreaterEqual.eval(ActivationRecord actrec) {
+        return getLeft().eval(actrec) >= getRight().eval(actrec) ? 1 : 0;
+    }
+
+    public int Numeral.eval(ActivationRecord actrec) {
+        return Integer.valueOf(getNUMERAL());
+    }
+
+    public int IdUse.eval(ActivationRecord actrec){
+        return actrec.get(decl().uniqueName());
+    }
+
+    public void Return.eval(ActivationRecord actrec) {
+        int returnVal = getExpr().eval(actrec);
+        actrec.completeReturn(returnVal);
+    }
+
+
+    public int FunctionCall.eval(ActivationRecord actrec) {
+        if(getIdUse().getID().equals("print")){
+            System.out.println(getExpr(0).eval(actrec)); // print only has 1 parameter
+            return 0;
+        }
+        else if(getIdUse().getID().equals("read")){
+            // don't use complete return bc it will end the function
+            int returnValueForRead = 0;
+            try {
+                returnValueForRead = Integer.parseInt(actrec.scanner.next());
+            } catch (Exception e) {
+                returnValueForRead = 0;
+            }
+            return returnValueForRead;
+        }
+        else{
+            ActivationRecord newActrec = new ActivationRecord(actrec.scanner); // create new activation record
+            Function function = getIdUse().decl().function(); // get function declaration
+           
+            //System.out.println("test5: " + "Calling " + getIdUse().getID() + "()");
+
+            if (hasExpr()){
+                for(int i = 0; i < getNumExpr(); i++){
+                    int exprEvaluated = getExpr(i).eval(actrec);
+                    newActrec.put(function.getParamList().getParam(i).getIdDecl().getID(), exprEvaluated);
+                    //System.out.println("test6: " + exprEvaluated);
+                }
+                // temporary print instead of returning value
+                //System.out.println("test7: " + function.eval(newActrec));
+                
+            }
+            return function.eval(newActrec);
+        }
+    }
+
+    public void FunctionCallStmt.eval(ActivationRecord actrec) {
+        getFunctionCall().eval(actrec);
+    }
+
+    public void IfElse.eval(ActivationRecord actrec) {
+        // ensure it evals to 1 bc that means true
+        if(getExpr().eval(actrec) == 1) {
+            for(Stmt stmt : getStmtBlock().getStmts()) {
+                if(actrec.isReturnCalled()) {
+                    break;
+                }
+                stmt.eval(actrec);
+            }
+        }
+        else if(hasElseBlock()) {
+            for(Stmt stmt : getElseBlock().getStmts()) {
+                if(actrec.isReturnCalled()) {
+                    break;
+                }
+                stmt.eval(actrec);
+            }
+        }
+    }
+
+    public void While.eval(ActivationRecord actrec) {
+        // check isReturnCalled() first bc if it is, then we don't need to eval the expression
+        // it calls a function as an expression sometimes and will print and we don't want that
+        while(!actrec.isReturnCalled() && getExpr().eval(actrec) == 1) {
+            for(Stmt stmt : getStmtBlock().getStmts()) {
+                stmt.eval(actrec);
+                if(actrec.isReturnCalled()) {
+                    break;
+                }
+            }
+        }
+    }
+
+    syn String IdDecl.uniqueName() {
+        return index() + getID();
+    }
+    // return empty bc we don't want to add anything to the index here
+    eq Program.getChild().index() {
+        return "";
+    }
+    // only StmtBlock and IdDecl have index() methods
+    eq StmtBlock.getStmt(int index).index() {
+        return index() + index + "_";
+    }
+    // return empty bc we don't want to add anything to the index
+    eq Function.getIdDecl().index() {
+        return "";
+    }
+    // return empty bc we don't want to add anything to the index
+    eq Function.getStmtBlock().index() {
+        return "";
+    }
+    // add index to iddecl and stmtblock
+    inh String IdDecl.index();
+    inh String StmtBlock.index();
+
+}

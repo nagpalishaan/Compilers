@@ -1,0 +1,49 @@
+Program ::= Function*;
+
+Function ::= IdDecl ParamList StmtBlock;
+
+StmtBlock : Stmt ::= Stmt*;
+
+Param ::= IdDecl;
+
+ParamList ::= Param*;
+
+abstract Stmt;
+DeclareVar : Stmt ::= IdDecl [Expr];
+AssignVar : Stmt ::= IdUse Expr;
+
+IfElse : Stmt ::= Expr StmtBlock [ElseBlock:StmtBlock];
+While : Stmt ::= Expr StmtBlock;
+Return : Stmt ::= Expr;
+
+FunctionCallStmt : Stmt ::= FunctionCall;
+FunctionCall : Expr ::= IdUse Expr*;
+
+abstract Expr;
+
+Numeral : Expr ::= <NUMERAL>;
+IdUse : Expr ::= <ID>;
+Neg : Expr ::= Expr;
+
+BinExpr : Expr ::= Left:Expr Right:Expr;
+
+Add : BinExpr;
+Mul : BinExpr;
+Div : BinExpr;
+Sub : BinExpr;
+Mod : BinExpr;
+Less : BinExpr;
+LessEqual : BinExpr;
+Greater : BinExpr;
+GreaterEqual : BinExpr;
+Not : BinExpr;
+Equal : BinExpr;
+
+IdDecl ::= <ID>;
+UnknownDecl : IdDecl;
+
+abstract Type;
+IntType: Type;
+BoolType: Type;
+UnknownType: Type;
+

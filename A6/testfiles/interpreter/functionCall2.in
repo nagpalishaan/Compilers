@@ -1,0 +1,9 @@
+int product(int a, int b, int c) {
+    int d = a * b * c;
+}
+
+int main() {
+    int i = 10;
+    int j = 5;
+    print(product(i, 2, j));
+}

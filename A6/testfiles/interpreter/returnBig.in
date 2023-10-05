@@ -1,0 +1,8 @@
+int mooMooMeadows(int n) {
+    int a = 9;
+    return n * n + 2 - 5 % a;
+}
+
+int main() {
+    print(mooMooMeadows(5));
+}

@@ -1,0 +1,12 @@
+REACHABILITY:
+
+Function: gcd1
+
+Function: gcd2
+this function is circular
+
+Function: main
+gcd1
+gcd2
+print
+

@@ -1,0 +1,30 @@
+aspect CodeGen {
+
+    public void Program.genCode(PrintStream out) {
+        out.println(".global _start");
+        // TODO
+        out.println("_start:");
+
+        // TODO: Call main functino
+
+        // Call sys_exit:
+        out.println("        movq $0, %rdi");
+        out.println("        movq $60, %rax");
+        out.println("        syscall"); // Done!
+
+        // TODO: Helper procedures (print/read)
+
+        // Functions
+        for Function decl : getFunctionList() {
+            decl.genCode(out);
+        }   
+
+    }
+    
+    // Note: Each expression should generate code that puts the result in RAX
+
+    public void Function.genCode(PrintStream out) {
+        // TODO
+    }
+
+}

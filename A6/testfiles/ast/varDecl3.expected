@@ -1,0 +1,14 @@
+Program
+  List
+    Function
+      IdDecl ID="n"
+      ParamList
+        List
+      StmtBlock
+        List
+          DeclareVar
+            IdDecl ID="x"
+            Opt
+          AssignVar
+            IdUse ID="x"
+            Numeral NUMERAL="3"

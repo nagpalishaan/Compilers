@@ -1,0 +1,9 @@
+digraph G {
+gcd2 -> gcd2;
+main -> gcd1;
+main -> gcd2;
+main -> print;
+gcd1;
+gcd2;
+main;
+}

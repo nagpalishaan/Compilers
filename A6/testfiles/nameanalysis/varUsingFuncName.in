@@ -1,0 +1,10 @@
+int b() {
+    int x;
+    a = x;
+}
+
+int a(){
+    int b = 1;
+    int c = 2;
+
+}

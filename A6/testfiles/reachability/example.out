@@ -1,0 +1,14 @@
+REACHABILITY:
+
+Function: fac
+this function is circular
+
+Function: f
+fac
+print
+
+Function: main
+f
+fac
+print
+
