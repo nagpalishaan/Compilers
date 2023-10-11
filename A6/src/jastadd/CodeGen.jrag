@@ -30,8 +30,8 @@ aspect CodeGen {
         // print out label
         out.println(getIdDecl().getID() + ":");
         // move stack pointer
-        out.println("pushq %rbp");
-        out.println("movq %rsp, %rbp");
+        out.println("pushq %rbp # save old base pointer");
+        out.println("movq %rsp, %rbp # set new base pointer");
         // generate code for body
         getStmtBlock().genCode(out);
     }
@@ -53,10 +53,10 @@ aspect CodeGen {
         // generate code for expression
         getExpr().genCode(out);
         // move  stack back to place
-        out.println("movq %rbp, %rsp");
-        out.println("popq %rbp");
+        out.println("movq %rbp, %rsp # restore stack pointer");
+        out.println("popq %rbp # restore base pointer");
         // return
-        out.println("ret\n");
+        out.println("ret\n # return");
     }
 
     // function call with no params
@@ -73,6 +73,6 @@ aspect CodeGen {
     // move value of numeral into RAX
     public void Numeral.genCode(PrintStream out) {
         //use Integer.valueOf to get value of numeral bc its not stored as int
-        out.println("movq $" + Integer.valueOf(getNUMERAL()) + ", %rax");
+        out.println("movq $" + Integer.valueOf(getNUMERAL()) + ", %rax # load numeral into RAX");
     }
 }
