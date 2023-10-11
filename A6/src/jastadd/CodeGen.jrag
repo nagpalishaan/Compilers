@@ -170,7 +170,7 @@ aspect CodeGen {
     public void IfElse.genCode(PrintStream out) {
         String ifStart = "if_start_" + enclosingFunction().getIdDecl().uniqueName();
         String elseStart = "else_start_" + enclosingFunction().getIdDecl().uniqueName();
-        String elseEnd = "else_end_" + enclosingFunction().getIdDecl().uniqueName();
+        //String elseEnd = "else_end_" + enclosingFunction().getIdDecl().uniqueName();
         String ifEnd = "if_end_" + enclosingFunction().getIdDecl().uniqueName();
        
         out.println(ifStart + ":");
@@ -178,21 +178,22 @@ aspect CodeGen {
         // generate code for expression; assume that expression exists
         getExpr().genCode(out);
 
-        getExpr().genConditionalJump(out, elseStart);
-
-        getStmtBlock().genCode(out);
-        out.println("        jmp " + ifEnd);
-
         // if else block exists
         if(hasElseBlock()) {
+            getExpr().genConditionalJump(out, elseStart);
+
+            // generate code for if block statements
+            getStmtBlock().genCode(out);
+            out.println("        jmp " + ifEnd);
+
             // generate code for else block statements
             out.println(elseStart + ":");
             getElseBlock().genCode(out);
-            out.println(elseEnd + ":");
-            out.println("        jmp " + ifEnd);
+            //out.println(elseEnd + ":");
         }
         else{
-            out.println("        jmp " + ifEnd);
+            getExpr().genConditionalJump(out, ifStart);
+            getStmtBlock().genCode(out);
         }
 
         out.println(ifEnd + ":");
@@ -213,7 +214,7 @@ aspect CodeGen {
         getStmtBlock().genCode(out);
         out.println("        jmp " + whileStart); // loop back to start of while loop
 
-        out.println("while_end" + enclosingFunction().getIdDecl().uniqueName());
+        out.println(whileEnd + ":");
     }
 
     // generate code for return statement
