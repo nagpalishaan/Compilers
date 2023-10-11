@@ -173,10 +173,10 @@ aspect CodeGen {
         String elseEnd = "else_end_" + enclosingFunction().getIdDecl().uniqueName();
         String ifEnd = "if_end_" + enclosingFunction().getIdDecl().uniqueName();
        
-        out.println(ifStart + ":");
+        //out.println(ifStart + ":");
 
         // generate code for expression; assume that expression exists
-        getExpr().genCode(out);
+        //getExpr().genCode(out);
 
         // if else block exists
         if(hasElseBlock()) {
@@ -196,7 +196,7 @@ aspect CodeGen {
             getStmtBlock().genCode(out);
         }
 
-        out.println(ifEnd + ":");
+        //out.println(ifEnd + ":");
     }
 
     public void While.genCode(PrintStream out){
