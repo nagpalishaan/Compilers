@@ -5,26 +5,67 @@ aspect CodeGen {
         // TODO
         out.println("_start:");
 
-        // TODO: Call main functino
+        out.println("call main");
+        out.println("call _exit\n");
 
         // Call sys_exit:
-        out.println("        movq $0, %rdi");
-        out.println("        movq $60, %rax");
-        out.println("        syscall"); // Done!
+        out.println("_exit:");
+        out.println("movq $0, %rdi");
+        out.println("movq $60, %rax");
+        out.println("syscall\n"); // Done!
 
         // TODO: Helper procedures (print/read)
 
         // Functions
-        for Function decl : getFunctionList() {
-            decl.genCode(out);
+        for (Function func : getFunctionList()) {
+            func.genCode(out);
         }   
 
     }
     
     // Note: Each expression should generate code that puts the result in RAX
 
+    // generate code for each function
     public void Function.genCode(PrintStream out) {
-        // TODO
+        // print out label
+        out.println(getIdDecl().getID() + ":");
+        // move stack pointer
+        out.println("pushq %rbp");
+        out.println("movq %rsp, %rbp");
+        // generate code for body
+        getStmtBlock().genCode(out);
     }
 
+    // generate code for each statement
+    public void StmtBlock.genCode(PrintStream out) {
+        for(Stmt stmt : getStmtList()) {
+            stmt.genCode(out);
+        }
+    }
+
+    // give error because statements should not be called directly
+    public void Stmt.genCode(PrintStream out) {
+        throw new RuntimeException("Stmt.genCode() should never be called");
+    }
+
+    // generate code for return statement
+    public void Return.genCode(PrintStream out) {
+        // generate code for expression
+        getExpr().genCode(out);
+        // move  stack back to place
+        out.println("movq %rbp, %rsp");
+        out.println("popq %rbp");
+        // return
+        out.println("ret\n");
+    }
+
+    // throw error because expressions should not be called directly
+    public void Expr.genCode(PrintStream out) {
+        throw new RuntimeException("Expr.genCode() should never be called");
+    }
+
+    // move value of numeral into RAX
+    public void Numeral.genCode(PrintStream out) {
+        out.println("movq $" + Integer.valueOf(getNUMERAL()) + ", %rax");
+    }
 }
