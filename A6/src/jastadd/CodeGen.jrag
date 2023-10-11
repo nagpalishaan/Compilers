@@ -168,9 +168,9 @@ aspect CodeGen {
     }
 
     public void IfElse.genCode(PrintStream out) {
-        String ifStart = "if_start" + enclosingFunction().getIdDecl().uniqueName() + ":";
+        String ifStart = "if_start" + enclosingFunction().getIdDecl().uniqueName();
         String elseLabel = "else_start" + enclosingFunction().getIdDecl().uniqueName();
-        String ifEnd = "if_end" + enclosingFunction().getIdDecl().uniqueName() + ":";
+        String ifEnd = "if_end" + enclosingFunction().getIdDecl().uniqueName();
        
         out.println(ifStart + ":");
 
@@ -194,7 +194,7 @@ aspect CodeGen {
             out.println("        jmp " + ifEnd);
         }
 
-        out.println(ifEnd);
+        out.println(ifEnd + ":");
     }
 
     public void While.genCode(PrintStream out){
