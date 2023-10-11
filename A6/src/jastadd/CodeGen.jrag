@@ -17,14 +17,12 @@ aspect CodeGen {
         out.println("movq $60, %rax");
         out.println("syscall\n"); // Done!
 
-        // TODO: Helper procedures (print/read)
-
         // Functions
         for (Function func : getFunctionList()) {
             func.genCode(out);
         }   
 
-        // Helper procedures for input/output:
+        // Helper procedures for input/output (print/read):
         // Copied and pasted from CalcASM refer there for more info
         out.println("\n# From CalcASM - print and read below");
         out.println("# Procedure to print number to stdout.");
@@ -143,16 +141,16 @@ aspect CodeGen {
         // print out label
         out.println(getIdDecl().getID() + ":");
         // move stack pointer
-        out.println("pushq %rbp # save old base pointer");
-        out.println("movq %rsp, %rbp # set new base pointer");
+        out.println("        pushq %rbp # save old base pointer");
+        out.println("        movq %rsp, %rbp # set new base pointer");
         // generate code for body
         getStmtBlock().genCode(out);
 
         if(getIdDecl().getID().equals("main")) {
-            out.println("# this exists in case main doesn't have a return statement. it is defaulted to 0");
-            out.println("movq $0, %rax # return 0");
-            out.println("popq %rbp # restore base pointer"); 
-            out.println("ret\n # return");
+            out.println("        # this exists in case main doesn't have a return statement. it is defaulted to 0");
+            out.println("        movq $0, %rax # return 0");
+            out.println("        popq %rbp # restore base pointer"); 
+            out.println("        ret\n # return");
         }
     }
 
@@ -169,15 +167,63 @@ aspect CodeGen {
         throw new RuntimeException("Stmt.genCode() should never be called");
     }
 
+    public void IfElse.genCode(PrintStream out) {
+        String ifStart = "if_start "; // TODO: add id name
+        String elseLabel = "else_start "; // TODO: add id name
+        String ifEnd = "if_end "; // TODO: add id name
+       
+        out.println(ifStart);
+
+        // generate code for expression; assume that expression exists
+        getExpr().genCode(out);
+
+        getExpr().genConditionalJump(out, elseLabel);
+
+        getStmtBlock().genCode(out);
+        out.println("        jmp " + ifEnd);
+
+        // if else block exists
+        if(hasElseBlock()) {
+            // generate code for else block statements
+            out.println("else_start:");
+            getElseBlock().genCode(out);
+            out.println("else_end:");
+            out.println("        jmp " + ifEnd);
+        }
+        else{
+            out.println("        jmp " + ifEnd);
+        }
+
+        out.println(ifEnd);
+    }
+
+    public void While.genCode(PrintStream out){
+        String whileStart = "while_start "; // TODO: add id name
+        String whileEnd = "while_end "; // TODO: add id name
+
+        out.println(whileStart);
+
+        // generate code for expression; assume that expression exists
+        getExpr().genCode(out);
+
+        getExpr().genConditionalJump(out, whileEnd);
+
+        // generate code for statement block
+        getStmtBlock().genCode(out);
+        out.println("        jmp " + whileStart); // loop back to start of while loop
+
+        out.println("while_end"); // TODO: add id name
+    }
+
     // generate code for return statement
     public void Return.genCode(PrintStream out) {
         // generate code for expression
         getExpr().genCode(out);
-        // move  stack back to place
-        out.println("movq %rbp, %rsp # restore stack pointer");
-        out.println("popq %rbp # restore base pointer");
+        // move stack back to place
+        out.println("        movq %rbp, %rsp # restore stack pointer");
+        out.println("        popq %rbp # restore base pointer");
         // return
-        out.println("ret # return\n");
+        out.println("        ret # return\n");
     }
 
     // function call with no params
@@ -190,17 +236,17 @@ aspect CodeGen {
 		int numParams = getNumExpr();
         for (int i = numParams - 1; i > -1; i--) {
             getExpr(i).genCode(out);
-            out.println("push %rax # push param " + i + " onto stack");
+            out.println("        push %rax # push param " + i + " onto stack");
         }
         // output call and then print label
-        out.println("call " + getIdUse().getID());
-        out.println("addq $" + (numParams * 8) + ", %rsp # pop params off stack. it will be 0 if no params");
+        out.println("        call " + getIdUse().getID());
+        out.println("        addq $" + (numParams * 8) + ", %rsp # pop params off stack. it will be 0 if no params");
     }
 
     // move value of numeral into RAX
     public void Numeral.genCode(PrintStream out) {
         //use Integer.valueOf to get value of numeral bc its not stored as int
-        out.println("movq $" + Integer.valueOf(getNUMERAL()) + ", %rax # load numeral into RAX");
+        out.println("        movq $" + Integer.valueOf(getNUMERAL()) + ", %rax # load numeral into RAX");
     }
 
      // throw error because expressions should not be called directly
@@ -210,55 +256,137 @@ aspect CodeGen {
 
     public void Add.genCode(PrintStream out) {
         getLeft().genCode(out);
-        out.println("pushq %rax # push left onto stack");
+        out.println("        pushq %rax # push left onto stack");
         getRight().genCode(out);
-        out.println("movq %rax, %rbx # move right into rbx");
-        out.println("popq %rax # pop left off stack");
-        out.println("addq %rbx, %rax # add left and right");
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        addq %rbx, %rax # add left and right");
     }
 
     public void Sub.genCode(PrintStream out) {
         getLeft().genCode(out);
-        out.println("pushq %rax # push left onto stack");
+        out.println("        pushq %rax # push left onto stack");
         getRight().genCode(out);
-        out.println("movq %rax, %rbx # move right into rbx");
-        out.println("popq %rax # pop left off stack");
-        out.println("subq %rbx, %rax # subtract left and right");
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        subq %rbx, %rax # subtract left and right");
     }
 
     public void Mul.genCode(PrintStream out) {
         getLeft().genCode(out);
         out.println("pushq %rax # push left onto stack");
         getRight().genCode(out);
-        out.println("movq %rax, %rbx # move right into rbx");
-        out.println("popq %rax # pop left off stack");
-        out.println("imulq %rbx, %rax # multiply left and right");
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        imulq %rbx, %rax # multiply left and right");
     }
 
     public void Div.genCode(PrintStream out) {
         getLeft().genCode(out);
-        out.println("pushq %rax # push left onto stack");
+        out.println("        pushq %rax # push left onto stack");
         getRight().genCode(out);
-        out.println("movq %rax, %rbx # move right into rbx");
-        out.println("popq %rax # pop left off stack");
-        out.println("cqo # sign extend RAX to RDX to prepare for idiv");
-        out.println("idivq %rbx # divide RDX:RAX by right");
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        cqo # sign extend RAX to RDX to prepare for idiv");
+        out.println("        idivq %rbx # divide RDX:RAX by right");
     }
 
     public void Mod.genCode(PrintStream out) {
         getLeft().genCode(out);
-        out.println("pushq %rax # push left onto stack");
+        out.println("        pushq %rax # push left onto stack");
         getRight().genCode(out);
-        out.println("movq %rax, %rbx # move right into rbx");
-        out.println("popq %rax # pop left off stack");
-        out.println("cqo # sign extend RAX to RDX to prepare for idiv");
-        out.println("idivq %rbx # divide RDX:RAX by right");
-        out.println("movq %rdx, %rax # move remainder into RAX");
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        cqo # sign extend RAX to RDX to prepare for idiv");
+        out.println("        idivq %rbx # divide RDX:RAX by right");
+        out.println("        movq %rdx, %rax # move remainder into RAX");
     }
 
     public void Neg.genCode(PrintStream out) {
         getExpr().genCode(out);
-        out.println("negq %rax # negate expression");
+        out.println("        negq %rax # negate expression");
+    }
+
+    public void Equal.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("        pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        cmpq %rbx, %rax"); 
+    }
+
+    public void Not.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("        pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        cmpq %rbx, %rax"); 
+    }
+
+    public void Less.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("        pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        cmpq %rbx, %rax"); 
+    }
+
+    public void LessEqual.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("        pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        cmpq %rbx, %rax"); 
+    }
+
+    public void Greater.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("        pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        cmpq %rbx, %rax"); 
+    }
+
+    public void GreaterEqual.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("        pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("        movq %rax, %rbx # move right into rbx");
+        out.println("        popq %rax # pop left off stack");
+        out.println("        cmpq %rbx, %rax"); 
+    }
+
+    public void Expr.genConditionalJump(PrintStream out, String label){
+        throw new RuntimeException("Expr.genCode() should never be called");
+    }
+
+    public void Equal.genConditionalJump(PrintStream out, String label){
+        out.println("        je " + label);
+    }
+
+    public void Not.genConditionalJump(PrintStream out, String label){
+        out.println("        jne " + label);
+    }
+
+    public void Less.genConditionalJump(PrintStream out, String label){
+        out.println("        jl " + label);
+    }
+
+    public void LessEqual.genConditionalJump(PrintStream out, String label){
+        out.println("        jle " + label);
+    }
+
+    public void Greater.genConditionalJump(PrintStream out, String label){
+        out.println("        jg " + label);
+    }
+
+    public void GreaterEqual.genConditionalJump(PrintStream out, String label){
+        out.println("        jge " + label);
     }
 
 }
