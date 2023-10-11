@@ -5,9 +5,3 @@ int main() {
         print(2);
     }
 }
-
-int main() {
-    if (2 >= 1) {
-        print(3);
-    } 
-}
