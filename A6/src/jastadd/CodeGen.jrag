@@ -186,9 +186,9 @@ aspect CodeGen {
         // if else block exists
         if(hasElseBlock()) {
             // generate code for else block statements
-            out.println(elseStart);
+            out.println(elseStart + ":");
             getElseBlock().genCode(out);
-            out.println(elseEnd);
+            out.println(elseEnd + ":");
             out.println("        jmp " + ifEnd);
         }
         else{
