@@ -178,7 +178,7 @@ aspect CodeGen {
         // generate code for expression; assume that expression exists
         getExpr().genCode(out);
 
-        getExpr().genConditionalJump(out, elseLabel);
+        getExpr().genConditionalJump(out, elseStart);
 
         getStmtBlock().genCode(out);
         out.println("        jmp " + ifEnd);
