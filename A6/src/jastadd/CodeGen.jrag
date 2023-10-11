@@ -168,9 +168,9 @@ aspect CodeGen {
     }
 
     public void IfElse.genCode(PrintStream out) {
-        String ifStart = "if_start "; // TODO: add id name
-        String elseLabel = "else_start "; // TODO: add id name
-        String ifEnd = "if_end "; // TODO: add id name
+        String ifStart = "if_start " + enclosingFunction().getIdDecl().uniqueName();
+        String elseLabel = "else_start " + enclosingFunction().getIdDecl().uniqueName();
+        String ifEnd = "if_end " + enclosingFunction().getIdDecl().uniqueName();
        
         out.println(ifStart);
 
@@ -198,8 +198,8 @@ aspect CodeGen {
     }
 
     public void While.genCode(PrintStream out){
-        String whileStart = "while_start "; // TODO: add id name
-        String whileEnd = "while_end "; // TODO: add id name
+        String whileStart = "while_start " + enclosingFunction().getIdDecl().uniqueName();
+        String whileEnd = "while_end " + enclosingFunction().getIdDecl().uniqueName();
 
         out.println(whileStart);
 
@@ -212,7 +212,7 @@ aspect CodeGen {
         getStmtBlock().genCode(out);
         out.println("        jmp " + whileStart); // loop back to start of while loop
 
-        out.println("while_end"); // TODO: add id name
+        out.println("while_end" + enclosingFunction().getIdDecl().uniqueName());
     }
 
     // generate code for return statement
