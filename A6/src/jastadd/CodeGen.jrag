@@ -2,7 +2,7 @@ aspect CodeGen {
 
     public void Program.genCode(PrintStream out) {
         out.println(".global _start");
-        // TODO
+        // call main and exit
         out.println("_start:");
 
         out.println("call main");
@@ -57,6 +57,12 @@ aspect CodeGen {
         out.println("popq %rbp");
         // return
         out.println("ret\n");
+    }
+
+    // function call with no params
+    public void FunctionCallStmt.genCode(PrintStream out) {
+        // output call and then print label
+        out.println("call " + getFunctionCall().getIdUse().getID());
     }
 
     // throw error because expressions should not be called directly
