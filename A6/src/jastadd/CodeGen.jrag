@@ -180,7 +180,7 @@ aspect CodeGen {
 
         // if else block exists
         if(hasElseBlock()) {
-            getExpr().genConditionalJump(out, ifStart);
+            getExpr().genConditionalJump(out, elseStart);
 
             // generate code for if block statements
             getStmtBlock().genCode(out);
@@ -192,7 +192,7 @@ aspect CodeGen {
             out.println(elseEnd + ":");
         }
         else{
-            getExpr().genConditionalJump(out, elseStart);
+            getExpr().genConditionalJump(out, ifEnd);
             getStmtBlock().genCode(out);
         }
 
@@ -200,8 +200,8 @@ aspect CodeGen {
     }
 
     public void While.genCode(PrintStream out){
-        String whileStart = "while_start" + enclosingFunction().getIdDecl().uniqueName();
-        String whileEnd = "while_end" + enclosingFunction().getIdDecl().uniqueName();
+        String whileStart = "while_start_" + enclosingFunction().getIdDecl().uniqueName();
+        String whileEnd = "while_end_" + enclosingFunction().getIdDecl().uniqueName();
 
         out.println(whileStart + ":");
 
