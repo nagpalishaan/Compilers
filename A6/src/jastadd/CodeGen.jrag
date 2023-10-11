@@ -206,7 +206,7 @@ aspect CodeGen {
         out.println(whileStart + ":");
 
         // generate code for expression; assume that expression exists
-        getExpr().genCode(out);
+        //getExpr().genCode(out);
 
         getExpr().genConditionalJump(out, whileEnd);
 
