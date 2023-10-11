@@ -170,7 +170,7 @@ aspect CodeGen {
     public void IfElse.genCode(PrintStream out) {
         String ifStart = "if_start_" + enclosingFunction().getIdDecl().uniqueName();
         String elseStart = "else_start_" + enclosingFunction().getIdDecl().uniqueName();
-        //String elseEnd = "else_end_" + enclosingFunction().getIdDecl().uniqueName();
+        String elseEnd = "else_end_" + enclosingFunction().getIdDecl().uniqueName();
         String ifEnd = "if_end_" + enclosingFunction().getIdDecl().uniqueName();
        
         out.println(ifStart + ":");
@@ -180,7 +180,7 @@ aspect CodeGen {
 
         // if else block exists
         if(hasElseBlock()) {
-            getExpr().genConditionalJump(out, elseStart);
+            getExpr().genConditionalJump(out, ifStart);
 
             // generate code for if block statements
             getStmtBlock().genCode(out);
@@ -189,10 +189,10 @@ aspect CodeGen {
             // generate code for else block statements
             out.println(elseStart + ":");
             getElseBlock().genCode(out);
-            //out.println(elseEnd + ":");
+            out.println(elseEnd + ":");
         }
         else{
-            getExpr().genConditionalJump(out, ifStart);
+            getExpr().genConditionalJump(out, elseStart);
             getStmtBlock().genCode(out);
         }
 
