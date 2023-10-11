@@ -56,7 +56,7 @@ aspect CodeGen {
         out.println("movq %rbp, %rsp # restore stack pointer");
         out.println("popq %rbp # restore base pointer");
         // return
-        out.println("ret\n # return");
+        out.println("ret # return\n");
     }
 
     // function call with no params
