@@ -183,8 +183,8 @@ aspect CodeGen {
             getExpr().genConditionalJump(out, elseStart);
 
             // generate code for if block statements
-            getStmtBlock().genCode(out);
-            out.println("        jmp " + ifEnd);
+            //getStmtBlock().genCode(out);
+            //out.println("        jmp " + ifEnd);
 
             // generate code for else block statements
             out.println(elseStart + ":");
