@@ -176,29 +176,41 @@ aspect CodeGen {
         //out.println(ifStart + ":");
 
         // generate code for expression; assume that expression exists
-        //getExpr().genCode(out);
+        getExpr().genCode(out);
 
         // if else block exists
-        if(hasElseBlock()) {
-            getExpr().genConditionalJump(out, elseStart);
+        // if(hasElseBlock()) {
+        //     getExpr().genConditionalJump(out, elseStart);
 
-            // generate code for if block statements
-            getStmtBlock().genCode(out);
-            out.println("        jmp " + ifEnd);
+        //     // generate code for if block statements
+        //     getStmtBlock().genCode(out);
+        //     out.println("        jmp " + ifEnd);
 
-            // generate code for else block statements
-            out.println(elseStart + ":");
+        //     // generate code for else block statements
+        //     out.println(elseStart + ":");
+        //     getElseBlock().genCode(out);
+        //     //out.println(elseEnd + ":");
+        //     //out.println(ifEnd + ":");
+        // }
+        // else{
+        //     getExpr().genConditionalJump(out, ifEnd);
+        //     getStmtBlock().genCode(out);
+        //     out.println(ifEnd + ":");
+        // }
+
+        getExpr().genConditionalJump(out, ifStart);
+        
+        out.println(elseStart + ":");
+        if (hasElseBlock()) {
             getElseBlock().genCode(out);
-            //out.println(elseEnd + ":");
+        }
+        out.println("        jmp " + ifEnd);
 
-            out.println(ifEnd + ":");
-        }
-        else{
-            getExpr().genConditionalJump(out, ifEnd);
-            getStmtBlock().genCode(out);
-            out.println(ifEnd + ":");
-        }
-        //out.println(ifEnd + ":");
+        out.println(ifStart + ":");
+        getStmtBlock().genCode(out);
+        out.println("        jmp " + ifEnd);
+
+        out.println(ifEnd + ":");
     }
 
     public void While.genCode(PrintStream out){
