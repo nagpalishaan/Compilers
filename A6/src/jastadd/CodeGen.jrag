@@ -172,7 +172,7 @@ aspect CodeGen {
         String elseLabel = "else_start " + enclosingFunction().getIdDecl().uniqueName();
         String ifEnd = "if_end " + enclosingFunction().getIdDecl().uniqueName();
        
-        out.println(ifStart);
+        out.println(ifStart + ":");
 
         // generate code for expression; assume that expression exists
         getExpr().genCode(out);
@@ -201,7 +201,7 @@ aspect CodeGen {
         String whileStart = "while_start " + enclosingFunction().getIdDecl().uniqueName();
         String whileEnd = "while_end " + enclosingFunction().getIdDecl().uniqueName();
 
-        out.println(whileStart);
+        out.println(whileStart + ":");
 
         // generate code for expression; assume that expression exists
         getExpr().genCode(out);
