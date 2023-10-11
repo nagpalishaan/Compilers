@@ -25,6 +25,8 @@ aspect CodeGen {
         }   
 
         // Helper procedures for input/output:
+        // Copied and pasted from CalcASM refer there for more info
+        out.println("# From CalcASM - print and read below");
         out.println("# Procedure to print number to stdout.");
         out.println("# C signature: void print(long int)");
         out.println("print:");
@@ -145,6 +147,13 @@ aspect CodeGen {
         out.println("movq %rsp, %rbp # set new base pointer");
         // generate code for body
         getStmtBlock().genCode(out);
+
+        if(getIdDecl().getID().equals("main")) {
+            out.println("# this exists in case main doesn't have a return statement. it is defaulted to 0");
+            out.println("movq $0, %rax # return 0");
+            out.println("popq %rbp # restore base pointer"); 
+            out.println("ret\n # return");
+        }
     }
 
     // generate code for each statement
