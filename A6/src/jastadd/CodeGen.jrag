@@ -66,6 +66,7 @@ aspect CodeGen {
 
     // move value of numeral into RAX
     public void Numeral.genCode(PrintStream out) {
+        //use Integer.valueOf to get value of numeral bc its not stored as int
         out.println("movq $" + Integer.valueOf(getNUMERAL()) + ", %rax");
     }
 }
