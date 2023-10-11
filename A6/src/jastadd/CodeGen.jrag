@@ -185,11 +185,6 @@ aspect CodeGen {
         getFunctionCall().genCode(out);
     }
 
-    // throw error because expressions should not be called directly
-    public void Expr.genCode(PrintStream out) {
-        throw new RuntimeException("Expr.genCode() should never be called");
-    }
-
     public void FunctionCall.genCode(PrintStream out) {
         Function function = getIdUse().decl().function();
 		int numParams = getNumExpr();
@@ -206,6 +201,11 @@ aspect CodeGen {
     public void Numeral.genCode(PrintStream out) {
         //use Integer.valueOf to get value of numeral bc its not stored as int
         out.println("movq $" + Integer.valueOf(getNUMERAL()) + ", %rax # load numeral into RAX");
+    }
+
+     // throw error because expressions should not be called directly
+     public void Expr.genCode(PrintStream out) {
+        throw new RuntimeException("Expr.genCode() should never be called");
     }
 
     public void Add.genCode(PrintStream out) {
