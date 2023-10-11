@@ -26,7 +26,7 @@ aspect CodeGen {
 
         // Helper procedures for input/output:
         // Copied and pasted from CalcASM refer there for more info
-        out.println("# From CalcASM - print and read below");
+        out.println("\n# From CalcASM - print and read below");
         out.println("# Procedure to print number to stdout.");
         out.println("# C signature: void print(long int)");
         out.println("print:");
@@ -207,4 +207,58 @@ aspect CodeGen {
         //use Integer.valueOf to get value of numeral bc its not stored as int
         out.println("movq $" + Integer.valueOf(getNUMERAL()) + ", %rax # load numeral into RAX");
     }
+
+    public void Add.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("movq %rax, %rbx # move right into rbx");
+        out.println("popq %rax # pop left off stack");
+        out.println("addq %rbx, %rax # add left and right");
+    }
+
+    public void Sub.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("movq %rax, %rbx # move right into rbx");
+        out.println("popq %rax # pop left off stack");
+        out.println("subq %rbx, %rax # subtract left and right");
+    }
+
+    public void Mul.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("movq %rax, %rbx # move right into rbx");
+        out.println("popq %rax # pop left off stack");
+        out.println("imulq %rbx, %rax # multiply left and right");
+    }
+
+    public void Div.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("movq %rax, %rbx # move right into rbx");
+        out.println("popq %rax # pop left off stack");
+        out.println("cqo # sign extend RAX to RDX to prepare for idiv");
+        out.println("idivq %rbx # divide RDX:RAX by right");
+    }
+
+    public void Mod.genCode(PrintStream out) {
+        getLeft().genCode(out);
+        out.println("pushq %rax # push left onto stack");
+        getRight().genCode(out);
+        out.println("movq %rax, %rbx # move right into rbx");
+        out.println("popq %rax # pop left off stack");
+        out.println("cqo # sign extend RAX to RDX to prepare for idiv");
+        out.println("idivq %rbx # divide RDX:RAX by right");
+        out.println("movq %rdx, %rax # move remainder into RAX");
+    }
+
+    public void Neg.genCode(PrintStream out) {
+        getExpr().genCode(out);
+        out.println("negq %rax # negate expression");
+    }
+
 }
