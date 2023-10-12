@@ -403,14 +403,16 @@ aspect CodeGen {
     eq Program.getChild().address() = ""; // prevent everything from having an address and only what needs it
     // find out what index its at and return the correct thing
     eq Param.getIdDecl().address() {
+        return (parameterIndex()*8+16) +"(%rbp)";
+    }
+    syn int Param.parameterIndex() {
         ParamList paramList = paramList();
         for(int i = 0; i < paramList.getNumParam(); i++) {
             if(paramList.getParam(i) == this) {
-                return (i*8+16) +"(%rbp)";
+                return i;
             }
         }
-        
-        throw new RuntimeException("Param.getIdDecl().address() has a major error");
+        throw new RuntimeException("Param.parameterIndex() doesn't match a valid index");
     }
     public void IdUse.genCode(PrintStream out) {
 		out.println("       movq " + decl().address() + ", %rax"); // move address of variable into RAX
