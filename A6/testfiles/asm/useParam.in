@@ -1,0 +1,7 @@
+int wariosGoldMine(int i) {
+    return i;
+}
+
+int main() {
+    print(wariosGoldMine(4));
+}
