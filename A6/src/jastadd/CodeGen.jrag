@@ -178,37 +178,25 @@ aspect CodeGen {
         // generate code for expression; assume that expression exists
         getExpr().genCode(out);
 
-        // if else block exists
-        // if(hasElseBlock()) {
-        //     getExpr().genConditionalJump(out, elseStart);
+        //if else block exists
+        if(hasElseBlock()) {
+            getExpr().genConditionalJump(out, elseStart); // skip to else if expr true
 
-        //     // generate code for if block statements
-        //     getStmtBlock().genCode(out);
-        //     out.println("        jmp " + ifEnd);
+            // generate code for if block statements
+            getStmtBlock().genCode(out);
+            out.println("        jmp " + ifEnd);
 
-        //     // generate code for else block statements
-        //     out.println(elseStart + ":");
-        //     getElseBlock().genCode(out);
-        //     //out.println(elseEnd + ":");
-        //     //out.println(ifEnd + ":");
-        // }
-        // else{
-        //     getExpr().genConditionalJump(out, ifEnd);
-        //     getStmtBlock().genCode(out);
-        //     out.println(ifEnd + ":");
-        // }
-
-        getExpr().genConditionalJump(out, ifStart);
-        
-        out.println(elseStart + ":");
-        if (hasElseBlock()) {
+            // generate code for else block statements
+            out.println(elseStart + ":");
             getElseBlock().genCode(out);
+            //out.println(elseEnd + ":");
+            //out.println(ifEnd + ":");
         }
-        out.println("        jmp " + ifEnd);
-
-        out.println(ifStart + ":");
-        getStmtBlock().genCode(out);
-        out.println("        jmp " + ifEnd);
+        else{
+            getExpr().genConditionalJump(out, ifEnd);
+            getStmtBlock().genCode(out);
+            //out.println(ifEnd + ":");
+        }
 
         out.println(ifEnd + ":");
     }
@@ -220,9 +208,9 @@ aspect CodeGen {
         out.println(whileStart + ":");
 
         // generate code for expression; assume that expression exists
-        //getExpr().genCode(out);
+        getExpr().genCode(out);
 
-        getExpr().genConditionalJump(out, whileEnd);
+        getExpr().genConditionalJump(out, whileEnd); // skip to end if expr true
 
         // generate code for statement block
         getStmtBlock().genCode(out);
@@ -382,27 +370,27 @@ aspect CodeGen {
     }
 
     public void Equal.genConditionalJump(PrintStream out, String label){
-        out.println("        je " + label);
-    }
-
-    public void Not.genConditionalJump(PrintStream out, String label){
         out.println("        jne " + label);
     }
 
+    public void Not.genConditionalJump(PrintStream out, String label){
+        out.println("        je " + label);
+    }
+
     public void Less.genConditionalJump(PrintStream out, String label){
-        out.println("        jl " + label);
+        out.println("        jge " + label);
     }
 
     public void LessEqual.genConditionalJump(PrintStream out, String label){
-        out.println("        jle " + label);
-    }
-
-    public void Greater.genConditionalJump(PrintStream out, String label){
         out.println("        jg " + label);
     }
 
+    public void Greater.genConditionalJump(PrintStream out, String label){
+        out.println("        jle " + label);
+    }
+
     public void GreaterEqual.genConditionalJump(PrintStream out, String label){
-        out.println("        jge " + label);
+        out.println("        jl " + label);
     }
 
 }
