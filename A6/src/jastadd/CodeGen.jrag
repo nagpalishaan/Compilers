@@ -399,11 +399,14 @@ aspect CodeGen {
         out.println("        jl " + label);
     }
 
-    inh String IdDecl.address(); // address of variable
-    eq Program.getChild().address() = ""; // prevent everything from having an address and only what needs it
-    // find out what index its at and return the correct thing
-    eq Param.getIdDecl().address() {
-        return (getIdDecl().funcParamIndex()*8+16) +"(%rbp)";
+    syn String IdDecl.address() {
+        if (funcParamIndex() == -1){
+            // Address of local variable variable in the current stack frame
+            return "-" + (localIndex()*8) + "(%rbp)";
+        }
+        else {
+            return (funcParamIndex()*8+16) +"(%rbp)";
+        }
     }
 
     inh int IdDecl.funcParamIndex(); // index of parameter in function
@@ -436,8 +439,8 @@ aspect CodeGen {
     syn int ASTNode.localIndex() = prevNode().localIndex();
     eq Program.localIndex() = 0;
     eq IdDecl.localIndex() {
-        // if function reset local index
-        if (isFunction()){
+        // if function or parameter, don't increment index
+        if (isFunction() || (funcParamIndex() != -1)){
             return prevNode().localIndex();
         }
         else {
