@@ -176,7 +176,7 @@ aspect CodeGen {
     public void IfElse.genCode(PrintStream out) {
         String ifStart = "if_start_" + enclosingFunction().getIdDecl().uniqueName();
         String elseStart = "else_start_" + enclosingFunction().getIdDecl().uniqueName();
-        String elseEnd = "else_end_" + enclosingFunction().getIdDecl().uniqueName();
+        //String elseEnd = "else_end_" + enclosingFunction().getIdDecl().uniqueName();
         String ifEnd = "if_end_" + enclosingFunction().getIdDecl().uniqueName();
        
         //out.println(ifStart + ":");
@@ -405,6 +405,7 @@ aspect CodeGen {
     eq Param.getIdDecl().address() {
         return (parameterIndex()*8+16) +"(%rbp)";
     }
+
     syn int Param.parameterIndex() {
         ParamList paramList = paramList();
         for(int i = 0; i < paramList.getNumParam(); i++) {
@@ -414,6 +415,7 @@ aspect CodeGen {
         }
         throw new RuntimeException("Param.parameterIndex() doesn't match a valid index");
     }
+    
     public void IdUse.genCode(PrintStream out) {
 		out.println("       movq " + decl().address() + ", %rax"); // move address of variable into RAX
     }
@@ -431,7 +433,16 @@ aspect CodeGen {
     */
     syn int ASTNode.localIndex() = prevNode().localIndex();
     eq Program.localIndex() = 0;
-    eq IdDecl.localIndex() = prevNode().localIndex() + 1;
+    eq IdDecl.localIndex() {
+        // if function reset local index
+        if (isFunction()){
+            return prevNode().localIndex();
+        }
+        else {
+            return prevNode().localIndex() + 1;
+        }
+    }
+    eq Function.localIndex() = 0;
 
     inh ASTNode ASTNode.prevNode();
     eq ASTNode.getChild(int i).prevNode() = prevNode(i);
