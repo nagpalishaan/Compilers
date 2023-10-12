@@ -227,10 +227,10 @@ aspect CodeGen {
 
     public void DeclareVar.genCode(PrintStream out) {
         if(!hasExpr()) {
-            out.println("movq $0, " + getIdDecl().address());
+            out.println("movq $0, " + getIdDecl().address() + " # initialize variable to 0");
 		} else {
 			getExpr().genCode(out);
-			out.println("movq %rax, " + getIdDecl().address());
+			out.println("movq %rax, " + getIdDecl().address() + " # initialize variable to expression");
 		}
     }
 
