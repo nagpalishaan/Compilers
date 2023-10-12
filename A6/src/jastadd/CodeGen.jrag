@@ -403,17 +403,19 @@ aspect CodeGen {
     eq Program.getChild().address() = ""; // prevent everything from having an address and only what needs it
     // find out what index its at and return the correct thing
     eq Param.getIdDecl().address() {
-        return (parameterIndex()*8+16) +"(%rbp)";
+        return (getIdDecl().funcParamIndex()*8+16) +"(%rbp)";
     }
 
-    syn int Param.parameterIndex() {
+    inh int IdDecl.funcParamIndex(); // index of parameter in function
+    eq Program.getChild().funcParamIndex() = -1; // prevent everything from having an index and only what needs it
+    eq Param.getIdDecl().funcParamIndex() {
         ParamList paramList = paramList();
         for(int i = 0; i < paramList.getNumParam(); i++) {
             if(paramList.getParam(i) == this) {
                 return i;
             }
         }
-        throw new RuntimeException("Param.parameterIndex() doesn't match a valid index");
+        throw new RuntimeException("Param.funcParamIndex() doesn't match a valid index");
     }
     
     public void IdUse.genCode(PrintStream out) {
