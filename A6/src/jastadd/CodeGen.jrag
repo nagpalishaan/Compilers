@@ -3,19 +3,19 @@ aspect CodeGen {
     public void Program.genCode(PrintStream out) {
         out.println(".global _start");
         out.println(".data");
-        out.println("buf: .skip 1024");
+        out.println("       buf: .skip 1024");
         out.println(".text");
         // call main and exit
         out.println("_start:");
 
-        out.println("call main");
-        out.println("call _exit\n");
+        out.println("       call main");
+        out.println("       call _exit\n");
 
         // Call sys_exit:
         out.println("_exit:");
-        out.println("movq $0, %rdi");
-        out.println("movq $60, %rax");
-        out.println("syscall\n"); // Done!
+        out.println("       movq $0, %rdi");
+        out.println("       movq $60, %rax");
+        out.println("       syscall\n"); // Done!
 
         // Functions
         for (Function func : getFunctionList()) {
@@ -419,7 +419,7 @@ aspect CodeGen {
         throw new RuntimeException("Param.getIdDecl().address() has a major error");
     }
     public void IdUse.genCode(PrintStream out) {
-		out.println("   movq " + decl().address() + ", %rax"); // move address of variable into RAX
+		out.println("       movq " + decl().address() + ", %rax"); // move address of variable into RAX
     }
 
     inh ParamList Param.paramList(); // paramList attribute
