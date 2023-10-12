@@ -225,6 +225,20 @@ aspect CodeGen {
         out.println(whileEnd + ":");
     }
 
+    public void DeclareVar.genCode(PrintStream out) {
+        if(!hasExpr()) {
+            out.println("movq $0, " + getIdDecl().address());
+		} else {
+			getExpr().genCode(out);
+			out.println("movq %rax, " + getIdDecl().address());
+		}
+    }
+
+    public void AssignVar.genCode(PrintStream out) {
+        getExpr().genCode(out);
+		out.println("movq %rax, " + getIdUse().decl().address());
+    }
+
     // generate code for return statement
     public void Return.genCode(PrintStream out) {
         // generate code for expression

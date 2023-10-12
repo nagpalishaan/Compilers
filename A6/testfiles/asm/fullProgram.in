@@ -16,9 +16,16 @@ int f(int a, int b){
     if(b >= a){
             print(5);
         } else{
-            print();
+            print(6);
         }
     print(x);
+    return 15;
 
+}
 
+int main() {
+    int a = 1;
+    int b = 2;
+    print(f(a, b));
+    return 0;
 }
