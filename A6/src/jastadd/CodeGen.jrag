@@ -174,10 +174,10 @@ aspect CodeGen {
     }
 
     public void IfElse.genCode(PrintStream out) {
-        String ifStart = "if_start_" + enclosingFunction().getIdDecl().uniqueName();
-        String elseStart = "else_start_" + enclosingFunction().getIdDecl().uniqueName();
+        //String ifStart = "if_start_" + enclosingFunction().getIdDecl().uniqueName();
+        String elseStart = "else_start_" + enclosingFunction().getIdDecl().uniqueName() + "_" + index();
         //String elseEnd = "else_end_" + enclosingFunction().getIdDecl().uniqueName();
-        String ifEnd = "if_end_" + enclosingFunction().getIdDecl().uniqueName();
+        String ifEnd = "if_end_" + enclosingFunction().getIdDecl().uniqueName() + "_" + index();
        
         //out.println(ifStart + ":");
 
@@ -208,8 +208,8 @@ aspect CodeGen {
     }
 
     public void While.genCode(PrintStream out){
-        String whileStart = "while_start_" + enclosingFunction().getIdDecl().uniqueName();
-        String whileEnd = "while_end_" + enclosingFunction().getIdDecl().uniqueName();
+        String whileStart = "while_start_" + enclosingFunction().getIdDecl().uniqueName() + "_" + index();
+        String whileEnd = "while_end_" + enclosingFunction().getIdDecl().uniqueName() + "_" + index();
 
         out.println(whileStart + ":");
 
@@ -467,4 +467,6 @@ aspect CodeGen {
     eq ASTNode.getChild(int i).prevNode() = prevNode(i);
     syn ASTNode ASTNode.lastNode() = prevNode(getNumChild());
     syn ASTNode ASTNode.prevNode(int i) = i>0 ? getChild(i-1).lastNode() : this;
+
+    inh String Stmt.index();
 }   
